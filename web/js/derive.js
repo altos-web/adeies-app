@@ -37,6 +37,25 @@ function parseDate(value) {
 
 const toIso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
+// Κλίση ελληνικού ονόματος. Ο πίνακας ορίζεται μία φορά στο scripts/fields.py και
+// έρχεται εδώ μέσω config.json — δεν αντιγράφεται. Ό,τι δεν ταιριάζει σε κατάληξη
+// μένει άκλιτο, που είναι το σωστό για τα ξένα ονόματα.
+function klise(word, female, kind) {
+  if (blank(word)) return '';
+  const table = (config().klisi || {})[female ? 'thiliko' : 'arseniko'] || [];
+  for (const [suffix, gen, ait] of table) {
+    if (word.endsWith(suffix)) return word.slice(0, -suffix.length) + (kind === 'gen' ? gen : ait);
+  }
+  return word;
+}
+
+// Το επώνυμο κλίνεται μόνο στα αρσενικά: τα ελληνικά γυναικεία επώνυμα είναι ήδη σε
+// τύπο γενικής («ΙΩΑΝΝΙΔΟΥ») και δεν αλλάζουν ποτέ.
+function onomateponymoKlisi(eponymo, onoma, female, kind) {
+  const last = female ? String(eponymo ?? '').trim() : klise(String(eponymo ?? '').trim(), false, kind);
+  return [last, klise(String(onoma ?? '').trim(), female, kind)].filter((p) => p).join(' ');
+}
+
 // Λήξη με περιληπτική μέτρηση: η πρώτη ημέρα μετράει. 15/04 για 2 ημέρες → 16/04.
 // Με workingOnly αγνοούνται Σάββατο και Κυριακή, όπως ορίζουν τα έντυπα που λένε
 // «εργάσιμων ημερών». Οι αργίες δεν καλύπτονται — γι' αυτό η λήξη μένει επεξεργάσιμη.
@@ -75,6 +94,13 @@ export function derive(data) {
   if (blank(out.onomateponymo)) {
     out.onomateponymo = [data.eponymo, data.onoma].filter((p) => !blank(p)).join(' ');
   }
+  // Οι πτώσεις: τα έντυπα λένε «αίτηση της ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗΣ» αλλά «χορηγούμε στην
+  // ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ» — μία ονομαστική τιμή δεν αρκεί για τα δύο. Ο πίνακας κλίσης
+  // έρχεται από το fields.py μέσω config.json, όπως και οι υπόλοιποι.
+  for (const [tag, kind] of [['onomateponymo_gen', 'gen'], ['onomateponymo_ait', 'ait']]) {
+    if (blank(out[tag])) out[tag] = onomateponymoKlisi(data.eponymo, data.onoma, female, kind);
+  }
+
   if (blank(out.dieuthinsi_katoikias)) {
     out.dieuthinsi_katoikias = [data.odos, data.arithmos_katoikias]
       .filter((p) => !blank(p)).join(' ');
@@ -125,7 +151,8 @@ export function formatDates(data) {
 export function suggestions(data) {
   const full = formatDates(derive(data));
   const out = {};
-  for (const tag of ['onomateponymo', 'dieuthinsi_katoikias', 'imeres_olografos',
+  for (const tag of ['onomateponymo', 'onomateponymo_gen', 'onomateponymo_ait',
+                     'dieuthinsi_katoikias', 'imeres_olografos',
                      'imeres_plithos', 'imerominia_eos', 'imerominia_stis', 'topos',
                      'etos_anaforas']) {
     if (blank(data[tag]) && !blank(full[tag])) out[tag] = full[tag];

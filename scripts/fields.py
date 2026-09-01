@@ -48,6 +48,10 @@ FIELDS = {
     "eponymo": ("ekpaideutikos", "Επώνυμο", "text"),
     "onoma": ("ekpaideutikos", "Όνομα", "text"),
     "onomateponymo": ("ekpaideutikos", "Ονοματεπώνυμο", "text", "eponymo+onoma"),
+    "onomateponymo_gen": ("ekpaideutikos", "Ονοματεπώνυμο (γενική) — «αίτηση του/της …»",
+                          "text", "eponymo+onoma+fylo"),
+    "onomateponymo_ait": ("ekpaideutikos", "Ονοματεπώνυμο (αιτιατική) — «χορηγούμε στον/στην …»",
+                          "text", "eponymo+onoma+fylo"),
     "patronymo": ("ekpaideutikos", "Πατρώνυμο", "text"),
     "mitronymo": ("ekpaideutikos", "Μητρώνυμο", "text"),
     # Οι υπεύθυνες δηλώσεις ζητούν και τα επώνυμα των γονέων, άλλοτε σε χωριστά
@@ -206,6 +210,40 @@ IMERES_OLOGRAFOS = (
     | {20 + n: f"ΕΙΚΟΣΙ {_ONES[n]}" for n in range(1, 10)}
     | {30: "ΤΡΙΑΝΤΑ"}
 )
+
+
+# Κλίση ελληνικών ονομάτων: κατάληξη → (γενική, αιτιατική), σε κεφαλαία — τα
+# έντυπα γράφονται όλα κεφαλαία, οπότε δεν υπάρχει θέμα τόνων.
+#
+# Δοκιμάζονται με τη σειρά και κερδίζει η πρώτη κατάληξη που ταιριάζει. Ό,τι δεν
+# ταιριάζει μένει **άκλιτο**, που είναι και το σωστό για τα ξένα ονόματα.
+#
+# Το επώνυμο κλίνεται μόνο στα αρσενικά. Τα ελληνικά γυναικεία επώνυμα είναι ήδη
+# σε τύπο γενικής («ΙΩΑΝΝΙΔΟΥ», «ΠΑΠΑΔΟΠΟΥΛΟΥ») και δεν αλλάζουν ποτέ· αν τους
+# εφαρμοζόταν ο θηλυκός πίνακας, το «ΚΩΣΤΑ» θα γινόταν «ΚΩΣΤΑΣ».
+KLISI = {
+    "arseniko": [("ΟΣ", "ΟΥ", "Ο"), ("ΗΣ", "Η", "Η"), ("ΑΣ", "Α", "Α")],
+    "thiliko": [("Α", "ΑΣ", "Α"), ("Η", "ΗΣ", "Η"), ("Ω", "ΩΣ", "Ω")],
+}
+
+
+def klise(word, female, case):
+    """Μία λέξη σε γενική ή αιτιατική. case: "gen" ή "ait"."""
+    if not word:
+        return ""
+    for suffix, gen, ait in KLISI["thiliko" if female else "arseniko"]:
+        if word.endswith(suffix):
+            return word[: -len(suffix)] + (gen if case == "gen" else ait)
+    return word
+
+
+def onomateponymo_klisi(eponymo, onoma, female, case):
+    """«ΠΑΠΑΔΟΠΟΥΛΟΣ ΙΩΑΝΝΗΣ» → «ΠΑΠΑΔΟΠΟΥΛΟΥ ΙΩΑΝΝΗ» / «ΠΑΠΑΔΟΠΟΥΛΟ ΙΩΑΝΝΗ»."""
+    eponymo = (eponymo or "").strip()
+    onoma = (onoma or "").strip()
+    if not female:
+        eponymo = klise(eponymo, False, case)
+    return " ".join(p for p in (eponymo, klise(onoma, female, case)) if p)
 
 
 def by_group():

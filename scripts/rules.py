@@ -181,7 +181,7 @@ RULES = [
     ("aitisi", None, r"^\s*Α\.Δ\.Τ\.\s*:\s*" + B, r"Α.Δ.Τ.: {{ adt }}"),
 
     # η επικεφαλίδα «τ......  ......» των εντύπων χωρίς πλαίσιο στοιχείων
-    ("aitisi", None, r"^\s*τ[…\.]+\s+[…\.]{4,}\s*$", r"{{ tou_tis }} {{ onomateponymo }}"),
+    ("aitisi", None, r"^\s*τ[…\.]+\s+[…\.]{4,}\s*$", r"{{ tou_tis }} {{ onomateponymo_gen }}"),
     ("aitisi", None,
      r"^\s*(?:Δασκάλ[…\.]*\s*-\s*Νηπιαγωγού\s+)?[Εε]κπαιδευτικού\s+ΠΕ\s*[…\.]+\s*του\s*[…\.]+\s*"
      r"Δημοτικού Σχολείου\s*-\s*Νηπιαγωγείου\s*" + B,
@@ -261,12 +261,12 @@ RULES = [
      r"Την υπ' αριθμ. {{ protokollo_aitisis }} αίτηση"),
     ("all", None, r"Την\s+υπ['’]\s*αριθ\.?\s*πρωτ\.\s*" + D + r"[…\./\-0-9]*\s*αίτηση\s*τ[…\.]+\s*"
      + B + r"\s*αναπληρ[…\.]+\s*Εκπαιδευτικού\s+του\s*" + B,
-     r"Την υπ' αριθμ. {{ protokollo_aitisis }} αίτηση {{ tou_tis }} {{ onomateponymo }}, "
+     r"Την υπ' αριθμ. {{ protokollo_aitisis }} αίτηση {{ tou_tis }} {{ onomateponymo_gen }}, "
      r"{{ anaplirotis_gen }} εκπαιδευτικού του {{ sxoleio_gen }}"),
     ("all", None, r"Την\s+από\s*" + B + r"\s*αίτηση", r"Την από {{ imerominia_aitisis }} αίτηση"),
     ("all", None, r"Την\s+από\s*" + B + r"\s*βεβαίωση", r"Την από {{ imerominia_veveosis }} βεβαίωση"),
     ("all", None, r"Την\s+από\s*" + D + r"{3,}\s*αίτηση\s+του/της\s+κ\.\s*" + B,
-     r"Την από {{ imerominia_aitisis }} αίτηση {{ tou_tis }} κ. {{ onomateponymo }}"),
+     r"Την από {{ imerominia_aitisis }} αίτηση {{ tou_tis }} κ. {{ onomateponymo_gen }}"),
     ("all", None, r"εκπαιδευτικού\s+του\s+κλάδου\s+Π\.Ε\.\s*[…\.]*\s*-\s*" + B,
      r"εκπαιδευτικού του κλάδου {{ klados }}-{{ klados_perigrafi }}"),
     ("all", None, r"του\s*[…\.]+\s*Δ\.Σ\./Νηπιαγ\.\s*" + BS, r"του {{ sxoleio_gen }}"),
@@ -274,17 +274,18 @@ RULES = [
     ("all", None, r"Την\s+από\s*\{\{ imerominia_apo \}\}\s*αίτηση",
      r"Την από {{ imerominia_aitisis }} αίτηση"),
     ("all", None, r"αίτηση\s+του\s*/\s*της\s+κ\.\s*" + B,
-     r"αίτηση {{ tou_tis }} κ. {{ onomateponymo }}"),
+     r"αίτηση {{ tou_tis }} κ. {{ onomateponymo_gen }}"),
 
     # ── σώμα: το «Αποφασίζουμε» ──────────────────────────────────────────────
     ("all", None, r"Χορηγούμε\s+στον\s*/\s*(?:σ)?την", r"Χορηγούμε {{ ston_stin }}"),
     ("all", None, r"Χορηγούμε\s+στον\s*/\s*ην", r"Χορηγούμε {{ ston_stin }}"),
-    ("all", None, r"Χορηγούμε\s+στην\s*[…\.]{2,}", r"Χορηγούμε {{ ston_stin }} {{ onomateponymo }}"),
-    ("all", None, r"ΟΝΟΜΑΤΕΠΩΝΥΜΟ\s+του\s+ΠΑΤΡΩΝΥΜΟ", r"{{ onomateponymo }} του {{ patronymo }}"),
+    ("all", None, r"Χορηγούμε\s+στην\s*[…\.]{2,}", r"Χορηγούμε {{ ston_stin }} {{ onomateponymo_ait }}"),
+    # πάντα μέσα σε «Χορηγούμε στον/στην κ. …» — αιτιατική, ποτέ ονομαστική
+    ("all", None, r"ΟΝΟΜΑΤΕΠΩΝΥΜΟ\s+του\s+ΠΑΤΡΩΝΥΜΟ", r"{{ onomateponymo_ait }} του {{ patronymo }}"),
     ("all", None, r"(\{\{ ston_stin \}\})\s*(?:κ\s*\.?\s*)?[…\.]{2,}\s*του\s*[…\.]{2,}\s*,",
-     r"\1 κ. {{ onomateponymo }} του {{ patronymo }},"),
+     r"\1 κ. {{ onomateponymo_ait }} του {{ patronymo }},"),
     ("all", None, r"(\{\{ ston_stin \}\})\s*(?:κ\s*\.?\s*)?[…\.]{2,}\s*,",
-     r"\1 κ. {{ onomateponymo }},"),
+     r"\1 κ. {{ onomateponymo_ait }},"),
     ("all", None, r"(\{\{ ston_stin \}\})\s*κ\s*\.?\s*(?=\{\{ onomateponymo)", r"\1 κ. "),
     ("all", None, r"κλάδου\s*Π\.Ε\.?\s*[…\.]*\s*-\s*" + B, r"κλάδου {{ klados }}-{{ klados_perigrafi }}"),
     ("all", None, r"κλάδου\s*ΠΕ\s*[…\.]*", r"κλάδου {{ klados }} "),
@@ -337,8 +338,8 @@ RULES = [
     ("apofasi", None, r"^\s*ΣΤΟΙΧΕΙΑ ΣΧΟΛ\.?\s*ΜΟΝΑΔΑΣ\s*" + BS + r"$",
      r"ΣΤΟΙΧΕΙΑ ΣΧΟΛΙΚΗΣ ΜΟΝΑΔΑΣ: {{ sxoleio }}"),
     ("apofasi", None, r"αίτηση\s+του\s*/\s*της\s*(?:κ\s*\.?\s*)?[…\.]{2,}",
-     r"αίτηση {{ tou_tis }} κ. {{ onomateponymo }}"),
-    ("apofasi", None, r"αίτηση\s+του\s+[…\.]{2,}", r"αίτηση του {{ onomateponymo }}"),
+     r"αίτηση {{ tou_tis }} κ. {{ onomateponymo_gen }}"),
+    ("apofasi", None, r"αίτηση\s+του\s+[…\.]{2,}", r"αίτηση του {{ onomateponymo_gen }}"),
     ("apofasi", None, r"αναπληρωτ[…\.]*\s*(?=εκπαιδευτικ)", r"{{ anaplirotis_gen }} "),
     ("apofasi", None, r"αναπληρ[…\.]{2,}\s*(?=εκπαιδευτικ)", r"{{ anaplirotis_gen }} "),
     ("apofasi", None, r"αναπληρωτή\s*/\s*τρια\s+εκπαιδευτικό", r"{{ anaplirotis_ait }} εκπαιδευτικό"),
@@ -346,10 +347,10 @@ RULES = [
     ("apofasi", None, r"\{\{ klados \}\}\s*[-\s…\.]*(?=,|του\b|$)", r"{{ klados }}-{{ klados_perigrafi }} "),
     ("apofasi", None, r"του\s*[…\.]*\s*Δ\.Σ\.?\s*/\s*Νηπιαγ\.?" + BS + r"(?:\{\{ nomos_gen \}\})?" + BS, r"του {{ sxoleio_gen }}"),
     ("apofasi", None, r"Χορηγούμε\s+στον\s*/\s*στην\s+κ\s*/\s*κα\s*[…\.]{2,}",
-     r"Χορηγούμε {{ ston_stin }} κ. {{ onomateponymo }}"),
+     r"Χορηγούμε {{ ston_stin }} κ. {{ onomateponymo_ait }}"),
     ("apofasi", None, r"που\s+υπηρετεί\s+στο\s*[…\.]{2,}", r"που υπηρετεί στο {{ sxoleio_gen }}"),
     ("apofasi", None, r"Χορηγούμε\s+στον\s+αιτούντα\s+υπάλληλο\s*[…\.]{2,}",
-     r"Χορηγούμε {{ ston_stin }} αιτούντα υπάλληλο {{ onomateponymo }}"),
+     r"Χορηγούμε {{ ston_stin }} αιτούντα υπάλληλο {{ onomateponymo_ait }}"),
     ("apofasi", None, r"^\s*Ονοματεπώνυμο\s*:\s*" + BS + r"Α\.Μ\.\s*:\s*" + BS + r"$",
      r"Ονοματεπώνυμο: {{ onomateponymo }}    Α.Μ.: {{ am }}"),
     ("apofasi", None, r"^\s*Κλάδος\s*:\s*ΠΕ\s*" + BS + r"Μ\.Κ\.\s*:\s*" + BS + r"Βαθμός\s*:\s*" + BS + r"$",
@@ -358,7 +359,7 @@ RULES = [
     # καρφωμένα προσωπικά δεδομένα στο πρωτότυπο της προγεννητικής άδειας
     ("apofasi", None, r"Την,?\s*από\s*(?:[0-9\-]+|\{\{ imerominia_apo \}\})\s*αίτηση\s+της\s+[Α-Ωα-ωΆ-Ώά-ώ]+\s+[Α-Ωα-ωΆ-Ώά-ώ]+\s+"
      r"του\s+[Α-Ωα-ωΆ-Ώά-ώ]+\s*,\s*αναπληρώτριας\s+εκπαιδευτικού\s*-\s*ΕΣΠΑ\s+του\s+[^.]*?\s+για",
-     r"Την από {{ imerominia_aitisis }} αίτηση {{ tou_tis }} {{ onomateponymo }} του "
+     r"Την από {{ imerominia_aitisis }} αίτηση {{ tou_tis }} {{ onomateponymo_gen }} του "
      r"{{ patronymo }}, {{ anaplirotis_gen }} εκπαιδευτικού-ΕΣΠΑ του {{ sxoleio_gen }} για"),
     ("apofasi", None, r"Την,\s*με\s+ημερομηνία\s*[0-9\-]+\s*ιατρική\s+βεβαίωση",
      r"Την με ημερομηνία {{ imerominia_veveosis }} ιατρική βεβαίωση"),
@@ -366,7 +367,7 @@ RULES = [
     ("apofasi", None, r"^\s*Αθανάσιος\s+Διαλεκτόπουλος\s*$", r"{{ dieuthintis_onomateponymo }}"),
 
     ("apofasi", None, r"\{\{ ston_stin \}\}\s*κ\s*/\s*κα\s*[…\.]{2,}",
-     r"{{ ston_stin }} κ. {{ onomateponymo }}"),
+     r"{{ ston_stin }} κ. {{ onomateponymo_ait }}"),
     ("all", None, r"κλάδου\s*[…\.]{2,}", r"κλάδου {{ klados }}"),
     ("all", None, r"\{\{ klados \}\}\s*του\s*[…\.]{2,}", r"{{ klados }} του {{ sxoleio_gen }}"),
     ("all", None, r"[…\.]{2,}\s*(?=εργάσιμ)", r"{{ imeres_olografos }} "),

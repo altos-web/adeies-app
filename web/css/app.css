@@ -345,6 +345,19 @@ button.danger:hover { border-color: var(--brick); }
   margin-bottom: 1.25rem;
 }
 
+/* Το docx-preview βάζει δικό του stylesheet με «hyphens: auto» στο .docx και
+   «overflow-wrap: break-word» στα span. Επειδή η σελίδα είναι lang="el", ο
+   περιηγητής συλλαβίζει ελληνικά και η κεφαλίδα σπάει σε «ΘΡΗΣΚΕΥΜΑ-» / «ΤΩΝ».
+   Το Word δεν το κάνει ποτέ αυτό — το settings.xml των εντύπων δεν έχει
+   autoHyphenation. Οι λέξεις πρέπει να μένουν ολόκληρες και να αναδιπλώνονται
+   μόνο στα κενά, αλλιώς η προεπισκόπηση δεν δείχνει το πραγματικό έντυπο. */
+.preview .docx-wrapper,
+.preview .docx-wrapper * {
+  -webkit-hyphens: manual;
+  hyphens: manual;
+}
+.preview .docx-wrapper span { overflow-wrap: normal; }
+
 /* ── διάλογος εργαζομένου ───────────────────────────────────────────────── */
 dialog {
   border: 1px solid var(--rule);

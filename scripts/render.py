@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from fields import IMERES_OLOGRAFOS
+from fields import IMERES_OLOGRAFOS, onomateponymo_klisi
 from rules import COUNT_TAGS, GENDER_TAGS
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -102,6 +102,13 @@ def derive(data):
     if _blank(out.get("onomateponymo")):
         out["onomateponymo"] = " ".join(
             p for p in (data.get("eponymo"), data.get("onoma")) if not _blank(p))
+    # Οι πτώσεις: τα έντυπα λένε «αίτηση της ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗΣ» και «χορηγούμε στην
+    # ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ» — μία ονομαστική τιμή δεν αρκεί για τα δύο.
+    for tag, case in (("onomateponymo_gen", "gen"), ("onomateponymo_ait", "ait")):
+        if _blank(out.get(tag)):
+            out[tag] = onomateponymo_klisi(
+                data.get("eponymo"), data.get("onoma"), female, case)
+
     if _blank(out.get("dieuthinsi_katoikias")):
         out["dieuthinsi_katoikias"] = " ".join(
             p for p in (data.get("odos"), data.get("arithmos_katoikias")) if not _blank(p))

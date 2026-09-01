@@ -27,6 +27,16 @@
      Σειρές μέχρι τρεις μένουν: είναι σκόπιμο κενό της σελιδοποίησης. Ποτέ μέσα σε
      πίνακα: ένα κελί χωρίς παράγραφο είναι άκυρο και καταρρέει η διάταξη.
 
+  6. Σειρές κενών που χωρίζουν αριθμημένα σημεία → πραγματικό <w:br/>
+     **Δεν είναι ζημιά του LibreOffice** — την κουβαλούν και τα γνήσια .docx, γι'
+     αυτό τρέχει σε όλα. Στη λίστα «Έχοντας υπόψη» των αποφάσεων τα σημεία δεν
+     είναι ξεχωριστές παράγραφοι: είναι όλα σε μία, χωρισμένα με 20 ως 165
+     κυριολεκτικά κενά. Στο Word πέφτουν σε νέα γραμμή κατά τύχη, επειδή τα κενά
+     τυχαίνει να γεμίζουν τη γραμμή σε εκείνη τη γραμματοσειρά· σε οποιαδήποτε
+     άλλη —όπως του περιηγητή— το «2.» προσγειώνεται στη μέση της γραμμής.
+     Η στοίχιση με κενά αντικαθίσταται με αλλαγή γραμμής, οπότε παύει να εξαρτάται
+     από τις μετρικές της γραμματοσειράς.
+
 Ως εργαλείο γραμμής εντολών δείχνει τι θα άλλαζε στα ήδη ταγκαρισμένα:
 
   python3 scripts/normalize_docx.py
@@ -176,12 +186,61 @@ def _trim_trailing_blanks(xml):
     return "".join(out), len(drop)
 
 
+NUMBERED_GAP = re.compile(r" {5,}(?=\d{1,2}\s*\.)")
+
+
+def _break_numbered_items(xml):
+    """Σειρές κενών πριν από «<αριθμός>.» → <w:br/>. Ασφαλές να ξανατρέξει.
+
+    Δουλεύει ανά παράγραφο και πάνω στο ενιαίο κείμενό της, γιατί τα κενά και ο
+    αριθμός που ακολουθεί συχνά κάθονται σε **διαφορετικά** <w:t> — το Word σπάει
+    τα runs όπου θέλει. Το <w:br/> μπαίνει μέσα στο ίδιο run, ανάμεσα σε δύο <w:t>,
+    που είναι έγκυρο OOXML και κρατά αυτούσιες τις ιδιότητες του run.
+    """
+    total = 0
+    pieces, last = [], 0
+    for pm in PARAGRAPH.finditer(xml):
+        para = pm.group(0)
+        spans, parts, pos = [], [], 0
+        for tm in T_TEXT.finditer(para):
+            inner = tm.group(1)
+            spans.append((pos, pos + len(inner), tm))
+            parts.append(inner)
+            pos += len(inner)
+        text = "".join(parts)
+
+        edits = []
+        for gm in NUMBERED_GAP.finditer(text):
+            gs, ge = gm.start(), gm.end()
+            touched = [sp for sp in spans if sp[0] < ge and sp[1] > gs]
+            if not touched:
+                continue
+            total += 1
+            for i, (ts, _te, tm) in enumerate(touched):
+                base = tm.start(1)
+                cut_s = base + max(gs, ts) - ts
+                cut_e = base + min(ge, _te) - ts
+                # μόνο το πρώτο <w:t> παίρνει το break· στα υπόλοιπα σβήνονται τα κενά
+                repl = '</w:t><w:br/><w:t xml:space="preserve">' if i == 0 else ""
+                edits.append((cut_s, cut_e, repl))
+
+        if edits:
+            for cut_s, cut_e, repl in sorted(edits, reverse=True):
+                para = para[:cut_s] + repl + para[cut_e:]
+            pieces.append(xml[last:pm.start()])
+            pieces.append(para)
+            last = pm.end()
+    pieces.append(xml[last:])
+    return "".join(pieces), total
+
+
 def normalize_xml(xml, from_doc=True):
     """Επιστρέφει (xml, {διόρθωση: πλήθος}). Ασφαλές να ξανατρέξει.
 
-    Με from_doc=False εφαρμόζεται μόνο το κόψιμο της ουράς, που δεν αφορά τη
-    μετατροπή: και γνήσια .docx κουβαλούν κενές παραγράφους στο τέλος και τυπώνουν
-    μια λευκή σελίδα παραπάνω.
+    Με from_doc=False εφαρμόζονται μόνο οι δύο διορθώσεις που δεν αφορούν τη
+    μετατροπή: το κόψιμο της ουράς — και γνήσια .docx κουβαλούν κενές παραγράφους
+    στο τέλος και τυπώνουν μια λευκή σελίδα παραπάνω — και η αρίθμηση, που είναι
+    ελάττωμα του συντάκτη των εντύπων, όχι του LibreOffice.
     """
     stats = {}
     if from_doc:
@@ -189,6 +248,7 @@ def normalize_xml(xml, from_doc=True):
         xml, stats["γραμμές"] = _drop_empty_rows(xml)
         xml, stats["περιγράμματα"] = EMPTY_BORDERS.subn("", xml)
         xml, stats["κενές"] = _collapse_blank_runs(xml)
+    xml, stats["αρίθμηση"] = _break_numbered_items(xml)
     xml, stats["ουρά"] = _trim_trailing_blanks(xml)
     return xml, stats
 

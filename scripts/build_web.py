@@ -15,7 +15,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from fields import IMERES_OLOGRAFOS, by_group
+from fields import IMERES_OLOGRAFOS, KLISI, by_group
 from rules import COUNT_TAGS, GENDER_TAGS
 from taxonomy import CATEGORIES, LEAVE_TYPES, PROGRAMMES
 
@@ -52,6 +52,7 @@ def main():
         "gender": GENDER_TAGS,
         "count": COUNT_TAGS,
         "olografos": IMERES_OLOGRAFOS,
+        "klisi": KLISI,
         "leaveTypes": LEAVE_TYPES,
         "categories": CATEGORIES,
         "programmes": PROGRAMMES,

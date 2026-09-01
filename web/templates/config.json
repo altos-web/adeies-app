@@ -108,6 +108,18 @@
     "derived": "eponymo+onoma"
    },
    {
+    "tag": "onomateponymo_gen",
+    "label": "Ονοματεπώνυμο (γενική) — «αίτηση του/της …»",
+    "type": "text",
+    "derived": "eponymo+onoma+fylo"
+   },
+   {
+    "tag": "onomateponymo_ait",
+    "label": "Ονοματεπώνυμο (αιτιατική) — «χορηγούμε στον/στην …»",
+    "type": "text",
+    "derived": "eponymo+onoma+fylo"
+   },
+   {
     "tag": "patronymo",
     "label": "Πατρώνυμο",
     "type": "text"
@@ -797,6 +809,42 @@
   "29": "ΕΙΚΟΣΙ ΕΝΝΕΑ",
   "30": "ΤΡΙΑΝΤΑ"
  },
+ "klisi": {
+  "arseniko": [
+   [
+    "ΟΣ",
+    "ΟΥ",
+    "Ο"
+   ],
+   [
+    "ΗΣ",
+    "Η",
+    "Η"
+   ],
+   [
+    "ΑΣ",
+    "Α",
+    "Α"
+   ]
+  ],
+  "thiliko": [
+   [
+    "Α",
+    "ΑΣ",
+    "Α"
+   ],
+   [
+    "Η",
+    "ΗΣ",
+    "Η"
+   ],
+   [
+    "Ω",
+    "ΩΣ",
+    "Ω"
+   ]
+  ]
+ },
  "leaveTypes": {
   "kanoniki": "Κανονική άδεια",
   "anarrotiki": "Αναρρωτική άδεια",
@@ -882,7 +930,7 @@
   "tekno_patronymo": 5,
   "dimos_katoikias": 3,
   "nomos_on": 60,
-  "onomateponymo": 60,
+  "onomateponymo": 8,
   "imerominia_stis": 18,
   "anaplirotis_ait": 36,
   "anaplirotis_gen": 21,
@@ -893,6 +941,8 @@
   "imerominia_aitisis": 32,
   "klados_perigrafi": 50,
   "nosokomeio": 3,
+  "onomateponymo_ait": 54,
+  "onomateponymo_gen": 33,
   "perifereia": 55,
   "ston_stin": 53,
   "sxoleio": 40,
