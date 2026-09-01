@@ -2,7 +2,7 @@ import * as cat from './catalog.js';
 import { derive, formatDates, suggestions } from './derive.js';
 import { fillDocx } from './fill.js';
 import { buildForm, refreshPlaceholders, selectField, toggleField } from './forms.js';
-import { debounce, download, printPreview, renderInto } from './preview.js';
+import { debounce, download } from './output.js';
 import { store } from './store.js';
 
 const $ = (selector) => document.querySelector(selector);
@@ -284,7 +284,7 @@ function renderLeaves() {
   if (state.leaveType) {
     panel.append(renderEditor());
     const slot = currentSlot();
-    if (slot) updatePreview(slot); // μετά την προσάρτηση: το #preview πρέπει να υπάρχει
+    if (slot) updateSummary(slot); // μετά την προσάρτηση: το #summary πρέπει να υπάρχει
   }
 }
 
@@ -315,8 +315,8 @@ function renderEditor() {
   const left = document.createElement('div');
   left.className = 'pane-form';
   const right = document.createElement('div');
-  right.className = 'pane-preview';
-  right.innerHTML = '<div id="preview" class="preview"></div>';
+  right.className = 'pane-summary';
+  right.innerHTML = '<div id="summary" class="summary"></div>';
   wrap.append(left, right);
 
   // Οι λοιπές άδειες αφορούν και τους δύο· οι άλλες δύο κατηγορίες όχι.
@@ -382,7 +382,7 @@ function renderEditor() {
   const holder = document.createElement('div');
   left.append(holder);
 
-  const refresh = debounce(() => updatePreview(slot), 300);
+  const refresh = debounce(() => updateSummary(slot), 300);
   const draw = () => {
     sectionedForm(holder, [
       { fields: main },
@@ -409,8 +409,7 @@ function renderEditor() {
   const actions = document.createElement('div');
   actions.className = 'toolbar';
   actions.append(
-    button('Έκδοση PDF', 'primary', printPreview),
-    button('Λήψη .docx', '', async () => {
+    button('Λήψη .docx', 'primary', async () => {
       const key = state.docKind === 'aitisi' ? slot.aitisi : slot.apofasi;
       const file = cat.catalog()[key].file;
       download(await fillDocx(file, currentData()), file.split('/').pop());
@@ -432,15 +431,52 @@ function currentData() {
   return formatDates(derive(currentRaw()));
 }
 
-async function updatePreview(slot) {
+// Ό,τι έλεγχο έκανε η προεπισκόπηση, χωρίς να αποδίδεται το έγγραφο: ποιες ετικέτες
+// ζητά το επιλεγμένο έντυπο και ποιες από αυτές είναι ακόμη κενές. Το κενό πεδίο
+// τυπώνεται ως κενό στο Word, οπότε είναι το μόνο που αξίζει προειδοποίηση.
+function updateSummary(slot) {
   const key = state.docKind === 'aitisi' ? slot.aitisi : slot.apofasi;
-  const container = $('#preview');
+  const container = $('#summary');
   if (!key || !container) return;
-  try {
-    await renderInto(container, await fillDocx(cat.catalog()[key].file, currentData()));
-  } catch (error) {
-    container.innerHTML = `<p class="warn">Η προεπισκόπηση απέτυχε: ${escapeHtml(error.message)}</p>`;
-  }
+
+  const entry = cat.catalog()[key];
+  const labels = new Map(
+    Object.values(cat.config().fields).flat().map((f) => [f.tag, f.label]));
+  const data = currentData();
+
+  // Το φύλο και το πλήθος ημερών παράγουν μόνα τους τις μορφές τους («ούσα»,
+  // «ημερών»). Δεν τα γράφει κανείς, οπότε δεν έχουν θέση σε σύνοψη ελέγχου.
+  const automatic = new Set([
+    ...Object.keys(cat.config().gender), ...Object.keys(cat.config().count)]);
+
+  const tags = (entry.fields || []).filter((t) => !automatic.has(t));
+  const rows = tags.filter((t) => !t.startsWith('check_')).map((tag) => ({
+    tag, label: labels.get(tag) || tag, value: String(data[tag] ?? '').trim(),
+  }));
+  const empty = rows.filter((r) => !r.value);
+
+  // Η σχέση εργασίας είναι δέκα ετικέτες αλλά **μία** επιλογή: το έντυπο κρατά όλες
+  // τις γραμμές ορατές και σημειώνεται με «Χ» αυτή που ισχύει. Οι υπόλοιπες εννέα
+  // πρέπει να μείνουν κενές, οπότε δεν είναι παραλείψεις — μία σειρά, όχι δέκα.
+  const checks = tags.filter((t) => t.startsWith('check_'));
+  const marked = checks.filter((t) => String(data[t] ?? '').trim());
+  const sxesi = checks.length ? {
+    label: 'Σχέση εργασίας',
+    value: marked.map((t) => labels.get(t) || t).join(', '),
+  } : null;
+
+  container.innerHTML = `
+    <h3>${escapeHtml(entry.title)}</h3>
+    <p class="summary-count">${rows.length - empty.length} από ${rows.length}
+       πεδία συμπληρωμένα</p>
+    ${empty.length ? `<p class="warn">Θα τυπωθούν κενά: ${
+      empty.slice(0, 6).map((r) => escapeHtml(r.label)).join(', ')}${
+      empty.length > 6 ? ` και ${empty.length - 6} ακόμη — σημειωμένα πιο κάτω` : ''}</p>` : ''}
+    <dl class="summary-list">${[...(sxesi ? [sxesi] : []), ...rows].map((r) => `
+      <dt>${escapeHtml(r.label)}</dt>
+      <dd class="${r.value ? '' : 'is-empty'}">${
+        r.value ? escapeHtml(r.value) : '— κενό —'}</dd>`).join('')}
+    </dl>`;
 }
 
 // ── βοηθητικά ──────────────────────────────────────────────────────────────

@@ -332,31 +332,26 @@ button.danger:hover { border-color: var(--brick); }
 .pane-form { padding: 1.25rem 1.5rem 1.5rem; border-right: 1px solid var(--rule); }
 .pane-form .field { grid-template-columns: 11rem minmax(0, 1fr); gap: 0.75rem; }
 
-.pane-preview {
-  background: var(--desk);
+.pane-summary {
+  background: var(--wash);
+  border-left: 1px solid var(--rule);
   padding: 1.5rem;
   overflow: auto;
   max-height: 82vh;
 }
 
-.preview .docx-wrapper { background: none; padding: 0; }
-.preview .docx-wrapper > section.docx {
-  box-shadow: 0 2px 14px rgb(0 0 0 / 45%);
-  margin-bottom: 1.25rem;
+.summary h3 { margin: 0 0 0.25rem; font-size: 1rem; color: var(--stamp-deep); }
+.summary-count { margin: 0 0 1rem; color: var(--ink-soft); font-size: 0.875rem; }
+.summary-list {
+  display: grid;
+  grid-template-columns: minmax(0, 10rem) minmax(0, 1fr);
+  gap: 0.4rem 0.9rem;
+  margin: 0;
+  font-size: 0.875rem;
 }
-
-/* Το docx-preview βάζει δικό του stylesheet με «hyphens: auto» στο .docx και
-   «overflow-wrap: break-word» στα span. Επειδή η σελίδα είναι lang="el", ο
-   περιηγητής συλλαβίζει ελληνικά και η κεφαλίδα σπάει σε «ΘΡΗΣΚΕΥΜΑ-» / «ΤΩΝ».
-   Το Word δεν το κάνει ποτέ αυτό — το settings.xml των εντύπων δεν έχει
-   autoHyphenation. Οι λέξεις πρέπει να μένουν ολόκληρες και να αναδιπλώνονται
-   μόνο στα κενά, αλλιώς η προεπισκόπηση δεν δείχνει το πραγματικό έντυπο. */
-.preview .docx-wrapper,
-.preview .docx-wrapper * {
-  -webkit-hyphens: manual;
-  hyphens: manual;
-}
-.preview .docx-wrapper span { overflow-wrap: normal; }
+.summary-list dt { color: var(--ink-soft); }
+.summary-list dd { margin: 0; overflow-wrap: break-word; font-family: var(--mono); }
+.summary-list dd.is-empty { color: var(--brick); font-family: var(--sans); font-style: italic; }
 
 /* ── διάλογος εργαζομένου ───────────────────────────────────────────────── */
 dialog {
@@ -390,29 +385,4 @@ dialog .toolbar { margin: 0; padding: 0.9rem 1.5rem; border-top: 1px solid var(-
 
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
-}
-
-/* ── εκτύπωση: μόνο το έντυπο, σε Α4 ────────────────────────────────────── */
-@media print {
-  @page { size: A4; margin: 0; }
-
-  .masthead, nav, .segmented, .leave-list, .pane-form, .toolbar, .hint, .warn,
-  #tab-director, #tab-employees, dialog { display: none !important; }
-
-  body { background: #fff; }
-  .panel { padding: 0 !important; }
-  .split { display: block !important; border: 0 !important; min-height: 0 !important; }
-
-  .pane-preview {
-    background: #fff !important;
-    padding: 0 !important;
-    max-height: none !important;
-    overflow: visible !important;
-  }
-  .preview .docx-wrapper > section.docx {
-    box-shadow: none !important;
-    margin: 0 !important;
-    break-after: page;
-  }
-  .preview .docx-wrapper > section.docx:last-child { break-after: auto; }
 }
