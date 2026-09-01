@@ -9,3 +9,6 @@ __pycache__/
 # καθαριστούν — βλ. KATHARISMA.md. Ανακτώνται με scripts/fetch_templates.py.
 templates_src/
 KATHARISMA.md
+
+# cache του firebase deploy
+.firebase/
