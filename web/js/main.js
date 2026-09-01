@@ -2,7 +2,7 @@ import * as cat from './catalog.js';
 import { derive, formatDates, suggestions } from './derive.js';
 import { fillDocx } from './fill.js';
 import { buildForm, refreshPlaceholders, selectField, toggleField } from './forms.js';
-import { debounce, download } from './output.js';
+import { debounce, documentFilename, download } from './output.js';
 import { store } from './store.js';
 
 const $ = (selector) => document.querySelector(selector);
@@ -411,8 +411,15 @@ function renderEditor() {
   actions.append(
     button('Λήψη .docx', 'primary', async () => {
       const key = state.docKind === 'aitisi' ? slot.aitisi : slot.apofasi;
-      const file = cat.catalog()[key].file;
-      download(await fillDocx(file, currentData()), file.split('/').pop());
+      const entry = cat.catalog()[key];
+      const data = currentData();
+      download(await fillDocx(entry.file, data), documentFilename({
+        onoma: data.onoma,
+        eponymo: data.eponymo,
+        title: entry.title,
+        kind: state.docKind,
+        date: data.imerominia_egrafou,
+      }));
     }),
   );
   left.append(actions);

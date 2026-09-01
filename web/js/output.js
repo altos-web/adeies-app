@@ -28,3 +28,38 @@ export function debounce(fn, ms = 300) {
     timer = setTimeout(() => fn(...args), ms);
   };
 }
+
+// Το όνομα του παραγόμενου αρχείου:
+//
+//   ΟΝΟΜΑ_ΕΠΩΝΥΜΟ_ΤΥΠΟΣ-ΑΔΕΙΑΣ_ΑΙΤΗΣΗ|ΑΠΟΦΑΣΗ_ΗΜΕΡΟΜΗΝΙΑ.docx
+//
+// Ο διευθυντής κατεβάζει δεκάδες έντυπα στον ίδιο φάκελο· το «kanoniki.docx» που
+// έβγαινε πριν ήταν το ίδιο για κάθε εκπαιδευτικό και κάθε χρονιά.
+//
+// Οι τόνοι πέφτουν, όπως πάντα στα ελληνικά κεφαλαία: «ΚΑΝΟΝΙΚΗ», όχι «ΚΑΝΟΝΙΚΗ»
+// με τόνο. Ό,τι δεν επιτρέπεται σε όνομα αρχείου — / \ : * ? " < > | — γίνεται
+// παύλα, και οι ημερομηνίες γράφονται με παύλες αντί για καθέτους.
+const ILLEGAL = /[\/\\:*?"<>|]/g;
+
+function slug(text) {
+  return String(text ?? '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')  // τόνοι
+    .toUpperCase()
+    .replace(ILLEGAL, '-')
+    .replace(/\s+/g, '-')
+    .replace(/-{2,}/g, '-')
+    .replace(/^-|-$/g, '')
+    .trim();
+}
+
+export function documentFilename({ onoma, eponymo, title, kind, date }) {
+  const today = new Date();
+  const fallback = [today.getDate(), today.getMonth() + 1, today.getFullYear()]
+    .map((n, i) => (i < 2 ? String(n).padStart(2, '0') : n)).join('-');
+  const parts = [
+    slug(onoma), slug(eponymo), slug(title),
+    kind === 'aitisi' ? 'ΑΙΤΗΣΗ' : 'ΑΠΟΦΑΣΗ',
+    slug(date) || fallback,
+  ].filter(Boolean);
+  return `${parts.join('_')}.docx`;
+}
