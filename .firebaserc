@@ -1,0 +1,6 @@
+{
+  "projects": { "default": "adeies-ekpaideutikon" },
+  "targets": {
+    "adeies-ekpaideutikon": { "hosting": { "app": ["adeies"] } }
+  }
+}

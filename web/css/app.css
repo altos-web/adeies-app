@@ -1,0 +1,405 @@
+/* Άδειες — διεπαφή έκδοσης εντύπων.
+
+   Η οπτική γλώσσα βγαίνει από το ίδιο το έγγραφο που παράγει: στήλη ετικετών με
+   λεπτή γραμμή, κεφαλαία αραιωμένα για τις επικεφαλίδες, αριθμοί πρωτοκόλλου σε
+   μονοδιάστατη γραμματοσειρά. Η σελίδα της προεπισκόπησης «ακουμπά» σε σκούρα
+   επιφάνεια, όπως χαρτί σε γραφείο. */
+
+@font-face {
+  font-family: 'Plex'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('../fonts/ibm-plex-sans-greek-400-normal.woff2') format('woff2');
+  unicode-range: U+0370-03FF, U+1F00-1FFF;
+}
+@font-face {
+  font-family: 'Plex'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('../fonts/ibm-plex-sans-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plex'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('../fonts/ibm-plex-sans-greek-500-normal.woff2') format('woff2');
+  unicode-range: U+0370-03FF, U+1F00-1FFF;
+}
+@font-face {
+  font-family: 'Plex'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('../fonts/ibm-plex-sans-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plex'; font-style: normal; font-weight: 600; font-display: swap;
+  src: url('../fonts/ibm-plex-sans-greek-600-normal.woff2') format('woff2');
+  unicode-range: U+0370-03FF, U+1F00-1FFF;
+}
+@font-face {
+  font-family: 'Plex'; font-style: normal; font-weight: 600; font-display: swap;
+  src: url('../fonts/ibm-plex-sans-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'PlexMono'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('../fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2');
+}
+
+:root {
+  --paper: #f1f2f0;
+  --card: #ffffff;
+  --ink: #16181c;
+  --ink-soft: #5b615e;
+  --stamp: #27476e;
+  --stamp-deep: #1b3352;
+  --wash: #e5eaf2;
+  --rule: #cbcec9;
+  --brick: #9e3b30;
+  --desk: #3a3e3b;
+  --field: #eaece9;
+
+  --label-col: 15rem;
+  --sans: 'Plex', Corbel, Candara, 'Segoe UI', system-ui, sans-serif;
+  --mono: 'PlexMono', Consolas, 'DejaVu Sans Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 0.9375rem/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── κεφαλίδα: η εφαρμογή ως επιστολόχαρτο ──────────────────────────────── */
+.masthead {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem 2rem 0.875rem;
+  border-bottom: 1px solid var(--rule);
+  background: var(--card);
+}
+
+.masthead h1 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* Χώρος για banner που δίνει ο χρήστης. Άδειος φάκελος → κρύβεται εντελώς και η
+   κεφαλίδα δεν αλλάζει ύψος. */
+.banner {
+  flex: 0 1 auto;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.banner[hidden] { display: none; }
+.banner img { height: 3.5rem; max-width: 26rem; width: auto; object-fit: contain; }
+
+.masthead .issuer {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  text-align: right;
+  max-width: 40ch;
+}
+
+/* ── πλοήγηση: τα τρία βήματα, με τη σειρά που εξαρτώνται ────────────────── */
+nav {
+  display: flex;
+  gap: 0;
+  padding: 0 2rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--rule);
+}
+
+nav button {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.75rem 1.25rem 0.7rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  font: 500 0.875rem var(--sans);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+nav button::before {
+  content: attr(data-step);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--rule);
+}
+
+nav button:hover { color: var(--ink); }
+nav button.active { color: var(--stamp-deep); border-bottom-color: var(--stamp); }
+nav button.active::before { color: var(--stamp); }
+
+/* ── πάνελ ──────────────────────────────────────────────────────────────── */
+.panel { padding: 1.75rem 2rem 4rem; }
+.panel[hidden] { display: none; }
+#tab-director, #tab-employees { max-width: 62rem; }
+
+.hint { color: var(--ink-soft); font-size: 0.875rem; max-width: 60ch; margin: 0 0 1.5rem; }
+
+.warn {
+  color: var(--brick);
+  font-size: 0.875rem;
+  border-left: 2px solid var(--brick);
+  padding: 0.4rem 0 0.4rem 0.75rem;
+  margin: 0 0 1.25rem;
+}
+
+/* ── φόρμες: στήλη ετικετών με λεπτή γραμμή, όπως στο έντυπο ─────────────── */
+.form-grid { display: flex; flex-direction: column; }
+
+.field {
+  display: grid;
+  grid-template-columns: var(--label-col) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.field-label {
+  text-align: right;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.01em;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 0;
+  /* ελαφρύ γέμισμα ώστε να φαίνεται πού γράφεις — το λευκό σε λευκό δεν διαβάζεται */
+  background: var(--field);
+  padding: 0.3rem 0.45rem;
+  font: 400 0.9375rem var(--sans);
+  color: var(--ink);
+  border-radius: 2px;
+}
+
+.field textarea { resize: vertical; line-height: 1.45; }
+.field input:focus,
+.field select:focus,
+.field textarea:focus { outline: 2px solid var(--stamp); outline-offset: 0; background: var(--card); }
+.field input:hover, .field textarea:hover { background: #e0e3df; }
+.field select { font-family: var(--sans); }
+
+/* ── αναδιπλούμενες ενότητες: ό,τι υπολογίζεται ή σπανίζει ─────────────────── */
+.more { margin: 0.75rem 0 0; border-top: 1px solid var(--rule); }
+.more > summary {
+  padding: 0.5rem 0;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  list-style: none;
+}
+.more > summary::before { content: '+ '; }
+.more[open] > summary::before { content: '− '; }
+.more > summary::-webkit-details-marker { display: none; }
+.more > summary:hover { color: var(--ink); }
+.more > .hint { margin: 0 0 0.5rem; font-size: 0.8125rem; }
+
+/* Πεδίο που συμπληρώνεται μόνο του: η πρόταση γράφεται από κάτω, γιατί τα πεδία
+   ημερομηνίας αγνοούν το placeholder. */
+.field.has-suggestion { align-items: start; padding-bottom: 0.15rem; }
+.field .suggested {
+  grid-column: 2;
+  padding: 0 0.45rem 0.2rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--ink-soft);
+}
+.field .suggested[hidden] { display: none; }
+
+/* ── διακόπτης «μόνο εργάσιμες» ────────────────────────────────────────────── */
+.toggle { display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0; }
+.toggle input { width: auto; accent-color: var(--stamp); }
+.toggle small { color: var(--ink-soft); font-size: 0.75rem; }
+
+/* ── κουμπιά ────────────────────────────────────────────────────────────── */
+.toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0; }
+
+button {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--rule);
+  background: var(--card);
+  color: var(--ink);
+  font: 500 0.8125rem var(--sans);
+  border-radius: 2px;
+  cursor: pointer;
+}
+button:hover { border-color: var(--ink-soft); }
+button:focus-visible { outline: 2px solid var(--stamp); outline-offset: 1px; }
+button.primary { background: var(--stamp); border-color: var(--stamp); color: #fff; }
+button.primary:hover { background: var(--stamp-deep); }
+button.danger { color: var(--brick); border-color: transparent; }
+button.danger:hover { border-color: var(--brick); }
+
+/* ── πίνακας εργαζομένων ──────────────────────────────────────────────────
+   Περιορισμένος σε .list: ένας γυμνός επιλογέας «td» θα χτυπούσε και τα κελιά
+   των εγγράφων μέσα στην προεπισκόπηση, ζωγραφίζοντας γραμμές που το Word δεν
+   έχει. */
+.list { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+
+.list th {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 0 0.5rem 0.5rem 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+.list td { padding: 0.55rem 0.5rem 0.55rem 0; border-bottom: 1px solid var(--rule); }
+.list .row-actions { text-align: right; white-space: nowrap; }
+.list .row-actions button { padding: 0.25rem 0.6rem; }
+
+/* ── επιλογή κατηγορίας και τύπου άδειας ────────────────────────────────── */
+.segmented { display: inline-flex; margin-bottom: 1.5rem; }
+.segmented button { border-radius: 0; margin-left: -1px; }
+.segmented button:first-child { border-radius: 2px 0 0 2px; margin-left: 0; }
+.segmented button:last-child { border-radius: 0 2px 2px 0; }
+.segmented button.active {
+  background: var(--stamp); border-color: var(--stamp); color: #fff; position: relative;
+}
+
+.leave-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+  gap: 1px;
+  padding: 1px;
+  margin-bottom: 2rem;
+}
+
+.leave {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+  padding: 0.7rem 0.9rem;
+  border: 0;
+  border-radius: 0;
+  background: var(--card);
+  font-size: 0.875rem;
+  /* οι γραμμές του πλέγματος μπαίνουν στο ίδιο το κελί, ώστε να μη μένουν
+     άδεια γκρίζα τετράγωνα στο τέλος της τελευταίας σειράς */
+  box-shadow: 0 0 0 1px var(--rule);
+}
+.leave:hover { background: var(--wash); }
+.leave.active { background: var(--stamp); color: #fff; }
+.leave.active .badge { border-color: rgba(255, 255, 255, 0.45); color: #fff; }
+
+.badge {
+  display: inline-block;
+  margin-left: 0.3rem;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.badge.muted { border-style: dashed; }
+
+/* ── διπλή οθόνη: φόρμα αριστερά, έντυπο δεξιά ──────────────────────────── */
+.split {
+  display: grid;
+  grid-template-columns: minmax(22rem, 30rem) minmax(0, 1fr);
+  gap: 0;
+  border: 1px solid var(--rule);
+  background: var(--card);
+  min-height: 34rem;
+}
+
+.pane-form { padding: 1.25rem 1.5rem 1.5rem; border-right: 1px solid var(--rule); }
+.pane-form .field { grid-template-columns: 11rem minmax(0, 1fr); gap: 0.75rem; }
+
+.pane-preview {
+  background: var(--desk);
+  padding: 1.5rem;
+  overflow: auto;
+  max-height: 82vh;
+}
+
+.preview .docx-wrapper { background: none; padding: 0; }
+.preview .docx-wrapper > section.docx {
+  box-shadow: 0 2px 14px rgb(0 0 0 / 45%);
+  margin-bottom: 1.25rem;
+}
+
+/* ── διάλογος εργαζομένου ───────────────────────────────────────────────── */
+dialog {
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0;
+  width: min(46rem, 92vw);
+  background: var(--card);
+  color: var(--ink);
+}
+dialog::backdrop { background: rgb(22 24 28 / 55%); }
+dialog h2 {
+  margin: 0;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+#employee-form { padding: 0.5rem 1.5rem 1rem; max-height: 66vh; overflow: auto; }
+#employee-form .field { grid-template-columns: 13rem minmax(0, 1fr); gap: 1rem; }
+dialog .toolbar { margin: 0; padding: 0.9rem 1.5rem; border-top: 1px solid var(--rule); justify-content: flex-end; }
+
+@media (max-width: 60rem) {
+  .split { grid-template-columns: 1fr; }
+  .pane-form { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .field { grid-template-columns: 1fr; gap: 0.15rem; }
+  .field-label { text-align: left; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ── εκτύπωση: μόνο το έντυπο, σε Α4 ────────────────────────────────────── */
+@media print {
+  @page { size: A4; margin: 0; }
+
+  .masthead, nav, .segmented, .leave-list, .pane-form, .toolbar, .hint, .warn,
+  #tab-director, #tab-employees, dialog { display: none !important; }
+
+  body { background: #fff; }
+  .panel { padding: 0 !important; }
+  .split { display: block !important; border: 0 !important; min-height: 0 !important; }
+
+  .pane-preview {
+    background: #fff !important;
+    padding: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .preview .docx-wrapper > section.docx {
+    box-shadow: none !important;
+    margin: 0 !important;
+    break-after: page;
+  }
+  .preview .docx-wrapper > section.docx:last-child { break-after: auto; }
+}

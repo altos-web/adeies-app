@@ -1,0 +1,992 @@
+{
+ "fields": {
+  "ypiresia": [
+   {
+    "tag": "perifereia",
+    "label": "Περιφερειακή διεύθυνση",
+    "type": "text"
+   },
+   {
+    "tag": "nomos_gen",
+    "label": "Νομός (γενική) — «ΔΡΑΜΑΣ»",
+    "type": "text"
+   },
+   {
+    "tag": "nomos_on",
+    "label": "Νομός (ονομαστική) — «ΔΡΑΜΑ»",
+    "type": "text"
+   },
+   {
+    "tag": "vathmida",
+    "label": "Βαθμίδα — «Α/ΘΜΙΑΣ»",
+    "type": "text"
+   },
+   {
+    "tag": "vathmida_syntomo",
+    "label": "Βαθμίδα σύντομα — «Π.Ε.»",
+    "type": "text"
+   },
+   {
+    "tag": "sxoliko_etos",
+    "label": "Σχολικό έτος — «2026-2027»",
+    "type": "text"
+   },
+   {
+    "tag": "etos_anaforas",
+    "label": "Έτος αναφοράς προϋπηρεσίας",
+    "type": "text",
+    "derived": "sxoliko_etos"
+   }
+  ],
+  "sxoleio": [
+   {
+    "tag": "sxoleio",
+    "label": "Σχολείο (ονομαστική)",
+    "type": "text"
+   },
+   {
+    "tag": "sxoleio_gen",
+    "label": "Σχολείο (γενική) — «του …»",
+    "type": "text"
+   },
+   {
+    "tag": "sxoleio_tax_dieuthinsi",
+    "label": "Ταχυδρομική διεύθυνση",
+    "type": "text"
+   },
+   {
+    "tag": "sxoleio_tk_poli",
+    "label": "Τ.Κ. και πόλη",
+    "type": "text"
+   },
+   {
+    "tag": "sxoleio_plirofories",
+    "label": "Πληροφορίες (αρμόδιος)",
+    "type": "text"
+   },
+   {
+    "tag": "sxoleio_tilefono",
+    "label": "Τηλέφωνο",
+    "type": "text"
+   },
+   {
+    "tag": "sxoleio_email",
+    "label": "E-mail",
+    "type": "text"
+   },
+   {
+    "tag": "sxoleio_istoselida",
+    "label": "Ιστοσελίδα",
+    "type": "text"
+   },
+   {
+    "tag": "dieuthintis_titlos",
+    "label": "Τίτλος υπογράφοντος",
+    "type": "text"
+   },
+   {
+    "tag": "dieuthintis_onomateponymo",
+    "label": "Ονοματεπώνυμο διευθυντή",
+    "type": "text"
+   }
+  ],
+  "ekpaideutikos": [
+   {
+    "tag": "eponymo",
+    "label": "Επώνυμο",
+    "type": "text"
+   },
+   {
+    "tag": "onoma",
+    "label": "Όνομα",
+    "type": "text"
+   },
+   {
+    "tag": "onomateponymo",
+    "label": "Ονοματεπώνυμο",
+    "type": "text",
+    "derived": "eponymo+onoma"
+   },
+   {
+    "tag": "patronymo",
+    "label": "Πατρώνυμο",
+    "type": "text"
+   },
+   {
+    "tag": "mitronymo",
+    "label": "Μητρώνυμο",
+    "type": "text"
+   },
+   {
+    "tag": "patera_eponymo",
+    "label": "Επώνυμο πατέρα",
+    "type": "text"
+   },
+   {
+    "tag": "mitera_eponymo",
+    "label": "Επώνυμο μητέρας",
+    "type": "text"
+   },
+   {
+    "tag": "patera_onomateponymo",
+    "label": "Ονοματεπώνυμο πατέρα",
+    "type": "text",
+    "derived": "patronymo+patera_eponymo"
+   },
+   {
+    "tag": "mitera_onomateponymo",
+    "label": "Ονοματεπώνυμο μητέρας",
+    "type": "text",
+    "derived": "mitronymo+mitera_eponymo"
+   },
+   {
+    "tag": "imerominia_gennisis",
+    "label": "Ημερομηνία γέννησης",
+    "type": "date"
+   },
+   {
+    "tag": "topos_gennisis",
+    "label": "Τόπος γέννησης",
+    "type": "text"
+   },
+   {
+    "tag": "email",
+    "label": "E-mail",
+    "type": "text"
+   },
+   {
+    "tag": "klados",
+    "label": "Κλάδος — «ΠΕ70»",
+    "type": "text"
+   },
+   {
+    "tag": "klados_perigrafi",
+    "label": "Περιγραφή κλάδου — «ΔΑΣΚΑΛΩΝ»",
+    "type": "text"
+   },
+   {
+    "tag": "eidikotita",
+    "label": "Ειδικότητα",
+    "type": "text"
+   },
+   {
+    "tag": "am",
+    "label": "Αριθμός μητρώου",
+    "type": "text"
+   },
+   {
+    "tag": "afm",
+    "label": "ΑΦΜ",
+    "type": "text"
+   },
+   {
+    "tag": "adt",
+    "label": "Αριθμός δελτίου ταυτότητας",
+    "type": "text"
+   },
+   {
+    "tag": "vathmos",
+    "label": "Βαθμός",
+    "type": "text"
+   },
+   {
+    "tag": "mk",
+    "label": "Μισθολογικό κλιμάκιο",
+    "type": "text"
+   },
+   {
+    "tag": "dieuthinsi_katoikias",
+    "label": "Διεύθυνση κατοικίας",
+    "type": "text",
+    "derived": "odos+arithmos_katoikias"
+   },
+   {
+    "tag": "odos",
+    "label": "Οδός",
+    "type": "text"
+   },
+   {
+    "tag": "arithmos_katoikias",
+    "label": "Αριθμός",
+    "type": "text"
+   },
+   {
+    "tag": "tk",
+    "label": "Ταχυδρομικός κώδικας",
+    "type": "text"
+   },
+   {
+    "tag": "perioxi",
+    "label": "Περιοχή",
+    "type": "text"
+   },
+   {
+    "tag": "poli",
+    "label": "Πόλη",
+    "type": "text"
+   },
+   {
+    "tag": "dimos_katoikias",
+    "label": "Δήμος κατοικίας",
+    "type": "text"
+   },
+   {
+    "tag": "tilefono_katoikias",
+    "label": "Τηλέφωνο οικίας",
+    "type": "text"
+   },
+   {
+    "tag": "kinito",
+    "label": "Κινητό τηλέφωνο",
+    "type": "text"
+   },
+   {
+    "tag": "sxoleio_organikis",
+    "label": "Σχολείο οργανικής θέσης",
+    "type": "text"
+   },
+   {
+    "tag": "sxoleia_ypiresias",
+    "label": "Σχολείο/α που υπηρετεί",
+    "type": "text"
+   },
+   {
+    "tag": "ypiresia_eti",
+    "label": "Χρόνος υπηρεσίας: έτη",
+    "type": "number"
+   },
+   {
+    "tag": "ypiresia_mines",
+    "label": "Χρόνος υπηρεσίας: μήνες",
+    "type": "number"
+   },
+   {
+    "tag": "ypiresia_imeres",
+    "label": "Χρόνος υπηρεσίας: ημέρες",
+    "type": "number"
+   },
+   {
+    "tag": "check_plirous",
+    "label": "Αναπληρωτής πλήρους",
+    "type": "check"
+   },
+   {
+    "tag": "check_espa_plirous",
+    "label": "Αναπληρωτής ΕΣΠΑ πλήρους",
+    "type": "check"
+   },
+   {
+    "tag": "check_espa_amo",
+    "label": "Αναπληρωτής ΕΣΠΑ ΑΜΩ",
+    "type": "check"
+   },
+   {
+    "tag": "check_oromisthios",
+    "label": "Ωρομίσθιος",
+    "type": "check"
+   },
+   {
+    "tag": "check_monimos_apospasmenos",
+    "label": "Μόνιμος αποσπασμένος",
+    "type": "check"
+   },
+   {
+    "tag": "check_monimos_diathesi",
+    "label": "Μόνιμος στη διάθεση",
+    "type": "check"
+   },
+   {
+    "tag": "check_monimos_organiki",
+    "label": "Μόνιμος σε οργανική",
+    "type": "check"
+   },
+   {
+    "tag": "check_diathesi_plires",
+    "label": "Διάθεση από Β/θμια, πλήρης",
+    "type": "check"
+   },
+   {
+    "tag": "check_diathesi_meriki",
+    "label": "Διάθεση από Β/θμια, μερική",
+    "type": "check"
+   },
+   {
+    "tag": "check_idax",
+    "label": "ΙΔΑΧ",
+    "type": "check"
+   }
+  ],
+  "adeia": [
+   {
+    "tag": "topos",
+    "label": "Τόπος σύνταξης",
+    "type": "text",
+    "derived": "nomos_on"
+   },
+   {
+    "tag": "imerominia_egrafou",
+    "label": "Ημερομηνία εγγράφου",
+    "type": "date"
+   },
+   {
+    "tag": "arithmos_protokollou",
+    "label": "Αριθμός πρωτοκόλλου",
+    "type": "text"
+   },
+   {
+    "tag": "protokollo_aitisis",
+    "label": "Αριθμός πρωτοκόλλου της αίτησης",
+    "type": "text"
+   },
+   {
+    "tag": "imerominia_aitisis",
+    "label": "Ημερομηνία αίτησης",
+    "type": "date"
+   },
+   {
+    "tag": "imerominia_veveosis",
+    "label": "Ημερομηνία βεβαίωσης",
+    "type": "date"
+   },
+   {
+    "tag": "imerominia_apo",
+    "label": "Ημερομηνία έναρξης",
+    "type": "date"
+   },
+   {
+    "tag": "imeres_arithmitika",
+    "label": "Πλήθος ημερών",
+    "type": "number"
+   },
+   {
+    "tag": "imeres_etous",
+    "label": "Ημέρες που έχει ήδη λάβει φέτος",
+    "type": "number"
+   },
+   {
+    "tag": "imeres_plithos",
+    "label": "Ημέρες χωρίς μηδέν — «3/ήμερης»",
+    "type": "text",
+    "derived": "imeres_arithmitika"
+   },
+   {
+    "tag": "imeres_olografos",
+    "label": "Ημέρες ολογράφως",
+    "type": "text",
+    "derived": "imeres_arithmitika"
+   },
+   {
+    "tag": "imerominia_eos",
+    "label": "Ημερομηνία λήξης",
+    "type": "date",
+    "derived": "imerominia_apo+imeres_arithmitika"
+   },
+   {
+    "tag": "imerominia_stis",
+    "label": "Στις",
+    "type": "date",
+    "derived": "imerominia_apo"
+   },
+   {
+    "tag": "imera_evdomadas",
+    "label": "Ημέρα εβδομάδας",
+    "type": "text"
+   },
+   {
+    "tag": "thema",
+    "label": "Θέμα",
+    "type": "text"
+   },
+   {
+    "tag": "keimeno_aitimatos",
+    "label": "Κείμενο αιτήματος",
+    "type": "textarea"
+   },
+   {
+    "tag": "logoi_adeias",
+    "label": "Λόγοι χορήγησης",
+    "type": "textarea"
+   },
+   {
+    "tag": "synodeutika",
+    "label": "Συνοδευτικά δικαιολογητικά",
+    "type": "textarea"
+   }
+  ],
+  "eidika": [
+   {
+    "tag": "onoma_iatrou",
+    "label": "Ονοματεπώνυμο ιατρού",
+    "type": "text"
+   },
+   {
+    "tag": "foreas_aimodosias",
+    "label": "Φορέας αιμοληψίας",
+    "type": "text"
+   },
+   {
+    "tag": "nosokomeio",
+    "label": "Νοσοκομείο",
+    "type": "text"
+   },
+   {
+    "tag": "panepistimio",
+    "label": "Εκπαιδευτικό ίδρυμα",
+    "type": "text"
+   },
+   {
+    "tag": "dikastirio",
+    "label": "Δικαστήριο",
+    "type": "text"
+   },
+   {
+    "tag": "idiotita_dikis",
+    "label": "Ιδιότητα στη δίκη",
+    "type": "text"
+   },
+   {
+    "tag": "apofasi_efka",
+    "label": "Απόφαση ΕΦΚΑ",
+    "type": "text"
+   },
+   {
+    "tag": "imeres_kepa",
+    "label": "Ημέρες κατά το πιστοποιητικό ΚΕΠΑ",
+    "type": "number"
+   },
+   {
+    "tag": "pistopoiitiko_kepa",
+    "label": "Πιστοποιητικό ΚΕΠΑ",
+    "type": "text"
+   },
+   {
+    "tag": "lixiarxeio",
+    "label": "Ληξιαρχείο",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_eponymo",
+    "label": "Συζύγου: επώνυμο",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_onoma",
+    "label": "Συζύγου: όνομα",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_patronymo",
+    "label": "Συζύγου: πατρώνυμο",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_mitronymo",
+    "label": "Συζύγου: μητρώνυμο",
+    "type": "text"
+   },
+   {
+    "tag": "imerominia_gamou",
+    "label": "Ημερομηνία τέλεσης γάμου",
+    "type": "date"
+   },
+   {
+    "tag": "topos_gamou",
+    "label": "Τόπος τέλεσης γάμου",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_patera_onomateponymo",
+    "label": "Συζύγου: ονοματεπώνυμο πατέρα",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_mitera_onomateponymo",
+    "label": "Συζύγου: ονοματεπώνυμο μητέρας",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_imerominia_gennisis",
+    "label": "Συζύγου: ημερομηνία γέννησης",
+    "type": "date"
+   },
+   {
+    "tag": "syzygos_topos_gennisis",
+    "label": "Συζύγου: τόπος γέννησης",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_adt",
+    "label": "Συζύγου: ΑΔΤ",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_poli",
+    "label": "Συζύγου: τόπος κατοικίας",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_odos",
+    "label": "Συζύγου: οδός",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_arithmos",
+    "label": "Συζύγου: αριθμός",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_tk",
+    "label": "Συζύγου: Τ.Κ.",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_tilefono",
+    "label": "Συζύγου: τηλέφωνο",
+    "type": "text"
+   },
+   {
+    "tag": "syzygos_email",
+    "label": "Συζύγου: e-mail",
+    "type": "text"
+   },
+   {
+    "tag": "thanon_onomateponymo",
+    "label": "Θανόντος: ονοματεπώνυμο",
+    "type": "text"
+   },
+   {
+    "tag": "thanon_patronymo",
+    "label": "Θανόντος: πατρώνυμο",
+    "type": "text"
+   },
+   {
+    "tag": "thanon_mitronymo",
+    "label": "Θανόντος: μητρώνυμο",
+    "type": "text"
+   },
+   {
+    "tag": "thanon_adt",
+    "label": "Θανόντος: ΑΔΤ",
+    "type": "text"
+   },
+   {
+    "tag": "imerominia_thanatou",
+    "label": "Ημερομηνία θανάτου",
+    "type": "date"
+   },
+   {
+    "tag": "topos_thanatou",
+    "label": "Τόπος θανάτου",
+    "type": "text"
+   },
+   {
+    "tag": "topos_tafis",
+    "label": "Τόπος ταφής",
+    "type": "text"
+   },
+   {
+    "tag": "tekno_eponymo",
+    "label": "Τέκνου: επώνυμο",
+    "type": "text"
+   },
+   {
+    "tag": "tekno_onoma",
+    "label": "Τέκνου: όνομα",
+    "type": "text"
+   },
+   {
+    "tag": "tekno_patronymo",
+    "label": "Τέκνου: πατρώνυμο",
+    "type": "text"
+   },
+   {
+    "tag": "tekno_mitronymo",
+    "label": "Τέκνου: μητρώνυμο",
+    "type": "text"
+   },
+   {
+    "tag": "tekno_imera",
+    "label": "Τέκνου: ημέρα γέννησης",
+    "type": "text"
+   },
+   {
+    "tag": "tekno_minas",
+    "label": "Τέκνου: μήνας γέννησης",
+    "type": "text"
+   },
+   {
+    "tag": "tekno_etos",
+    "label": "Τέκνου: έτος γέννησης",
+    "type": "text"
+   },
+   {
+    "tag": "tekno_dimos",
+    "label": "Τέκνου: δήμος γέννησης",
+    "type": "text"
+   },
+   {
+    "tag": "sxoleio_teknou",
+    "label": "Σχολείο του τέκνου",
+    "type": "text"
+   }
+  ],
+  "loipes": [
+   {
+    "tag": "perioxi_metathesis",
+    "label": "Περιοχή μετάθεσης του σχολείου",
+    "type": "text"
+   },
+   {
+    "tag": "dimosio_tameio",
+    "label": "Δημόσιο ταμείο πληρωμών",
+    "type": "text"
+   },
+   {
+    "tag": "etos_adeias",
+    "label": "Έτος αιτούμενης άδειας",
+    "type": "text"
+   },
+   {
+    "tag": "eidos_spoudon",
+    "label": "Θέμα διατριβής ή τίτλος μεταπτυχιακού",
+    "type": "text"
+   },
+   {
+    "tag": "aei",
+    "label": "Α.Ε.Ι.",
+    "type": "text"
+   },
+   {
+    "tag": "tmima",
+    "label": "Τμήμα",
+    "type": "text"
+   },
+   {
+    "tag": "syllogos",
+    "label": "Σύλλογος εκπαιδευτικών",
+    "type": "text"
+   },
+   {
+    "tag": "idiotita_syllogou",
+    "label": "Ιδιότητα στον σύλλογο",
+    "type": "text"
+   },
+   {
+    "tag": "idiotita_apascholisis",
+    "label": "Ιδιότητα απασχόλησης",
+    "type": "text"
+   },
+   {
+    "tag": "ergodotis",
+    "label": "Εργοδότης ή φορέας",
+    "type": "text"
+   },
+   {
+    "tag": "ores_evdomadiaios",
+    "label": "Ώρες απασχόλησης την εβδομάδα",
+    "type": "text"
+   },
+   {
+    "tag": "katanomi_oron",
+    "label": "Αναλυτική κατανομή ωρών",
+    "type": "textarea"
+   },
+   {
+    "tag": "programma_epimorfosis",
+    "label": "Πρόγραμμα επιμόρφωσης",
+    "type": "text"
+   },
+   {
+    "tag": "kodikos_programmatos",
+    "label": "Κωδικός σεμιναρίου/προγράμματος",
+    "type": "text"
+   },
+   {
+    "tag": "arithmos_egkrisis_iky",
+    "label": "Αριθμός έγκρισης Ι.Κ.Υ.",
+    "type": "text"
+   },
+   {
+    "tag": "perifereiaki_tax_dieuthinsi",
+    "label": "Ταχ. διεύθυνση Περιφερειακής Δ/νσης",
+    "type": "textarea"
+   }
+  ]
+ },
+ "gender": {
+  "o_i": [
+   "Ο",
+   "Η"
+  ],
+  "o_i_pezo": [
+   "ο",
+   "η"
+  ],
+  "ston_stin": [
+   "στον",
+   "στην"
+  ],
+  "tou_tis": [
+   "του",
+   "της"
+  ],
+  "ait_katalixi": [
+   "ών",
+   "ούσα"
+  ],
+  "ait_katalixi_kef": [
+   "ΩΝ",
+   "ΟΥΣΑ"
+  ],
+  "endiaferomenos": [
+   "Ενδιαφερόμενος",
+   "Ενδιαφερόμενη"
+  ],
+  "endiaferomenou": [
+   "ενδιαφερόμενου",
+   "ενδιαφερόμενης"
+  ],
+  "anaplirotis_ait": [
+   "αναπληρωτή",
+   "αναπληρώτρια"
+  ],
+  "anaplirotis_gen": [
+   "αναπληρωτή",
+   "αναπληρώτριας"
+  ]
+ },
+ "count": {
+  "imeres_lexi": [
+   "ημέρας",
+   "ημερών"
+  ],
+  "ergasimon": [
+   "εργάσιμης",
+   "εργάσιμων"
+  ]
+ },
+ "olografos": {
+  "1": "ΜΙΑΣ",
+  "2": "ΔΥΟ",
+  "3": "ΤΡΙΩΝ",
+  "4": "ΤΕΣΣΑΡΩΝ",
+  "5": "ΠΕΝΤΕ",
+  "6": "ΕΞΙ",
+  "7": "ΕΠΤΑ",
+  "8": "ΟΚΤΩ",
+  "9": "ΕΝΝΕΑ",
+  "10": "ΔΕΚΑ",
+  "11": "ΕΝΤΕΚΑ",
+  "12": "ΔΩΔΕΚΑ",
+  "13": "ΔΕΚΑΤΡΙΩΝ",
+  "14": "ΔΕΚΑΤΕΣΣΑΡΩΝ",
+  "15": "ΔΕΚΑΠΕΝΤΕ",
+  "16": "ΔΕΚΑΕΞΙ",
+  "17": "ΔΕΚΑΕΠΤΑ",
+  "18": "ΔΕΚΑΟΚΤΩ",
+  "19": "ΔΕΚΑΕΝΝΕΑ",
+  "20": "ΕΙΚΟΣΙ",
+  "21": "ΕΙΚΟΣΙ ΜΙΑΣ",
+  "22": "ΕΙΚΟΣΙ ΔΥΟ",
+  "23": "ΕΙΚΟΣΙ ΤΡΙΩΝ",
+  "24": "ΕΙΚΟΣΙ ΤΕΣΣΑΡΩΝ",
+  "25": "ΕΙΚΟΣΙ ΠΕΝΤΕ",
+  "26": "ΕΙΚΟΣΙ ΕΞΙ",
+  "27": "ΕΙΚΟΣΙ ΕΠΤΑ",
+  "28": "ΕΙΚΟΣΙ ΟΚΤΩ",
+  "29": "ΕΙΚΟΣΙ ΕΝΝΕΑ",
+  "30": "ΤΡΙΑΝΤΑ"
+ },
+ "leaveTypes": {
+  "kanoniki": "Κανονική άδεια",
+  "anarrotiki": "Αναρρωτική άδεια",
+  "anarrotiki_yd": "Αναρρωτική άδεια με υπεύθυνη δήλωση",
+  "anatrofis": "Άδεια ανατροφής τέκνου",
+  "asthenia_teknou": "Άδεια ασθένειας τέκνου",
+  "sxoliki_epidosi": "Άδεια σχολικής επίδοσης τέκνου",
+  "exetaseon": "Άδεια εξετάσεων",
+  "kyisis": "Άδεια κύησης",
+  "loxeias": "Άδεια λοχείας",
+  "gamou": "Ειδική άδεια γάμου",
+  "thanatou": "Ειδική άδεια θανάτου συγγενούς",
+  "aimodosias": "Αιμοδοτική άδεια",
+  "diki": "Ειδική άδεια συμμετοχής σε δίκη",
+  "anapirias": "Ειδική άδεια αναπηρίας",
+  "gynaikologikos": "Άδεια γυναικολογικού ελέγχου",
+  "eklogiki": "Εκλογική άδεια",
+  "patrotitas": "Άδεια πατρότητας",
+  "progennitikon": "Άδεια προγεννητικών εξετάσεων",
+  "meiomeno_orario": "Μειωμένο ωράριο λόγω μητρότητας",
+  "apli": "Απλή αίτηση (ελεύθερο θέμα)",
+  "ekpaideftiki": "Εκπαιδευτική άδεια με αποδοχές",
+  "ekpaideftiki_ananeosi": "Ανανέωση εκπαιδευτικής άδειας",
+  "aneu_apodoxon": "Άδεια χωρίς αποδοχές για ολοκλήρωση σπουδών",
+  "syndikalistiki": "Συνδικαλιστική άδεια",
+  "epimorfotiki": "Άδεια για επιμορφωτικούς λόγους",
+  "epimorfotiki_exoteriko": "Άδεια για επιμορφωτικούς λόγους στο εξωτερικό",
+  "idiotiko_ergo": "Άδεια άσκησης ιδιωτικού έργου με αμοιβή",
+  "yd_anarrotikis": "Υπεύθυνη δήλωση για αναρρωτική άδεια"
+ },
+ "categories": {
+  "monimoi": "Μόνιμοι",
+  "anaplirotes": "Αναπληρωτές",
+  "loipes": "Λοιπές άδειες"
+ },
+ "programmes": {
+  "epa": "ΕΠΑ",
+  "parallili_stirixi": "Παράλληλη Στήριξη – ΕΒΠ – ΠΕ25",
+  "parallili_tomeako": "Παράλληλη – Τομεακό, ΣΜΕΑΕ, Αγγλικά στο Νηπιαγωγείο, Ολοήμερο Δημοτικό, Ολοήμερο Νηπιαγωγείο, Ψυχολόγοι – Κοινωνικοί Λειτουργοί"
+ },
+ "usedBy": {
+  "afm": 54,
+  "ait_katalixi": 37,
+  "check_espa_amo": 40,
+  "check_espa_plirous": 40,
+  "check_plirous": 40,
+  "dieuthinsi_katoikias": 48,
+  "eponymo": 54,
+  "imeres_arithmitika": 67,
+  "imeres_lexi": 58,
+  "imeres_olografos": 74,
+  "imerominia_apo": 82,
+  "imerominia_egrafou": 99,
+  "imerominia_eos": 73,
+  "kinito": 49,
+  "klados": 111,
+  "mitronymo": 42,
+  "o_i": 50,
+  "onoma": 54,
+  "patronymo": 78,
+  "sxoleia_ypiresias": 51,
+  "sxoleio_gen": 78,
+  "synodeutika": 20,
+  "tilefono_katoikias": 57,
+  "topos": 50,
+  "check_oromisthios": 16,
+  "keimeno_aitimatos": 6,
+  "nomos_gen": 87,
+  "thema": 6,
+  "vathmida": 64,
+  "ait_katalixi_kef": 10,
+  "mk": 10,
+  "sxoleio_organikis": 16,
+  "vathmida_syntomo": 67,
+  "vathmos": 10,
+  "tekno_dimos": 5,
+  "tekno_eponymo": 5,
+  "tekno_etos": 5,
+  "tekno_imera": 5,
+  "tekno_minas": 5,
+  "tekno_mitronymo": 5,
+  "tekno_onoma": 6,
+  "tekno_patronymo": 5,
+  "dimos_katoikias": 3,
+  "nomos_on": 60,
+  "onomateponymo": 60,
+  "imerominia_stis": 18,
+  "anaplirotis_ait": 36,
+  "anaplirotis_gen": 21,
+  "arithmos_protokollou": 54,
+  "dieuthintis_titlos": 55,
+  "endiaferomenos": 35,
+  "imeres_plithos": 9,
+  "imerominia_aitisis": 32,
+  "klados_perigrafi": 50,
+  "nosokomeio": 3,
+  "perifereia": 55,
+  "ston_stin": 53,
+  "sxoleio": 40,
+  "sxoleio_email": 53,
+  "sxoleio_plirofories": 54,
+  "sxoleio_tax_dieuthinsi": 57,
+  "sxoleio_tilefono": 57,
+  "tou_tis": 45,
+  "ergasimon": 20,
+  "pistopoiitiko_kepa": 3,
+  "apofasi_efka": 3,
+  "endiaferomenou": 20,
+  "protokollo_aitisis": 20,
+  "onoma_iatrou": 9,
+  "dieuthintis_onomateponymo": 22,
+  "sxoleio_istoselida": 21,
+  "dikastirio": 4,
+  "am": 15,
+  "panepistimio": 5,
+  "lixiarxeio": 3,
+  "imerominia_veveosis": 3,
+  "imera_evdomadas": 3,
+  "arithmos_katoikias": 9,
+  "dimosio_tameio": 3,
+  "eidikotita": 6,
+  "etos_adeias": 2,
+  "etos_anaforas": 3,
+  "logoi_adeias": 3,
+  "odos": 9,
+  "perioxi_metathesis": 3,
+  "poli": 9,
+  "sxoleio_tk_poli": 4,
+  "sxoliko_etos": 3,
+  "tk": 9,
+  "aei": 2,
+  "eidos_spoudon": 2,
+  "tmima": 2,
+  "perioxi": 2,
+  "arithmos_egkrisis_iky": 1,
+  "kodikos_programmatos": 1,
+  "perifereiaki_tax_dieuthinsi": 1,
+  "programma_epimorfosis": 1,
+  "ergodotis": 1,
+  "idiotita_apascholisis": 1,
+  "katanomi_oron": 1,
+  "ores_evdomadiaios": 1,
+  "check_diathesi_meriki": 7,
+  "check_diathesi_plires": 7,
+  "check_idax": 7,
+  "check_monimos_apospasmenos": 7,
+  "check_monimos_diathesi": 7,
+  "check_monimos_organiki": 7,
+  "idiotita_syllogou": 1,
+  "syllogos": 1,
+  "adt": 4,
+  "email": 3,
+  "imerominia_gennisis": 3,
+  "mitera_eponymo": 2,
+  "patera_eponymo": 2,
+  "topos_gennisis": 3,
+  "mitera_onomateponymo": 1,
+  "patera_onomateponymo": 1,
+  "syzygos_adt": 1,
+  "syzygos_arithmos": 1,
+  "syzygos_email": 1,
+  "syzygos_eponymo": 2,
+  "syzygos_imerominia_gennisis": 1,
+  "syzygos_mitera_onomateponymo": 1,
+  "syzygos_odos": 1,
+  "syzygos_onoma": 2,
+  "syzygos_patera_onomateponymo": 1,
+  "syzygos_poli": 1,
+  "syzygos_tilefono": 1,
+  "syzygos_tk": 1,
+  "syzygos_topos_gennisis": 1,
+  "imerominia_gamou": 1,
+  "syzygos_mitronymo": 1,
+  "syzygos_patronymo": 1,
+  "topos_gamou": 1,
+  "sxoleio_teknou": 1,
+  "imerominia_thanatou": 1,
+  "thanon_adt": 1,
+  "thanon_mitronymo": 1,
+  "thanon_onomateponymo": 1,
+  "thanon_patronymo": 1,
+  "topos_tafis": 1,
+  "topos_thanatou": 1,
+  "foreas_aimodosias": 1,
+  "imeres_kepa": 1,
+  "imeres_etous": 3,
+  "ypiresia_eti": 3,
+  "ypiresia_imeres": 3,
+  "ypiresia_mines": 3,
+  "o_i_pezo": 1,
+  "idiotita_dikis": 1
+ }
+}

@@ -1,0 +1,165 @@
+# ── ΥΠΗΡΕΣΙΑ ──
+etos_anaforas;Έτος αναφοράς προϋπηρεσίας (υπολογίζεται από sxoliko_etos)
+nomos_gen;Νομός (γενική) — «ΔΡΑΜΑΣ»
+nomos_on;Νομός (ονομαστική) — «ΔΡΑΜΑ»
+perifereia;Περιφερειακή διεύθυνση
+sxoliko_etos;Σχολικό έτος — «2026-2027»
+vathmida;Βαθμίδα — «Α/ΘΜΙΑΣ»
+vathmida_syntomo;Βαθμίδα σύντομα — «Π.Ε.»
+
+# ── ΣΧΟΛΙΚΗ ΜΟΝΑΔΑ ──
+dieuthintis_onomateponymo;Ονοματεπώνυμο διευθυντή
+dieuthintis_titlos;Τίτλος υπογράφοντος
+sxoleio;Σχολείο (ονομαστική)
+sxoleio_email;E-mail
+sxoleio_gen;Σχολείο (γενική) — «του …»
+sxoleio_istoselida;Ιστοσελίδα
+sxoleio_plirofories;Πληροφορίες (αρμόδιος)
+sxoleio_tax_dieuthinsi;Ταχυδρομική διεύθυνση
+sxoleio_tilefono;Τηλέφωνο
+sxoleio_tk_poli;Τ.Κ. και πόλη
+
+# ── ΕΚΠΑΙΔΕΥΤΙΚΟΣ ──
+adt;Αριθμός δελτίου ταυτότητας
+afm;ΑΦΜ
+am;Αριθμός μητρώου
+arithmos_katoikias;Αριθμός
+check_diathesi_meriki;Διάθεση από Β/θμια, μερική (τσεκάρισμα)
+check_diathesi_plires;Διάθεση από Β/θμια, πλήρης (τσεκάρισμα)
+check_espa_amo;Αναπληρωτής ΕΣΠΑ ΑΜΩ (τσεκάρισμα)
+check_espa_plirous;Αναπληρωτής ΕΣΠΑ πλήρους (τσεκάρισμα)
+check_idax;ΙΔΑΧ (τσεκάρισμα)
+check_monimos_apospasmenos;Μόνιμος αποσπασμένος (τσεκάρισμα)
+check_monimos_diathesi;Μόνιμος στη διάθεση (τσεκάρισμα)
+check_monimos_organiki;Μόνιμος σε οργανική (τσεκάρισμα)
+check_oromisthios;Ωρομίσθιος (τσεκάρισμα)
+check_plirous;Αναπληρωτής πλήρους (τσεκάρισμα)
+dieuthinsi_katoikias;Διεύθυνση κατοικίας (υπολογίζεται από odos+arithmos_katoikias)
+dimos_katoikias;Δήμος κατοικίας
+eidikotita;Ειδικότητα
+email;E-mail
+eponymo;Επώνυμο
+imerominia_gennisis;Ημερομηνία γέννησης (ημερομηνία)
+kinito;Κινητό τηλέφωνο
+klados;Κλάδος — «ΠΕ70»
+klados_perigrafi;Περιγραφή κλάδου — «ΔΑΣΚΑΛΩΝ»
+mitera_eponymo;Επώνυμο μητέρας
+mitera_onomateponymo;Ονοματεπώνυμο μητέρας (υπολογίζεται από mitronymo+mitera_eponymo)
+mitronymo;Μητρώνυμο
+mk;Μισθολογικό κλιμάκιο
+odos;Οδός
+onoma;Όνομα
+onomateponymo;Ονοματεπώνυμο (υπολογίζεται από eponymo+onoma)
+patera_eponymo;Επώνυμο πατέρα
+patera_onomateponymo;Ονοματεπώνυμο πατέρα (υπολογίζεται από patronymo+patera_eponymo)
+patronymo;Πατρώνυμο
+perioxi;Περιοχή
+poli;Πόλη
+sxoleia_ypiresias;Σχολείο/α που υπηρετεί
+sxoleio_organikis;Σχολείο οργανικής θέσης
+tilefono_katoikias;Τηλέφωνο οικίας
+tk;Ταχυδρομικός κώδικας
+topos_gennisis;Τόπος γέννησης
+vathmos;Βαθμός
+ypiresia_eti;Χρόνος υπηρεσίας: έτη (αριθμός)
+ypiresia_imeres;Χρόνος υπηρεσίας: ημέρες (αριθμός)
+ypiresia_mines;Χρόνος υπηρεσίας: μήνες (αριθμός)
+
+# ── Η ΣΥΓΚΕΚΡΙΜΕΝΗ ΑΔΕΙΑ ──
+arithmos_protokollou;Αριθμός πρωτοκόλλου
+imera_evdomadas;Ημέρα εβδομάδας
+imeres_arithmitika;Πλήθος ημερών (αριθμός)
+imeres_etous;Ημέρες που έχει ήδη λάβει φέτος (αριθμός)
+imeres_olografos;Ημέρες ολογράφως (υπολογίζεται από imeres_arithmitika)
+imeres_plithos;Ημέρες χωρίς μηδέν — «3/ήμερης» (υπολογίζεται από imeres_arithmitika)
+imerominia_aitisis;Ημερομηνία αίτησης (ημερομηνία)
+imerominia_apo;Ημερομηνία έναρξης (ημερομηνία)
+imerominia_egrafou;Ημερομηνία εγγράφου (ημερομηνία)
+imerominia_eos;Ημερομηνία λήξης (ημερομηνία, υπολογίζεται από imerominia_apo+imeres_arithmitika)
+imerominia_stis;Στις (ημερομηνία, υπολογίζεται από imerominia_apo)
+imerominia_veveosis;Ημερομηνία βεβαίωσης (ημερομηνία)
+keimeno_aitimatos;Κείμενο αιτήματος (ελεύθερο κείμενο)
+logoi_adeias;Λόγοι χορήγησης (ελεύθερο κείμενο)
+protokollo_aitisis;Αριθμός πρωτοκόλλου της αίτησης
+synodeutika;Συνοδευτικά δικαιολογητικά (ελεύθερο κείμενο)
+thema;Θέμα
+topos;Τόπος σύνταξης (υπολογίζεται από nomos_on)
+
+# ── ΔΙΚΑΙΟΛΟΓΗΤΙΚΑ ΚΑΙ ΤΡΙΤΑ ΠΡΟΣΩΠΑ ──
+apofasi_efka;Απόφαση ΕΦΚΑ
+dikastirio;Δικαστήριο
+foreas_aimodosias;Φορέας αιμοληψίας
+idiotita_dikis;Ιδιότητα στη δίκη
+imeres_kepa;Ημέρες κατά το πιστοποιητικό ΚΕΠΑ (αριθμός)
+imerominia_gamou;Ημερομηνία τέλεσης γάμου (ημερομηνία)
+imerominia_thanatou;Ημερομηνία θανάτου (ημερομηνία)
+lixiarxeio;Ληξιαρχείο
+nosokomeio;Νοσοκομείο
+onoma_iatrou;Ονοματεπώνυμο ιατρού
+panepistimio;Εκπαιδευτικό ίδρυμα
+pistopoiitiko_kepa;Πιστοποιητικό ΚΕΠΑ
+sxoleio_teknou;Σχολείο του τέκνου
+syzygos_adt;Συζύγου: ΑΔΤ
+syzygos_arithmos;Συζύγου: αριθμός
+syzygos_email;Συζύγου: e-mail
+syzygos_eponymo;Συζύγου: επώνυμο
+syzygos_imerominia_gennisis;Συζύγου: ημερομηνία γέννησης (ημερομηνία)
+syzygos_mitera_onomateponymo;Συζύγου: ονοματεπώνυμο μητέρας
+syzygos_mitronymo;Συζύγου: μητρώνυμο
+syzygos_odos;Συζύγου: οδός
+syzygos_onoma;Συζύγου: όνομα
+syzygos_patera_onomateponymo;Συζύγου: ονοματεπώνυμο πατέρα
+syzygos_patronymo;Συζύγου: πατρώνυμο
+syzygos_poli;Συζύγου: τόπος κατοικίας
+syzygos_tilefono;Συζύγου: τηλέφωνο
+syzygos_tk;Συζύγου: Τ.Κ.
+syzygos_topos_gennisis;Συζύγου: τόπος γέννησης
+tekno_dimos;Τέκνου: δήμος γέννησης
+tekno_eponymo;Τέκνου: επώνυμο
+tekno_etos;Τέκνου: έτος γέννησης
+tekno_imera;Τέκνου: ημέρα γέννησης
+tekno_minas;Τέκνου: μήνας γέννησης
+tekno_mitronymo;Τέκνου: μητρώνυμο
+tekno_onoma;Τέκνου: όνομα
+tekno_patronymo;Τέκνου: πατρώνυμο
+thanon_adt;Θανόντος: ΑΔΤ
+thanon_mitronymo;Θανόντος: μητρώνυμο
+thanon_onomateponymo;Θανόντος: ονοματεπώνυμο
+thanon_patronymo;Θανόντος: πατρώνυμο
+topos_gamou;Τόπος τέλεσης γάμου
+topos_tafis;Τόπος ταφής
+topos_thanatou;Τόπος θανάτου
+
+# ── ΜΟΝΟ ΣΤΙΣ ΛΟΙΠΕΣ ΑΔΕΙΕΣ ──
+aei;Α.Ε.Ι.
+arithmos_egkrisis_iky;Αριθμός έγκρισης Ι.Κ.Υ.
+dimosio_tameio;Δημόσιο ταμείο πληρωμών
+eidos_spoudon;Θέμα διατριβής ή τίτλος μεταπτυχιακού
+ergodotis;Εργοδότης ή φορέας
+etos_adeias;Έτος αιτούμενης άδειας
+idiotita_apascholisis;Ιδιότητα απασχόλησης
+idiotita_syllogou;Ιδιότητα στον σύλλογο
+katanomi_oron;Αναλυτική κατανομή ωρών (ελεύθερο κείμενο)
+kodikos_programmatos;Κωδικός σεμιναρίου/προγράμματος
+ores_evdomadiaios;Ώρες απασχόλησης την εβδομάδα
+perifereiaki_tax_dieuthinsi;Ταχ. διεύθυνση Περιφερειακής Δ/νσης (ελεύθερο κείμενο)
+perioxi_metathesis;Περιοχή μετάθεσης του σχολείου
+programma_epimorfosis;Πρόγραμμα επιμόρφωσης
+syllogos;Σύλλογος εκπαιδευτικών
+tmima;Τμήμα
+
+# ── ΠΑΡΑΓΟΝΤΑΙ ΑΠΟ ΤΟ ΦΥΛΟ ──
+ait_katalixi;«ών» αν άνδρας, «ούσα» αν γυναίκα
+ait_katalixi_kef;«ΩΝ» αν άνδρας, «ΟΥΣΑ» αν γυναίκα
+anaplirotis_ait;«αναπληρωτή» αν άνδρας, «αναπληρώτρια» αν γυναίκα
+anaplirotis_gen;«αναπληρωτή» αν άνδρας, «αναπληρώτριας» αν γυναίκα
+endiaferomenos;«Ενδιαφερόμενος» αν άνδρας, «Ενδιαφερόμενη» αν γυναίκα
+endiaferomenou;«ενδιαφερόμενου» αν άνδρας, «ενδιαφερόμενης» αν γυναίκα
+o_i;«Ο» αν άνδρας, «Η» αν γυναίκα
+o_i_pezo;«ο» αν άνδρας, «η» αν γυναίκα
+ston_stin;«στον» αν άνδρας, «στην» αν γυναίκα
+tou_tis;«του» αν άνδρας, «της» αν γυναίκα
+
+# ── ΠΑΡΑΓΟΝΤΑΙ ΑΠΟ ΤΟ ΠΛΗΘΟΣ ΗΜΕΡΩΝ ──
+ergasimon;«εργάσιμης» για 1 ημέρα, «εργάσιμων» για 2+
+imeres_lexi;«ημέρας» για 1 ημέρα, «ημερών» για 2+

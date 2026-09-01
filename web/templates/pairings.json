@@ -1,0 +1,650 @@
+{
+  "anaplirotes": {
+    "epa": {
+      "aimodosias": {
+        "title": "Αιμοδοτική άδεια",
+        "aitisi": "anaplirotes/epa/aitisi/aimodosias",
+        "apofasi": "anaplirotes/epa/apofasi/aimodosias",
+        "apofaseis": [
+          "anaplirotes/epa/apofasi/aimodosias"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "anapirias": {
+        "title": "Ειδική άδεια αναπηρίας",
+        "aitisi": "anaplirotes/epa/aitisi/anapirias",
+        "apofasi": "anaplirotes/epa/apofasi/anapirias",
+        "apofaseis": [
+          "anaplirotes/epa/apofasi/anapirias"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "anarrotiki": {
+        "title": "Αναρρωτική άδεια",
+        "aitisi": "anaplirotes/epa/aitisi/anarrotiki",
+        "apofasi": "anaplirotes/epa/apofasi/anarrotiki",
+        "apofaseis": [
+          "anaplirotes/epa/apofasi/anarrotiki"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "anatrofis": {
+        "title": "Άδεια ανατροφής τέκνου",
+        "aitisi": "anaplirotes/epa/aitisi/anatrofis",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "apli": {
+        "title": "Απλή αίτηση (ελεύθερο θέμα)",
+        "aitisi": "anaplirotes/epa/aitisi/apli",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "asthenia_teknou": {
+        "title": "Άδεια ασθένειας τέκνου",
+        "aitisi": "anaplirotes/epa/aitisi/asthenia_teknou",
+        "apofasi": "anaplirotes/epa/apofasi/asthenia_teknou",
+        "apofaseis": [
+          "anaplirotes/epa/apofasi/asthenia_teknou",
+          "anaplirotes/epa/apofasi/asthenia_teknou__2"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "exetaseon": {
+        "title": "Άδεια εξετάσεων",
+        "aitisi": "anaplirotes/epa/aitisi/exetaseon",
+        "apofasi": "anaplirotes/epa/apofasi/exetaseon",
+        "apofaseis": [
+          "anaplirotes/epa/apofasi/exetaseon"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "kanoniki": {
+        "title": "Κανονική άδεια",
+        "aitisi": "anaplirotes/epa/aitisi/kanoniki",
+        "apofasi": "anaplirotes/epa/apofasi/kanoniki",
+        "apofaseis": [
+          "anaplirotes/epa/apofasi/kanoniki"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "kyisis": {
+        "title": "Άδεια κύησης",
+        "aitisi": "anaplirotes/epa/aitisi/kyisis",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "loxeias": {
+        "title": "Άδεια λοχείας",
+        "aitisi": "anaplirotes/epa/aitisi/loxeias",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "meiomeno_orario": {
+        "title": "Μειωμένο ωράριο λόγω μητρότητας",
+        "aitisi": "anaplirotes/epa/aitisi/meiomeno_orario",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "progennitikon": {
+        "title": "Άδεια προγεννητικών εξετάσεων",
+        "aitisi": "anaplirotes/epa/aitisi/progennitikon",
+        "apofasi": "anaplirotes/epa/apofasi/progennitikon",
+        "apofaseis": [
+          "anaplirotes/epa/apofasi/progennitikon"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "thanatou": {
+        "title": "Ειδική άδεια θανάτου συγγενούς",
+        "aitisi": "anaplirotes/epa/aitisi/thanatou",
+        "apofasi": "anaplirotes/epa/apofasi/thanatou",
+        "apofaseis": [
+          "anaplirotes/epa/apofasi/thanatou"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "diki": {
+        "title": "Ειδική άδεια συμμετοχής σε δίκη",
+        "aitisi": null,
+        "apofasi": "anaplirotes/epa/apofasi/diki",
+        "apofaseis": [
+          "anaplirotes/epa/apofasi/diki"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "eklogiki": {
+        "title": "Εκλογική άδεια",
+        "aitisi": null,
+        "apofasi": "anaplirotes/epa/apofasi/eklogiki",
+        "apofaseis": [
+          "anaplirotes/epa/apofasi/eklogiki"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "gamou": {
+        "title": "Ειδική άδεια γάμου",
+        "aitisi": null,
+        "apofasi": "anaplirotes/epa/apofasi/gamou",
+        "apofaseis": [
+          "anaplirotes/epa/apofasi/gamou"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "sxoliki_epidosi": {
+        "title": "Άδεια σχολικής επίδοσης τέκνου",
+        "aitisi": null,
+        "apofasi": "anaplirotes/epa/apofasi/sxoliki_epidosi",
+        "apofaseis": [
+          "anaplirotes/epa/apofasi/sxoliki_epidosi"
+        ],
+        "ektos_sxolikis_monadas": false
+      }
+    },
+    "parallili_stirixi": {
+      "aimodosias": {
+        "title": "Αιμοδοτική άδεια",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/aimodosias",
+        "apofasi": "anaplirotes/parallili_stirixi/apofasi/aimodosias",
+        "apofaseis": [
+          "anaplirotes/parallili_stirixi/apofasi/aimodosias"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "anapirias": {
+        "title": "Ειδική άδεια αναπηρίας",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/anapirias",
+        "apofasi": "anaplirotes/parallili_stirixi/apofasi/anapirias",
+        "apofaseis": [
+          "anaplirotes/parallili_stirixi/apofasi/anapirias"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "anarrotiki": {
+        "title": "Αναρρωτική άδεια",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/anarrotiki",
+        "apofasi": "anaplirotes/parallili_stirixi/apofasi/anarrotiki",
+        "apofaseis": [
+          "anaplirotes/parallili_stirixi/apofasi/anarrotiki"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "anatrofis": {
+        "title": "Άδεια ανατροφής τέκνου",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/anatrofis",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "apli": {
+        "title": "Απλή αίτηση (ελεύθερο θέμα)",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/apli",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "asthenia_teknou": {
+        "title": "Άδεια ασθένειας τέκνου",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/asthenia_teknou",
+        "apofasi": "anaplirotes/parallili_stirixi/apofasi/asthenia_teknou",
+        "apofaseis": [
+          "anaplirotes/parallili_stirixi/apofasi/asthenia_teknou",
+          "anaplirotes/parallili_stirixi/apofasi/asthenia_teknou__2"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "exetaseon": {
+        "title": "Άδεια εξετάσεων",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/exetaseon",
+        "apofasi": "anaplirotes/parallili_stirixi/apofasi/exetaseon",
+        "apofaseis": [
+          "anaplirotes/parallili_stirixi/apofasi/exetaseon"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "kanoniki": {
+        "title": "Κανονική άδεια",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/kanoniki",
+        "apofasi": "anaplirotes/parallili_stirixi/apofasi/kanoniki",
+        "apofaseis": [
+          "anaplirotes/parallili_stirixi/apofasi/kanoniki"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "kyisis": {
+        "title": "Άδεια κύησης",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/kyisis",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "loxeias": {
+        "title": "Άδεια λοχείας",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/loxeias",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "meiomeno_orario": {
+        "title": "Μειωμένο ωράριο λόγω μητρότητας",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/meiomeno_orario",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "progennitikon": {
+        "title": "Άδεια προγεννητικών εξετάσεων",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/progennitikon",
+        "apofasi": "anaplirotes/parallili_stirixi/apofasi/progennitikon",
+        "apofaseis": [
+          "anaplirotes/parallili_stirixi/apofasi/progennitikon"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "thanatou": {
+        "title": "Ειδική άδεια θανάτου συγγενούς",
+        "aitisi": "anaplirotes/parallili_stirixi/aitisi/thanatou",
+        "apofasi": "anaplirotes/parallili_stirixi/apofasi/thanatou",
+        "apofaseis": [
+          "anaplirotes/parallili_stirixi/apofasi/thanatou"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "diki": {
+        "title": "Ειδική άδεια συμμετοχής σε δίκη",
+        "aitisi": null,
+        "apofasi": "anaplirotes/parallili_stirixi/apofasi/diki",
+        "apofaseis": [
+          "anaplirotes/parallili_stirixi/apofasi/diki"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "eklogiki": {
+        "title": "Εκλογική άδεια",
+        "aitisi": null,
+        "apofasi": "anaplirotes/parallili_stirixi/apofasi/eklogiki",
+        "apofaseis": [
+          "anaplirotes/parallili_stirixi/apofasi/eklogiki"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "gamou": {
+        "title": "Ειδική άδεια γάμου",
+        "aitisi": null,
+        "apofasi": "anaplirotes/parallili_stirixi/apofasi/gamou",
+        "apofaseis": [
+          "anaplirotes/parallili_stirixi/apofasi/gamou"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "sxoliki_epidosi": {
+        "title": "Άδεια σχολικής επίδοσης τέκνου",
+        "aitisi": null,
+        "apofasi": "anaplirotes/parallili_stirixi/apofasi/sxoliki_epidosi",
+        "apofaseis": [
+          "anaplirotes/parallili_stirixi/apofasi/sxoliki_epidosi"
+        ],
+        "ektos_sxolikis_monadas": false
+      }
+    },
+    "parallili_tomeako": {
+      "aimodosias": {
+        "title": "Αιμοδοτική άδεια",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/aimodosias",
+        "apofasi": "anaplirotes/parallili_tomeako/apofasi/aimodosias",
+        "apofaseis": [
+          "anaplirotes/parallili_tomeako/apofasi/aimodosias"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "anapirias": {
+        "title": "Ειδική άδεια αναπηρίας",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/anapirias",
+        "apofasi": "anaplirotes/parallili_tomeako/apofasi/anapirias",
+        "apofaseis": [
+          "anaplirotes/parallili_tomeako/apofasi/anapirias"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "anarrotiki": {
+        "title": "Αναρρωτική άδεια",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/anarrotiki",
+        "apofasi": "anaplirotes/parallili_tomeako/apofasi/anarrotiki",
+        "apofaseis": [
+          "anaplirotes/parallili_tomeako/apofasi/anarrotiki"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "anatrofis": {
+        "title": "Άδεια ανατροφής τέκνου",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/anatrofis",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "apli": {
+        "title": "Απλή αίτηση (ελεύθερο θέμα)",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/apli",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "asthenia_teknou": {
+        "title": "Άδεια ασθένειας τέκνου",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/asthenia_teknou",
+        "apofasi": "anaplirotes/parallili_tomeako/apofasi/asthenia_teknou",
+        "apofaseis": [
+          "anaplirotes/parallili_tomeako/apofasi/asthenia_teknou",
+          "anaplirotes/parallili_tomeako/apofasi/asthenia_teknou__2"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "exetaseon": {
+        "title": "Άδεια εξετάσεων",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/exetaseon",
+        "apofasi": "anaplirotes/parallili_tomeako/apofasi/exetaseon",
+        "apofaseis": [
+          "anaplirotes/parallili_tomeako/apofasi/exetaseon"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "kanoniki": {
+        "title": "Κανονική άδεια",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/kanoniki",
+        "apofasi": "anaplirotes/parallili_tomeako/apofasi/kanoniki",
+        "apofaseis": [
+          "anaplirotes/parallili_tomeako/apofasi/kanoniki"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "kyisis": {
+        "title": "Άδεια κύησης",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/kyisis",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "loxeias": {
+        "title": "Άδεια λοχείας",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/loxeias",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "meiomeno_orario": {
+        "title": "Μειωμένο ωράριο λόγω μητρότητας",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/meiomeno_orario",
+        "apofasi": null,
+        "apofaseis": [],
+        "ektos_sxolikis_monadas": true
+      },
+      "progennitikon": {
+        "title": "Άδεια προγεννητικών εξετάσεων",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/progennitikon",
+        "apofasi": "anaplirotes/parallili_tomeako/apofasi/progennitikon",
+        "apofaseis": [
+          "anaplirotes/parallili_tomeako/apofasi/progennitikon"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "thanatou": {
+        "title": "Ειδική άδεια θανάτου συγγενούς",
+        "aitisi": "anaplirotes/parallili_tomeako/aitisi/thanatou",
+        "apofasi": "anaplirotes/parallili_tomeako/apofasi/thanatou",
+        "apofaseis": [
+          "anaplirotes/parallili_tomeako/apofasi/thanatou"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "diki": {
+        "title": "Ειδική άδεια συμμετοχής σε δίκη",
+        "aitisi": null,
+        "apofasi": "anaplirotes/parallili_tomeako/apofasi/diki",
+        "apofaseis": [
+          "anaplirotes/parallili_tomeako/apofasi/diki"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "eklogiki": {
+        "title": "Εκλογική άδεια",
+        "aitisi": null,
+        "apofasi": "anaplirotes/parallili_tomeako/apofasi/eklogiki",
+        "apofaseis": [
+          "anaplirotes/parallili_tomeako/apofasi/eklogiki"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "gamou": {
+        "title": "Ειδική άδεια γάμου",
+        "aitisi": null,
+        "apofasi": "anaplirotes/parallili_tomeako/apofasi/gamou",
+        "apofaseis": [
+          "anaplirotes/parallili_tomeako/apofasi/gamou"
+        ],
+        "ektos_sxolikis_monadas": false
+      },
+      "sxoliki_epidosi": {
+        "title": "Άδεια σχολικής επίδοσης τέκνου",
+        "aitisi": null,
+        "apofasi": "anaplirotes/parallili_tomeako/apofasi/sxoliki_epidosi",
+        "apofaseis": [
+          "anaplirotes/parallili_tomeako/apofasi/sxoliki_epidosi"
+        ],
+        "ektos_sxolikis_monadas": false
+      }
+    }
+  },
+  "loipes": {
+    "aneu_apodoxon": {
+      "title": "Άδεια χωρίς αποδοχές για ολοκλήρωση σπουδών",
+      "aitisi": "loipes/aitisi/aneu_apodoxon",
+      "apofasi": null,
+      "apofaseis": [],
+      "ektos_sxolikis_monadas": true
+    },
+    "ekpaideftiki": {
+      "title": "Εκπαιδευτική άδεια με αποδοχές",
+      "aitisi": "loipes/aitisi/ekpaideftiki",
+      "apofasi": null,
+      "apofaseis": [],
+      "ektos_sxolikis_monadas": true
+    },
+    "ekpaideftiki_ananeosi": {
+      "title": "Ανανέωση εκπαιδευτικής άδειας",
+      "aitisi": "loipes/aitisi/ekpaideftiki_ananeosi",
+      "apofasi": null,
+      "apofaseis": [],
+      "ektos_sxolikis_monadas": true
+    },
+    "epimorfotiki": {
+      "title": "Άδεια για επιμορφωτικούς λόγους",
+      "aitisi": "loipes/aitisi/epimorfotiki",
+      "apofasi": null,
+      "apofaseis": [],
+      "ektos_sxolikis_monadas": true
+    },
+    "epimorfotiki_exoteriko": {
+      "title": "Άδεια για επιμορφωτικούς λόγους στο εξωτερικό",
+      "aitisi": "loipes/aitisi/epimorfotiki_exoteriko",
+      "apofasi": null,
+      "apofaseis": [],
+      "ektos_sxolikis_monadas": true
+    },
+    "idiotiko_ergo": {
+      "title": "Άδεια άσκησης ιδιωτικού έργου με αμοιβή",
+      "aitisi": "loipes/aitisi/idiotiko_ergo",
+      "apofasi": null,
+      "apofaseis": [],
+      "ektos_sxolikis_monadas": true
+    },
+    "syndikalistiki": {
+      "title": "Συνδικαλιστική άδεια",
+      "aitisi": "loipes/aitisi/syndikalistiki",
+      "apofasi": null,
+      "apofaseis": [],
+      "ektos_sxolikis_monadas": true
+    },
+    "yd_anarrotikis": {
+      "title": "Υπεύθυνη δήλωση για αναρρωτική άδεια",
+      "aitisi": "loipes/aitisi/yd_anarrotikis",
+      "apofasi": null,
+      "apofaseis": [],
+      "ektos_sxolikis_monadas": true
+    }
+  },
+  "monimoi": {
+    "aimodosias": {
+      "title": "Αιμοδοτική άδεια",
+      "aitisi": "monimoi/aitisi/aimodosias",
+      "apofasi": "monimoi/apofasi/aimodosias",
+      "apofaseis": [
+        "monimoi/apofasi/aimodosias"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "anarrotiki": {
+      "title": "Αναρρωτική άδεια",
+      "aitisi": "monimoi/aitisi/anarrotiki",
+      "apofasi": "monimoi/apofasi/anarrotiki",
+      "apofaseis": [
+        "monimoi/apofasi/anarrotiki"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "anarrotiki_yd": {
+      "title": "Αναρρωτική άδεια με υπεύθυνη δήλωση",
+      "aitisi": "monimoi/aitisi/anarrotiki_yd",
+      "apofasi": "monimoi/apofasi/anarrotiki_yd",
+      "apofaseis": [
+        "monimoi/apofasi/anarrotiki_yd"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "anatrofis": {
+      "title": "Άδεια ανατροφής τέκνου",
+      "aitisi": "monimoi/aitisi/anatrofis",
+      "apofasi": null,
+      "apofaseis": [],
+      "ektos_sxolikis_monadas": true
+    },
+    "asthenia_teknou": {
+      "title": "Άδεια ασθένειας τέκνου",
+      "aitisi": "monimoi/aitisi/asthenia_teknou",
+      "apofasi": "monimoi/apofasi/asthenia_teknou",
+      "apofaseis": [
+        "monimoi/apofasi/asthenia_teknou",
+        "monimoi/apofasi/asthenia_teknou__2"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "diki": {
+      "title": "Ειδική άδεια συμμετοχής σε δίκη",
+      "aitisi": "monimoi/aitisi/diki",
+      "apofasi": "monimoi/apofasi/diki",
+      "apofaseis": [
+        "monimoi/apofasi/diki"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "exetaseon": {
+      "title": "Άδεια εξετάσεων",
+      "aitisi": "monimoi/aitisi/exetaseon",
+      "apofasi": "monimoi/apofasi/exetaseon",
+      "apofaseis": [
+        "monimoi/apofasi/exetaseon"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "gamou": {
+      "title": "Ειδική άδεια γάμου",
+      "aitisi": "monimoi/aitisi/gamou",
+      "apofasi": "monimoi/apofasi/gamou",
+      "apofaseis": [
+        "monimoi/apofasi/gamou"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "kanoniki": {
+      "title": "Κανονική άδεια",
+      "aitisi": "monimoi/aitisi/kanoniki",
+      "apofasi": "monimoi/apofasi/kanoniki",
+      "apofaseis": [
+        "monimoi/apofasi/kanoniki"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "kyisis": {
+      "title": "Άδεια κύησης",
+      "aitisi": "monimoi/aitisi/kyisis",
+      "apofasi": null,
+      "apofaseis": [],
+      "ektos_sxolikis_monadas": true
+    },
+    "loxeias": {
+      "title": "Άδεια λοχείας",
+      "aitisi": "monimoi/aitisi/loxeias",
+      "apofasi": null,
+      "apofaseis": [],
+      "ektos_sxolikis_monadas": true
+    },
+    "sxoliki_epidosi": {
+      "title": "Άδεια σχολικής επίδοσης τέκνου",
+      "aitisi": "monimoi/aitisi/sxoliki_epidosi",
+      "apofasi": "monimoi/apofasi/sxoliki_epidosi",
+      "apofaseis": [
+        "monimoi/apofasi/sxoliki_epidosi"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "thanatou": {
+      "title": "Ειδική άδεια θανάτου συγγενούς",
+      "aitisi": "monimoi/aitisi/thanatou",
+      "apofasi": "monimoi/apofasi/thanatou",
+      "apofaseis": [
+        "monimoi/apofasi/thanatou"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "anapirias": {
+      "title": "Ειδική άδεια αναπηρίας",
+      "aitisi": null,
+      "apofasi": "monimoi/apofasi/anapirias",
+      "apofaseis": [
+        "monimoi/apofasi/anapirias"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "eklogiki": {
+      "title": "Εκλογική άδεια",
+      "aitisi": null,
+      "apofasi": "monimoi/apofasi/eklogiki",
+      "apofaseis": [
+        "monimoi/apofasi/eklogiki"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "gynaikologikos": {
+      "title": "Άδεια γυναικολογικού ελέγχου",
+      "aitisi": null,
+      "apofasi": "monimoi/apofasi/gynaikologikos",
+      "apofaseis": [
+        "monimoi/apofasi/gynaikologikos"
+      ],
+      "ektos_sxolikis_monadas": false
+    },
+    "patrotitas": {
+      "title": "Άδεια πατρότητας",
+      "aitisi": null,
+      "apofasi": "monimoi/apofasi/patrotitas",
+      "apofaseis": [
+        "monimoi/apofasi/patrotitas"
+      ],
+      "ektos_sxolikis_monadas": false
+    }
+  }
+}

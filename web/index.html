@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Άδειες εκπαιδευτικών</title>
+<meta name="description" content="Έκδοση αιτήσεων και αποφάσεων αδειών εκπαιδευτικών.">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<header class="masthead">
+  <h1>Εφαρμογή αδειών</h1>
+  <div class="banner" id="banner" hidden></div>
+  <p class="issuer" id="issuer"></p>
+</header>
+
+<nav>
+  <button data-tab="director" data-step="01">Διευθυντής &amp; σχολείο</button>
+  <button data-tab="employees" data-step="02">Εργαζόμενοι</button>
+  <button data-tab="leaves" data-step="03">Άδειες</button>
+</nav>
+
+<main>
+  <section class="panel" id="tab-director" hidden></section>
+  <section class="panel" id="tab-employees" hidden></section>
+  <section class="panel" id="tab-leaves" hidden></section>
+</main>
+
+<dialog id="employee-dialog">
+  <h2>Καρτέλα εργαζομένου</h2>
+  <div id="employee-form"></div>
+  <div class="toolbar">
+    <button onclick="document.getElementById('employee-dialog').close()">Άκυρο</button>
+    <button class="primary" id="employee-save">Αποθήκευση</button>
+  </div>
+</dialog>
+
+<script src="vendor/jszip.min.js"></script>
+<script src="vendor/docx-preview.min.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
