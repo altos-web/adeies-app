@@ -4,7 +4,7 @@
 import { store } from '../store.js';
 import { DAYS_OF_WEEK, DEFAULT_BELL_TIMES, DIMOTIKO_ORGANICITIES, getBranchesForSchoolType, isBranchValidForSchoolType, SCHOOL_TYPES } from './curricula.js';
 import { TimetableMatrix } from './matrix.js';
-import { autoAssignTeachers, buildBellTimes, createInitialTimetable, getAvailableDistributions, getDefaultLessonDistribution, normalizeTimetable, populateCurriculumForClasses, splitMultigradeLesson, syncSpecialClasses } from './model.js';
+import { autoAssignTeachers, buildBellTimes, configureOloimeroSubject2, createInitialTimetable, getAvailableDistributions, getDefaultLessonDistribution, normalizeTimetable, populateCurriculumForClasses, splitMultigradeLesson, splitOloimeroLesson, syncSpecialClasses, updateCardTeacher } from './model.js';
 import { TimetableSolver } from './solver.js';
 
 export class TimetableUI {
@@ -210,14 +210,18 @@ export class TimetableUI {
                 </label>
 
                 <div id="oloimero-details-panel" style="margin-top: 0.75rem; margin-left: 1.8rem; display: ${this.timetable.hasOloimero ? 'flex' : 'none'}; flex-direction: column; gap: 0.6rem; padding: 0.75rem 1rem; background: var(--wash); border-radius: 5px; border: 1px solid var(--rule);">
-                  <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
-                    <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.875rem;">
-                      <input type="radio" name="rb-oloimero-type" value="basic" ${(this.timetable.oloimeroType || 'basic') === 'basic' ? 'checked' : ''}>
-                      <span><strong>Βασικό Ολοήμερο (έως 16:00)</strong> — 3 ώρες/ημέρα (15 ώρες/εβδ.)</span>
+                  <div style="display: flex; flex-direction: column; gap: 0.45rem;">
+                    <label style="display: flex; align-items: center; gap: 0.45rem; cursor: pointer; font-size: 0.875rem;">
+                      <input type="radio" name="rb-oloimero-type" value="until_15" ${this.timetable.oloimeroType === 'until_15' ? 'checked' : ''}>
+                      <span><strong>Ολοήμερο έως 15:00</strong> — 2 ώρες/ημέρα (10 ώρ./εβδ.: 1η ώρα Σίτιση, 2η ώρα Μελέτη-Προετοιμασία)</span>
                     </label>
-                    <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.875rem;">
+                    <label style="display: flex; align-items: center; gap: 0.45rem; cursor: pointer; font-size: 0.875rem;">
+                      <input type="radio" name="rb-oloimero-type" value="basic" ${(this.timetable.oloimeroType || 'basic') === 'basic' ? 'checked' : ''}>
+                      <span><strong>Βασικό Ολοήμερο έως 16:00</strong> — 3 ώρες/ημέρα (15 ώρ./εβδ.: Σίτιση, Μελέτη &amp; 2ο Διδακτικό Αντικείμενο)</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.45rem; cursor: pointer; font-size: 0.875rem;">
                       <input type="radio" name="rb-oloimero-type" value="expanded" ${this.timetable.oloimeroType === 'expanded' ? 'checked' : ''}>
-                      <span><strong>Αναβαθμισμένο Ολοήμερο (έως 17:30)</strong> — 5 ώρες/ημέρα (25 ώρες/εβδ.)</span>
+                      <span><strong>Αναβαθμισμένο Ολοήμερο έως 17:30</strong> — 5 ώρες/ημέρα (25 ώρ./εβδ.: Σίτιση, Μελέτη, 2ο Διδ. Αντικείμενο &amp; Όμιλοι)</span>
                     </label>
                   </div>
                   <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; margin-top: 0.25rem;">
@@ -311,7 +315,8 @@ export class TimetableUI {
       cbOloimero.onchange = (e) => {
         this.timetable.hasOloimero = e.target.checked;
         if (oloPanel) oloPanel.style.display = e.target.checked ? 'flex' : 'none';
-        this.timetable.periodsPerDay = e.target.checked ? (this.timetable.oloimeroType === 'expanded' ? 11 : 9) : 6;
+        const oloPeriods = this.timetable.oloimeroType === 'until_15' ? 8 : (this.timetable.oloimeroType === 'expanded' ? 11 : 9);
+        this.timetable.periodsPerDay = e.target.checked ? oloPeriods : 6;
         syncSpecialClasses(this.timetable);
         this.timetable.bellTimes = buildBellTimes(this.timetable);
         populateCurriculumForClasses(this.timetable);
@@ -323,11 +328,12 @@ export class TimetableUI {
       };
     }
 
-    // Τύπος Ολοημέρου (Βασικό / Αναβαθμισμένο)
+    // Τύπος Ολοημέρου (έως 15:00 / Βασικό έως 16:00 / Αναβαθμισμένο έως 17:30)
     div.querySelectorAll('input[name="rb-oloimero-type"]').forEach((rb) => {
       rb.onchange = (e) => {
         this.timetable.oloimeroType = e.target.value;
-        this.timetable.periodsPerDay = this.timetable.oloimeroType === 'expanded' ? 11 : 9;
+        const oloPeriods = this.timetable.oloimeroType === 'until_15' ? 8 : (this.timetable.oloimeroType === 'expanded' ? 11 : 9);
+        this.timetable.periodsPerDay = oloPeriods;
         this.timetable.bellTimes = buildBellTimes(this.timetable);
         populateCurriculumForClasses(this.timetable);
         if (this.timetable.teachers && this.timetable.teachers.length > 0) {
@@ -360,8 +366,8 @@ export class TimetableUI {
     if (resetDimotikoBtn) {
       resetDimotikoBtn.onclick = () => {
         if (confirm('Επαναφορά των 6 αυτόνομων τμημάτων (Α1, Β1, Γ1, Δ1, Ε1, ΣΤ1);')) {
-          this.timetable.dimotikoOrganicity = '6th_plus';
-          this.timetable.periodsPerDay = this.timetable.hasOloimero ? (this.timetable.oloimeroType === 'expanded' ? 11 : 9) : 6;
+          const oloPeriods = this.timetable.oloimeroType === 'until_15' ? 8 : (this.timetable.oloimeroType === 'expanded' ? 11 : 9);
+          this.timetable.periodsPerDay = this.timetable.hasOloimero ? oloPeriods : 6;
           this.timetable.classes = JSON.parse(JSON.stringify(DIMOTIKO_ORGANICITIES['6th_plus'].defaultClasses));
           this.timetable.bellTimes = buildBellTimes(this.timetable);
           populateCurriculumForClasses(this.timetable);
@@ -1447,6 +1453,16 @@ export class TimetableUI {
                 ✂️ Σπάσιμο Τάξης
               </button>
             ` : ''}
+            ${les.isOloimero && les.hours > 1 ? `
+              <button type="button" class="btn-split-oloimero" style="font-size: 0.72rem; padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid var(--rule); background: var(--wash); cursor: pointer; white-space: nowrap; margin-top: 0.15rem;" title="Επιμερισμός ωρών σε διαφορετικούς εκπαιδευτικούς (π.χ. 2 ώρες στον έναν και 3 στον άλλον)">
+                ✂️ Επιμερισμός Ωρών
+              </button>
+            ` : ''}
+            ${les.isOloimero && (les.subjectId === 'drastiriotites' || les.fixedPeriod === 9) ? `
+              <button type="button" class="btn-configure-subject2" style="font-size: 0.72rem; padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid #f59e0b; background: rgba(245, 158, 11, 0.1); color: #b45309; cursor: pointer; white-space: nowrap; margin-top: 0.15rem; font-weight: 600;" title="Διαμόρφωση του 2ου Διδακτικού Αντικειμένου σε επιμέρους μαθήματα/ειδικότητες (Τ.Π.Ε., Αγγλικά, Αθλητισμός, Εικαστικά)">
+                🎨 Διαμόρφωση 2ου Διδ. Αντικειμένου
+              </button>
+            ` : ''}
           </div>
         </td>
       `;
@@ -1522,6 +1538,26 @@ export class TimetableUI {
         };
       }
 
+      // 7. Split oloimero lesson button (επιμερισμός ωρών)
+      const splitOloBtn = row.querySelector('.btn-split-oloimero');
+      if (splitOloBtn) {
+        splitOloBtn.onclick = () => {
+          this.openSplitOloimeroModal(les, () => {
+            this.renderLessonsList(tbody, filterClass);
+          });
+        };
+      }
+
+      // 8. Configure subject 2 button (2ο διδακτικό αντικείμενο)
+      const cfgSub2Btn = row.querySelector('.btn-configure-subject2');
+      if (cfgSub2Btn) {
+        cfgSub2Btn.onclick = () => {
+          this.openConfigureSubject2Modal(les, () => {
+            this.renderLessonsList(tbody, filterClass);
+          });
+        };
+      }
+
       tbody.append(row);
     });
   }
@@ -1585,6 +1621,136 @@ export class TimetableUI {
       dialog.remove();
       if (onSaved) onSaved();
     };
+
+    document.body.append(dialog);
+    dialog.showModal();
+  }
+
+  // Pop-up modal για επιμερισμό ωρών μαθήματος Ολοημέρου (Σίτιση, Μελέτη-Προετοιμασία) σε πολλαπλούς εκπαιδευτικούς
+  openSplitOloimeroModal(lesson, onSaved = null) {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'class-dialog';
+
+    dialog.innerHTML = `
+      <div class="dialog-content">
+        <h3>✂️ Επιμερισμός Ωρών — ${lesson.subjectName}</h3>
+        <p class="hint">
+          Επιμερίστε τις ${lesson.hours} ώρες του μαθήματος σε διαφορετικούς εκπαιδευτικούς (π.χ. για συμπλήρωση υποχρεωτικού ωραρίου).
+        </p>
+
+        <div style="margin-top: 1.25rem;">
+          <label class="field" style="width: 100%;">
+            <span class="label" style="font-weight: 600;">Πόσες ώρες θέλετε να αποσχίσετε σε ξεχωριστή ανάθεση;</span>
+            <input type="number" id="split-olo-hours" min="1" max="${lesson.hours - 1}" value="${Math.min(2, lesson.hours - 1)}" style="width: 100%; padding: 0.5rem; border: 1px solid var(--rule); border-radius: 4px; font-family: var(--sans);">
+            <span class="hint" style="font-size: 0.8125rem; margin-top: 0.25rem;">
+              Θα δημιουργηθεί μια νέα γραμμή ανάθεσης με τις επιλεγμένες ώρες, επιτρέποντας την ανάθεση σε διαφορετικό εκπαιδευτικό.
+            </span>
+          </label>
+        </div>
+
+        <div class="toolbar" style="margin-top: 1.5rem; justify-content: flex-end;">
+          <button type="button" class="btn-cancel">Άκυρο</button>
+          <button type="button" class="primary btn-save">✂️ Επιμερισμός Ωρών</button>
+        </div>
+      </div>
+    `;
+
+    dialog.querySelector('.btn-cancel').onclick = () => {
+      dialog.close();
+      dialog.remove();
+    };
+
+    dialog.querySelector('.btn-save').onclick = () => {
+      const splitHours = parseInt(dialog.querySelector('#split-olo-hours').value, 10) || 1;
+      splitOloimeroLesson(this.timetable, lesson.id, splitHours);
+      this.save();
+      dialog.close();
+      dialog.remove();
+      if (onSaved) onSaved();
+    };
+
+    document.body.append(dialog);
+    dialog.showModal();
+  }
+
+  // Pop-up modal για διαμόρφωση του 2ου Διδακτικού Αντικειμένου σε επιμέρους ειδικότητες
+  openConfigureSubject2Modal(lesson, onSaved = null) {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'class-dialog';
+
+    dialog.innerHTML = `
+      <div class="dialog-content">
+        <h3>🎨 Διαμόρφωση 2ου Διδακτικού Αντικειμένου (15:15 - 16:00)</h3>
+        <p class="hint">
+          Σύμφωνα με το Π.Δ. 79/2017, στο 2ο Διδακτικό Αντικείμενο διδάσκονται επιμέρους μαθήματα από εκπαιδευτικούς των αντίστοιχων ειδικοτήτων (Τ.Π.Ε., Αγγλικά, Φυσική Αγωγή, Εικαστικά, Μουσική, Θεατρική Αγωγή).
+        </p>
+
+        <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.6rem;">
+          <strong style="font-size: 0.875rem;">Επιλέξτε ένα έτοιμο πρότυπο κατανομής (Σύνολο 5 ώρες):</strong>
+          
+          <button type="button" class="secondary preset-btn" data-preset="preset1" style="text-align: left; padding: 0.6rem 0.85rem; line-height: 1.4; border-radius: 6px; cursor: pointer;">
+            <strong>Πρότυπο 1 (Πιο συνηθισμένο):</strong><br>
+            • 2 ώρες <strong>Τ.Π.Ε.</strong> (ΠΕ86)<br>
+            • 2 ώρες <strong>Αγγλικά</strong> (ΠΕ06)<br>
+            • 1 ώρα <strong>Αθλητισμός</strong> (ΠΕ11)
+          </button>
+
+          <button type="button" class="secondary preset-btn" data-preset="preset2" style="text-align: left; padding: 0.6rem 0.85rem; line-height: 1.4; border-radius: 6px; cursor: pointer;">
+            <strong>Πρότυπο 2:</strong><br>
+            • 2 ώρες <strong>Τ.Π.Ε.</strong> (ΠΕ86)<br>
+            • 2 ώρες <strong>Αγγλικά</strong> (ΠΕ06)<br>
+            • 1 ώρα <strong>Εικαστικά</strong> (ΠΕ08)
+          </button>
+
+          <button type="button" class="secondary preset-btn" data-preset="preset3" style="text-align: left; padding: 0.6rem 0.85rem; line-height: 1.4; border-radius: 6px; cursor: pointer;">
+            <strong>Πρότυπο 3:</strong><br>
+            • 2 ώρες <strong>Αγγλικά</strong> (ΠΕ06)<br>
+            • 2 ώρες <strong>Αθλητισμός</strong> (ΠΕ11)<br>
+            • 1 ώρα <strong>Μουσική</strong> (ΠΕ79.01)
+          </button>
+        </div>
+
+        <div class="toolbar" style="margin-top: 1.5rem; justify-content: flex-end;">
+          <button type="button" class="btn-cancel">Άκυρο</button>
+        </div>
+      </div>
+    `;
+
+    dialog.querySelector('.btn-cancel').onclick = () => {
+      dialog.close();
+      dialog.remove();
+    };
+
+    const presets = {
+      preset1: [
+        { id: 'tpe_olo', name: '2ο Διδ. Αντικείμενο: Τ.Π.Ε.', short: 'ΤΠΕ.ΟΛ', branch: 'ΠΕ86', hours: 2, color: '#0ea5e9' },
+        { id: 'eng_olo', name: '2ο Διδ. Αντικείμενο: Αγγλικά', short: 'ΑΓΓΛ.ΟΛ', branch: 'ΠΕ06', hours: 2, color: '#8b5cf6' },
+        { id: 'pe_olo', name: '2ο Διδ. Αντικείμενο: Αθλητισμός', short: 'ΑΘΛ.ΟΛ', branch: 'ΠΕ11', hours: 1, color: '#10b981' },
+      ],
+      preset2: [
+        { id: 'tpe_olo', name: '2ο Διδ. Αντικείμενο: Τ.Π.Ε.', short: 'ΤΠΕ.ΟΛ', branch: 'ΠΕ86', hours: 2, color: '#0ea5e9' },
+        { id: 'eng_olo', name: '2ο Διδ. Αντικείμενο: Αγγλικά', short: 'ΑΓΓΛ.ΟΛ', branch: 'ΠΕ06', hours: 2, color: '#8b5cf6' },
+        { id: 'art_olo', name: '2ο Διδ. Αντικείμενο: Εικαστικά', short: 'ΕΙΚ.ΟΛ', branch: 'ΠΕ08', hours: 1, color: '#f43f5e' },
+      ],
+      preset3: [
+        { id: 'eng_olo', name: '2ο Διδ. Αντικείμενο: Αγγλικά', short: 'ΑΓΓΛ.ΟΛ', branch: 'ΠΕ06', hours: 2, color: '#8b5cf6' },
+        { id: 'pe_olo', name: '2ο Διδ. Αντικείμενο: Αθλητισμός', short: 'ΑΘΛ.ΟΛ', branch: 'ΠΕ11', hours: 2, color: '#10b981' },
+        { id: 'mus_olo', name: '2ο Διδ. Αντικείμενο: Μουσική', short: 'ΜΟΥΣ.ΟΛ', branch: 'ΠΕ79.01', hours: 1, color: '#eab308' },
+      ],
+    };
+
+    dialog.querySelectorAll('.preset-btn').forEach((btn) => {
+      btn.onclick = () => {
+        const choice = presets[btn.dataset.preset];
+        if (choice) {
+          configureOloimeroSubject2(this.timetable, lesson.id, choice);
+          this.save();
+          dialog.close();
+          dialog.remove();
+          if (onSaved) onSaved();
+        }
+      };
+    });
 
     document.body.append(dialog);
     dialog.showModal();
@@ -1860,6 +2026,7 @@ export class TimetableUI {
       </div>
 
       <div class="matrix-mount-point" id="matrix-mount"></div>
+      <div id="oloimero-summary-mount"></div>
     `;
 
     // Run Solver
@@ -1915,13 +2082,170 @@ export class TimetableUI {
       window.print();
     };
 
+    const oloMount = div.querySelector('#oloimero-summary-mount');
+    const updateAll = () => {
+      this.save();
+      if (oloMount) this.renderOloimeroScheduleSummary(oloMount);
+    };
+
     // Render Matrix
     const mount = div.querySelector('#matrix-mount');
-    this.matrix = new TimetableMatrix(mount, this.timetable, () => {
-      this.save();
-    });
+    this.matrix = new TimetableMatrix(mount, this.timetable, updateAll);
     this.matrix.render();
 
+    // Render All-day schedule summary if All-day is active
+    if (oloMount) {
+      this.renderOloimeroScheduleSummary(oloMount);
+    }
+
     return div;
+  }
+
+  // Ειδικός Εβδομαδιαίος Πίνακας Ολοήμερου Προγράμματος (Σίτιση, Μελέτη-Προετοιμασία, 2ο Διδακτικό Αντικείμενο)
+  renderOloimeroScheduleSummary(mount) {
+    if (!mount) return;
+    mount.innerHTML = '';
+    if (!this.timetable.hasOloimero) return;
+
+    const oloClasses = (this.timetable.classes || []).filter((c) => c.isOloimero || c.id.startsWith('c_olo_'));
+    if (oloClasses.length === 0) return;
+
+    const isUntil15 = this.timetable.oloimeroType === 'until_15';
+    const isExpanded = this.timetable.oloimeroType === 'expanded';
+    const oloEndTime = isUntil15 ? '15:00' : (isExpanded ? '17:30' : '16:00');
+
+    const cardWrap = document.createElement('div');
+    cardWrap.className = 'oloimero-summary-card';
+    cardWrap.style.cssText = 'background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 1.25rem; margin-top: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);';
+
+    let html = `
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+        <div>
+          <h4 style="margin: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>☀️ Εβδομαδιαίος Πίνακας Ολοήμερου Προγράμματος (Κατανομή Εκπαιδευτικών)</span>
+          </h4>
+          <p class="hint" style="margin: 0.25rem 0 0 0; font-size: 0.8125rem;">
+            Εμφάνιση των ανατεθειμένων εκπαιδευτικών ανά ημέρα στη Σίτιση, στη Μελέτη-Προετοιμασία και στο 2ο Διδακτικό Αντικείμενο (Λήξη: <strong>${oloEndTime}</strong>).
+          </p>
+        </div>
+        <span class="badge info" style="font-weight: 600;">${isUntil15 ? 'Ολοήμερο έως 15:00' : (isExpanded ? 'Αναβαθμισμένο έως 17:30' : 'Βασικό έως 16:00')}</span>
+      </div>
+    `;
+
+    for (const cls of oloClasses) {
+      html += `
+        <div style="margin-top: 0.75rem;">
+          <strong style="font-size: 0.9375rem; color: var(--accent); display: block; margin-bottom: 0.4rem;">${cls.name}</strong>
+          <div style="overflow-x: auto;">
+            <table class="list" style="width: 100%; border-collapse: collapse; font-size: 0.8125rem; text-align: center;">
+              <thead>
+                <tr style="background: var(--wash);">
+                  <th style="text-align: left; padding: 0.5rem 0.75rem; min-width: 13rem;">Ώρα / Διδακτικό Αντικείμενο</th>
+                  ${DAYS_OF_WEEK.map((d) => `<th style="padding: 0.5rem; min-width: 8rem;">${d.name}</th>`).join('')}
+                </tr>
+              </thead>
+              <tbody>
+                <!-- 1η ώρα: Σίτιση (13:20 - 14:00) -->
+                <tr style="border-bottom: 1px solid var(--rule);">
+                  <td style="text-align: left; padding: 0.5rem 0.75rem; font-weight: 600; background: rgba(16, 185, 129, 0.05);">
+                    <div style="color: #047857;">1η Ολοημέρου (13:20 - 14:00)</div>
+                    <small style="font-weight: normal; color: var(--ink-secondary);">Διατροφική Αγωγή / Σίτιση</small>
+                  </td>
+                  ${DAYS_OF_WEEK.map((d, dIdx) => {
+                    const card = (this.timetable.schedule || []).find((c) => c.classId === cls.id && c.day === (dIdx + 1) && c.period === 7);
+                    if (card && card.teacherName && card.teacherName !== '— Χωρίς εκπαιδευτικό —') {
+                      return `<td style="padding: 0.45rem; background: rgba(16, 185, 129, 0.08); border-left: 1px solid var(--rule);">
+                        <strong style="color: #047857; display: block;">${card.teacherName}</strong>
+                        <span style="font-size: 0.72rem; color: var(--ink-secondary);">Σίτιση</span>
+                      </td>`;
+                    }
+                    return `<td style="padding: 0.45rem; color: var(--brick); font-size: 0.75rem; border-left: 1px solid var(--rule);"><span style="color: var(--ink-muted);">— Κενό —</span></td>`;
+                  }).join('')}
+                </tr>
+
+                <!-- 2η ώρα: Μελέτη - Προετοιμασία (14:15 - 15:00) -->
+                <tr style="border-bottom: 1px solid var(--rule);">
+                  <td style="text-align: left; padding: 0.5rem 0.75rem; font-weight: 600; background: rgba(59, 130, 246, 0.05);">
+                    <div style="color: #1d4ed8;">2η Ολοημέρου (14:15 - 15:00)</div>
+                    <small style="font-weight: normal; color: var(--ink-secondary);">Μελέτη - Προετοιμασία</small>
+                  </td>
+                  ${DAYS_OF_WEEK.map((d, dIdx) => {
+                    const card = (this.timetable.schedule || []).find((c) => c.classId === cls.id && c.day === (dIdx + 1) && c.period === 8);
+                    if (card && card.teacherName && card.teacherName !== '— Χωρίς εκπαιδευτικό —') {
+                      return `<td style="padding: 0.45rem; background: rgba(59, 130, 246, 0.08); border-left: 1px solid var(--rule);">
+                        <strong style="color: #1d4ed8; display: block;">${card.teacherName}</strong>
+                        <span style="font-size: 0.72rem; color: var(--ink-secondary);">Μελέτη</span>
+                      </td>`;
+                    }
+                    return `<td style="padding: 0.45rem; color: var(--brick); font-size: 0.75rem; border-left: 1px solid var(--rule);"><span style="color: var(--ink-muted);">— Κενό —</span></td>`;
+                  }).join('')}
+                </tr>
+
+                ${!isUntil15 ? `
+                  <!-- 3η ώρα: 2ο Διδακτικό Αντικείμενο (15:15 - 16:00) -->
+                  <tr style="border-bottom: 1px solid var(--rule);">
+                    <td style="text-align: left; padding: 0.5rem 0.75rem; font-weight: 600; background: rgba(245, 158, 11, 0.05);">
+                      <div style="color: #b45309;">3η Ολοημέρου (15:15 - 16:00)</div>
+                      <small style="font-weight: normal; color: var(--ink-secondary);">2ο Διδακτικό Αντικείμενο</small>
+                    </td>
+                    ${DAYS_OF_WEEK.map((d, dIdx) => {
+                      const card = (this.timetable.schedule || []).find((c) => c.classId === cls.id && c.day === (dIdx + 1) && c.period === 9);
+                      if (card && card.teacherName && card.teacherName !== '— Χωρίς εκπαιδευτικό —') {
+                        return `<td style="padding: 0.45rem; background: rgba(245, 158, 11, 0.08); border-left: 1px solid var(--rule);">
+                          <strong style="color: #b45309; display: block; font-size: 0.78rem;">${card.subjectShort || card.subjectName}</strong>
+                          <span style="font-size: 0.72rem; color: var(--ink);">${card.teacherName}</span>
+                        </td>`;
+                      }
+                      return `<td style="padding: 0.45rem; color: var(--brick); font-size: 0.75rem; border-left: 1px solid var(--rule);"><span style="color: var(--ink-muted);">— Κενό —</span></td>`;
+                    }).join('')}
+                  </tr>
+                ` : ''}
+
+                ${isExpanded ? `
+                  <!-- 4η ώρα: Όμιλος Α΄ (16:00 - 16:45) -->
+                  <tr style="border-bottom: 1px solid var(--rule);">
+                    <td style="text-align: left; padding: 0.5rem 0.75rem; font-weight: 600; background: rgba(139, 92, 246, 0.05);">
+                      <div style="color: #7c3aed;">4η Αναβαθμισμένου (16:00 - 16:45)</div>
+                      <small style="font-weight: normal; color: var(--ink-secondary);">Σχολικός Μαθητικός Όμιλος Α΄</small>
+                    </td>
+                    ${DAYS_OF_WEEK.map((d, dIdx) => {
+                      const card = (this.timetable.schedule || []).find((c) => c.classId === cls.id && c.day === (dIdx + 1) && c.period === 10);
+                      if (card && card.teacherName && card.teacherName !== '— Χωρίς εκπαιδευτικό —') {
+                        return `<td style="padding: 0.45rem; background: rgba(139, 92, 246, 0.08); border-left: 1px solid var(--rule);">
+                          <strong style="color: #7c3aed; display: block; font-size: 0.78rem;">${card.subjectShort || card.subjectName}</strong>
+                          <span style="font-size: 0.72rem; color: var(--ink);">${card.teacherName}</span>
+                        </td>`;
+                      }
+                      return `<td style="padding: 0.45rem; color: var(--brick); font-size: 0.75rem; border-left: 1px solid var(--rule);"><span style="color: var(--ink-muted);">— Κενό —</span></td>`;
+                    }).join('')}
+                  </tr>
+
+                  <!-- 5η ώρα: Όμιλος Β΄ (16:45 - 17:30) -->
+                  <tr style="border-bottom: 1px solid var(--rule);">
+                    <td style="text-align: left; padding: 0.5rem 0.75rem; font-weight: 600; background: rgba(236, 72, 153, 0.05);">
+                      <div style="color: #db2777;">5η Αναβαθμισμένου (16:45 - 17:30)</div>
+                      <small style="font-weight: normal; color: var(--ink-secondary);">Σχολικός Μαθητικός Όμιλος Β΄</small>
+                    </td>
+                    ${DAYS_OF_WEEK.map((d, dIdx) => {
+                      const card = (this.timetable.schedule || []).find((c) => c.classId === cls.id && c.day === (dIdx + 1) && c.period === 11);
+                      if (card && card.teacherName && card.teacherName !== '— Χωρίς εκπαιδευτικό —') {
+                        return `<td style="padding: 0.45rem; background: rgba(236, 72, 153, 0.08); border-left: 1px solid var(--rule);">
+                          <strong style="color: #db2777; display: block; font-size: 0.78rem;">${card.subjectShort || card.subjectName}</strong>
+                          <span style="font-size: 0.72rem; color: var(--ink);">${card.teacherName}</span>
+                        </td>`;
+                      }
+                      return `<td style="padding: 0.45rem; color: var(--brick); font-size: 0.75rem; border-left: 1px solid var(--rule);"><span style="color: var(--ink-muted);">— Κενό —</span></td>`;
+                    }).join('')}
+                  </tr>
+                ` : ''}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    cardWrap.innerHTML = html;
+    mount.append(cardWrap);
   }
 }

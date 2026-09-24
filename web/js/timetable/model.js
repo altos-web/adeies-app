@@ -25,8 +25,13 @@ export function buildBellTimes(timetable) {
   // 3. Ολοήμερο Πρόγραμμα
   if (isDimotiko && timetable.hasOloimero) {
     const oloSource = isOligothesio ? DEFAULT_BELL_TIMES.oloimero_oligothesia : DEFAULT_BELL_TIMES.oloimero_primary;
-    const isExpanded = timetable.oloimeroType === 'expanded';
-    const oloTimes = isExpanded ? oloSource : oloSource.slice(0, 3);
+    let sliceCount = 3;
+    if (timetable.oloimeroType === 'until_15') {
+      sliceCount = 2; // Έως 15:00 (1η ώρα Σίτιση, 2η ώρα Μελέτη-Προετοιμασία)
+    } else if (timetable.oloimeroType === 'expanded') {
+      sliceCount = oloSource.length; // Έως 17:30 (5 ώρες)
+    }
+    const oloTimes = oloSource.slice(0, sliceCount);
     times.push(...JSON.parse(JSON.stringify(oloTimes)));
   }
 
@@ -226,7 +231,13 @@ export function normalizeTimetable(tt) {
   tt.bellTimes = buildBellTimes(tt);
   if (tt.schoolType === 'dimotiko') {
     if (tt.hasOloimero) {
-      tt.periodsPerDay = tt.oloimeroType === 'expanded' ? 11 : 9;
+      if (tt.oloimeroType === 'until_15') {
+        tt.periodsPerDay = 8; // Έως 15:00 (6 πρωινές + 2 ολοημέρου)
+      } else if (tt.oloimeroType === 'expanded') {
+        tt.periodsPerDay = 11; // Έως 17:30 (6 πρωινές + 5 ολοημέρου)
+      } else {
+        tt.periodsPerDay = 9; // Έως 16:00 (6 πρωινές + 3 ολοημέρου)
+      }
     } else {
       tt.periodsPerDay = 6;
     }
@@ -251,6 +262,11 @@ export function getDefaultLessonDistribution(lesson, totalHours = null) {
   const hrs = totalHours !== null ? Number(totalHours) : Number(lesson?.hours || 0);
   if (!hrs || hrs <= 0) return [];
   if (hrs === 1) return [1];
+
+  // Μαθήματα καθορισμένης ώρας (Ολοήμερο, Πρωινή Ζώνη): πάντα μονόωρα σε διαφορετικές ημέρες
+  if (lesson?.fixedPeriod !== null && lesson?.fixedPeriod !== undefined || lesson?.isOloimero || lesson?.isProiniZoni) {
+    return Array(hrs).fill(1);
+  }
 
   // Αν έχει οριστεί ρητά defaultDistribution στο αντικείμενο μαθήματος:
   if (lesson?.defaultDistribution) {
@@ -433,6 +449,92 @@ export function splitMultigradeLesson(timetable, baseLessonId, targetGrade, hour
 
   timetable.lessons.push(newLesson);
   return newLesson;
+}
+
+// Δημιουργία ή απόσχιση ωρών για μάθημα Ολοημέρου (Σίτιση, Μελέτη-Προετοιμασία, 2ο Διδακτικό Αντικείμενο)
+// Επιτρέπει τον επιμερισμό των ωρών σε διαφορετικούς εκπαιδευτικούς (π.χ. 2 ώρες Σίτισης στον έναν και 3 στον άλλον)
+export function splitOloimeroLesson(timetable, baseLessonId, splitHours, customSubject = null) {
+  const lesson = (timetable.lessons || []).find((l) => l.id === baseLessonId);
+  if (!lesson) return null;
+
+  const currentHours = Number(lesson.hours) || 0;
+  const hoursToCut = Math.min(Math.max(1, Number(splitHours) || 1), currentHours - 1);
+  if (hoursToCut <= 0 || currentHours <= 1) return null;
+
+  lesson.hours = currentHours - hoursToCut;
+  const baseDefDist = getDefaultLessonDistribution(lesson, lesson.hours);
+  lesson.distribution = Array.isArray(baseDefDist) ? baseDefDist.join('+') : String(baseDefDist);
+  lesson.isSplit = true;
+  lesson.splitType = 'oloimero_split';
+
+  const newLessonId = `les_${lesson.classId}_${customSubject?.id || lesson.subjectId}_split_${Date.now()}`;
+  const splitDefDist = getDefaultLessonDistribution(lesson, hoursToCut);
+  const distStr = Array.isArray(splitDefDist) ? splitDefDist.join('+') : String(splitDefDist);
+
+  const newLesson = {
+    ...JSON.parse(JSON.stringify(lesson)),
+    id: newLessonId,
+    subjectId: customSubject?.id || lesson.subjectId,
+    subjectName: customSubject?.name || lesson.subjectName,
+    subjectShort: customSubject?.short || lesson.subjectShort,
+    subjectColor: customSubject?.color || lesson.subjectColor,
+    branch: customSubject?.branch || lesson.branch,
+    hours: hoursToCut,
+    defaultHours: hoursToCut,
+    distribution: distStr,
+    defaultDistribution: distStr,
+    isSplit: true,
+    splitType: 'oloimero_split',
+    teacherId: '',
+    teacherName: '— Χωρίς εκπαιδευτικό —',
+  };
+
+  timetable.lessons.push(newLesson);
+  return newLesson;
+}
+
+// Διαμόρφωση του 2ου Διδακτικού Αντικειμένου σε επιμέρους ειδικότητες (Τ.Π.Ε., Αγγλικά, Αθλητισμός, Τέχνες)
+export function configureOloimeroSubject2(timetable, baseLessonId, subjectsArray) {
+  const baseLesson = (timetable.lessons || []).find((l) => l.id === baseLessonId);
+  if (!baseLesson || !Array.isArray(subjectsArray) || subjectsArray.length === 0) return false;
+
+  const idx = timetable.lessons.findIndex((l) => l.id === baseLessonId);
+  timetable.lessons.splice(idx, 1);
+
+  for (const s of subjectsArray) {
+    const hours = Number(s.hours) || 1;
+    const defDist = getDefaultLessonDistribution(baseLesson, hours);
+    const distStr = Array.isArray(defDist) ? defDist.join('+') : String(defDist);
+    timetable.lessons.push({
+      ...JSON.parse(JSON.stringify(baseLesson)),
+      id: `les_${baseLesson.classId}_${s.id}_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
+      subjectId: s.id,
+      subjectName: s.name,
+      subjectShort: s.short,
+      subjectColor: s.color || '#f59e0b',
+      branch: s.branch || 'ΠΕ70',
+      hours,
+      defaultHours: hours,
+      distribution: distStr,
+      defaultDistribution: distStr,
+      isSplit: true,
+      splitType: 'oloimero_split',
+      teacherId: '',
+      teacherName: '— Χωρίς εκπαιδευτικό —',
+      fixedPeriod: 9,
+    });
+  }
+  return true;
+}
+
+// Αλλαγή εκπαιδευτικού σε μεμονωμένη τοποθετημένη κάρτα του προγράμματος
+export function updateCardTeacher(timetable, cardId, newTeacherId) {
+  const card = (timetable.schedule || []).find((c) => c.id === cardId);
+  if (!card) return false;
+  const teacher = (timetable.teachers || []).find((t) => t.id === newTeacherId);
+  card.teacherId = newTeacherId || '';
+  card.teacherName = teacher ? teacher.name : '— Χωρίς εκπαιδευτικό —';
+  return true;
 }
 
 // Αυτόματη φόρτωση του νομοθετημένου αναλυτικού προγράμματος στα τμήματα

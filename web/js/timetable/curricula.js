@@ -663,17 +663,22 @@ export function isBranchValidForSchoolType(branchCode, schoolType) {
 
 // ── Αναλυτικά Προγράμματα Ολοημέρου & Πρωινής Ζώνης (Π.Δ. 79/2017 & Ν. 4957/2022) ──
 export const OLOIMERO_CURRICULA = {
+  // Ολοήμερο με λήξη στις 15:00 (13:20/13:40 έως 15:00 - 10 ώρες/εβδ. - Π.Δ. 79/2017)
+  until_15: [
+    { id: 'sitisi', name: 'Διατροφική Αγωγή / Σίτιση', short: 'ΣΙΤ', hours: 5, branch: 'ΠΕ70', color: '#10b981', difficulty: 1, isOloimero: true, fixedPeriod: 7 },
+    { id: 'meleti', name: 'Μελέτη - Προετοιμασία', short: 'ΜΕΛ.ΟΛ', hours: 5, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 2, isOloimero: true, fixedPeriod: 8 },
+  ],
   // Βασικό Ολοήμερο (13:20/13:40 έως 16:00 - 15 ώρες/εβδ.)
   basic: [
     { id: 'sitisi', name: 'Διατροφική Αγωγή / Σίτιση', short: 'ΣΙΤ', hours: 5, branch: 'ΠΕ70', color: '#10b981', difficulty: 1, isOloimero: true, fixedPeriod: 7 },
     { id: 'meleti', name: 'Μελέτη - Προετοιμασία', short: 'ΜΕΛ.ΟΛ', hours: 5, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 2, isOloimero: true, fixedPeriod: 8 },
-    { id: 'drastiriotites', name: 'Διδακτικό Αντικείμενο (ΤΠΕ / Αγγλικά / Αθλητισμός / Τέχνες)', short: 'ΔΡΑΣΤ', hours: 5, branch: 'ΠΕ70/ΠΕ86/ΠΕ06/ΠΕ11/ΠΕ08/ΠΕ79.01', color: '#f59e0b', difficulty: 1, isOloimero: true, fixedPeriod: 9 },
+    { id: 'drastiriotites', name: '2ο Διδακτικό Αντικείμενο (ΤΠΕ / Αγγλικά / Αθλητισμός / Τέχνες)', short: '2ο ΔΙΔ.ΑΝΤ', hours: 5, branch: 'ΠΕ70/ΠΕ86/ΠΕ06/ΠΕ11/ΠΕ08/ΠΕ79.01', color: '#f59e0b', difficulty: 1, isOloimero: true, fixedPeriod: 9 },
   ],
   // Αναβαθμισμένο Ολοήμερο (έως 17:30 - 25 ώρες/εβδ. - Ν. 4957/2022)
   expanded: [
     { id: 'sitisi', name: 'Διατροφική Αγωγή / Σίτιση', short: 'ΣΙΤ', hours: 5, branch: 'ΠΕ70', color: '#10b981', difficulty: 1, isOloimero: true, fixedPeriod: 7 },
     { id: 'meleti', name: 'Μελέτη - Προετοιμασία', short: 'ΜΕΛ.ΟΛ', hours: 5, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 2, isOloimero: true, fixedPeriod: 8 },
-    { id: 'drastiriotites', name: 'Διδακτικό Αντικείμενο (ΤΠΕ / Αγγλικά / Αθλητισμός / Τέχνες)', short: 'ΔΡΑΣΤ', hours: 5, branch: 'ΠΕ70/ΠΕ86/ΠΕ06/ΠΕ11/ΠΕ08/ΠΕ79.01', color: '#f59e0b', difficulty: 1, isOloimero: true, fixedPeriod: 9 },
+    { id: 'drastiriotites', name: '2ο Διδακτικό Αντικείμενο (ΤΠΕ / Αγγλικά / Αθλητισμός / Τέχνες)', short: '2ο ΔΙΔ.ΑΝΤ', hours: 5, branch: 'ΠΕ70/ΠΕ86/ΠΕ06/ΠΕ11/ΠΕ08/ΠΕ79.01', color: '#f59e0b', difficulty: 1, isOloimero: true, fixedPeriod: 9 },
     { id: 'omilos_1', name: 'Σχολικός Μαθητικός Όμιλος Α΄', short: 'ΟΜΙΛ.Α', hours: 5, branch: 'ΠΕ70/ΠΕ11/ΠΕ86/ΠΕ79.01/ΠΕ08', color: '#8b5cf6', difficulty: 1, isOloimero: true, fixedPeriod: 10 },
     { id: 'omilos_2', name: 'Σχολικός Μαθητικός Όμιλος Β΄', short: 'ΟΜΙΛ.Β', hours: 5, branch: 'ΠΕ70/ΠΕ11/ΠΕ86/ΠΕ79.01/ΠΕ08', color: '#ec4899', difficulty: 1, isOloimero: true, fixedPeriod: 11 },
   ],

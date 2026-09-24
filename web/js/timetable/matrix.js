@@ -169,7 +169,7 @@ export class TimetableMatrix {
         showedOloimeroDivider = true;
         const divRow = document.createElement('tr');
         divRow.className = 'matrix-section-row';
-        const oloEndTime = this.timetable.oloimeroType === 'expanded' ? '17:30' : '16:00';
+        const oloEndTime = this.timetable.oloimeroType === 'until_15' ? '15:00' : (this.timetable.oloimeroType === 'expanded' ? '17:30' : '16:00');
         divRow.innerHTML = `<td colspan="6" class="matrix-section-divider">☀️ Ολοήμερο Πρόγραμμα (${timeInfo ? timeInfo.start : '13:15'} - ${oloEndTime})</td>`;
         tbody.append(divRow);
       }
@@ -180,9 +180,20 @@ export class TimetableMatrix {
 
       const timeTd = document.createElement('td');
       timeTd.className = 'cell-period-label';
+
+      let oloPeriodTitle = '';
+      if (period === 7) oloPeriodTitle = 'Σίτιση';
+      else if (period === 8) oloPeriodTitle = 'Μελέτη';
+      else if (period === 9) oloPeriodTitle = '2ο Διδ.Αντ.';
+      else if (period === 10) oloPeriodTitle = 'Όμιλος Α΄';
+      else if (period === 11) oloPeriodTitle = 'Όμιλος Β΄';
+
       if (period === 0) {
         timeTd.innerHTML = `<strong>ΠΖ</strong><small>${timeLabel || '07:00-08:00'}</small>`;
         timeTd.title = 'Πρωινή Ζώνη (07:00 - 08:00)';
+      } else if (period >= 7 && oloPeriodTitle) {
+        timeTd.innerHTML = `<strong>${period}η</strong><small style="font-weight: 700; color: #0284c7;">${oloPeriodTitle}</small><small>${timeLabel}</small>`;
+        timeTd.title = `Ολοήμερο: ${oloPeriodTitle} (${timeLabel})`;
       } else {
         timeTd.innerHTML = `<strong>${period}η</strong><small>${timeLabel}</small>`;
       }
@@ -364,13 +375,20 @@ export class TimetableMatrix {
       lengthBadgeText = currentPeriod ? `${lenName} (${part}/${totalParts})` : `${lenName} (${totalParts} ώρ.)`;
     }
 
+    let oloBadge = 'ΟΛΟ';
+    if (card.isOloimero) {
+      if (card.fixedPeriod === 7 || card.subjectId === 'sitisi') oloBadge = 'ΣΙΤΙΣΗ';
+      else if (card.fixedPeriod === 8 || card.subjectId === 'meleti') oloBadge = 'ΜΕΛΕΤΗ';
+      else if (card.fixedPeriod === 9 || card.subjectId === 'drastiriotites') oloBadge = '2ο ΔΙΔ.ΑΝΤ';
+    }
+
     cardEl.innerHTML = `
       <div class="card-header">
         <span class="card-subject" title="${card.subjectName}">${card.subjectShort || card.subjectName}</span>
         ${lengthBadgeText ? `<span class="card-badge length ${part > 1 ? 'is-cont' : ''}">${lengthBadgeText}</span>` : ''}
         ${card.isSplit ? `<span class="card-badge badge-split" title="Σπαστό μάθημα">${card.splitGrade ? `Τάξη ${card.splitGrade}΄` : 'Σπαστό'}</span>` : ''}
         ${card.isProiniZoni ? `<span class="card-badge badge-pz" title="Πρωινή Ζώνη">ΠΖ</span>` : ''}
-        ${card.isOloimero ? `<span class="card-badge badge-olo" title="Ολοήμερο Πρόγραμμα">ΟΛΟ</span>` : ''}
+        ${card.isOloimero ? `<span class="card-badge badge-olo" title="Ολοήμερο Πρόγραμμα: ${card.subjectName}">${oloBadge}</span>` : ''}
         ${currentPeriod ? `<button type="button" class="card-unplace-btn" title="Αφαίρεση από το πρόγραμμα (στο καλάθι)">✕</button>` : ''}
       </div>
       <div class="card-body">
@@ -382,6 +400,14 @@ export class TimetableMatrix {
         ${isMulti && part > 1 ? `<span class="card-continuation-hint">↳ συνέχεια από ${currentPeriod - 1}η ώρα</span>` : ''}
       </div>
     `;
+
+    // Click handler to quickly change educator on card
+    cardEl.addEventListener('click', (e) => {
+      if (e.target.closest('.card-unplace-btn')) return;
+      if (currentPeriod) {
+        this.openCardEditModal(card);
+      }
+    });
 
     // Unplace button click handler
     const unplaceBtn = cardEl.querySelector('.card-unplace-btn');
@@ -417,6 +443,71 @@ export class TimetableMatrix {
     });
 
     return cardEl;
+  }
+
+  // Αναδυόμενο παράθυρο γρήγορης αλλαγής εκπαιδευτικού για συγκεκριμένη κάρτα
+  openCardEditModal(card) {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'modal-dialog';
+    const dayName = DAYS_OF_WEEK[(card.day || 1) - 1]?.name || `Ημέρα ${card.day}`;
+    const cls = this.timetable.classes.find((c) => c.id === card.classId);
+
+    dialog.innerHTML = `
+      <div class="modal-header">
+        <h4>Ανάθεση Εκπαιδευτικού σε Κάρτα</h4>
+        <button type="button" class="close-btn" id="modal-card-close">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 0.85rem; padding: 1rem 0;">
+        <div style="background: var(--wash); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid var(--rule);">
+          <div style="font-size: 0.8125rem; color: var(--ink-secondary);">Τμήμα &amp; Μάθημα:</div>
+          <strong style="font-size: 0.95rem;">${cls?.name || card.className || ''} — ${card.subjectName}</strong>
+          <div style="font-size: 0.8125rem; color: var(--accent); margin-top: 0.25rem; font-weight: 600;">${dayName}, ${card.period}η ώρα</div>
+        </div>
+
+        <div>
+          <label for="sel-modal-card-teacher" style="display: block; font-size: 0.8125rem; font-weight: 600; margin-bottom: 0.35rem;">
+            Ανατεθειμένος Εκπαιδευτικός:
+          </label>
+          <select id="sel-modal-card-teacher" style="width: 100%; padding: 0.5rem; border: 1px solid var(--rule); border-radius: 4px; font-family: var(--sans);">
+            <option value="">— Χωρίς ανάθεση εκπαιδευτικού —</option>
+            ${(this.timetable.teachers || []).map((t) => `
+              <option value="${t.id}" ${t.id === card.teacherId ? 'selected' : ''}>
+                ${t.name} (${t.branch || '—'})
+              </option>
+            `).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.5rem;">
+        <button type="button" class="secondary" id="modal-card-cancel">Ακύρωση</button>
+        <button type="button" class="primary" id="modal-card-save">Αποθήκευση</button>
+      </div>
+    `;
+
+    document.body.append(dialog);
+    dialog.showModal();
+
+    dialog.querySelector('#modal-card-close').onclick = () => { dialog.close(); dialog.remove(); };
+    dialog.querySelector('#modal-card-cancel').onclick = () => { dialog.close(); dialog.remove(); };
+
+    dialog.querySelector('#modal-card-save').onclick = () => {
+      const newTeacherId = dialog.querySelector('#sel-modal-card-teacher').value;
+      const t = this.timetable.teachers.find((x) => x.id === newTeacherId);
+      card.teacherId = newTeacherId || '';
+      card.teacherName = t ? t.name : '— Χωρίς εκπαιδευτικό —';
+
+      // Ενημέρωση και στο schedule
+      const schedCard = this.timetable.schedule.find((c) => c.id === card.id);
+      if (schedCard) {
+        schedCard.teacherId = card.teacherId;
+        schedCard.teacherName = card.teacherName;
+      }
+
+      dialog.close();
+      dialog.remove();
+      if (this.onUpdate) this.onUpdate(this.timetable);
+      this.render();
+    };
   }
 
   // Ρύθμιση της ζώνης υποδοχής (Drop zone)
