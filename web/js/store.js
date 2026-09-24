@@ -8,6 +8,7 @@ const KEYS = {
   director: 'adeies.director',
   employees: 'adeies.employees',
   pairings: 'adeies.pairings',
+  timetable: 'adeies.timetable',
   meta: 'adeies.meta',
 };
 
@@ -51,6 +52,9 @@ export const store = {
     write(KEYS.pairings, { ...store.getPairings(), [key]: apofasi });
   },
 
+  getTimetable: () => read(KEYS.timetable, null),
+  setTimetable: (data) => write(KEYS.timetable, data),
+
   getMeta: () => read(KEYS.meta, {}),
   markExported() {
     write(KEYS.meta, { ...store.getMeta(), lastExport: new Date().toISOString() });
@@ -66,11 +70,12 @@ export const store = {
 
   exportAll() {
     return {
-      version: 1,
+      version: 2,
       exported: new Date().toISOString(),
       director: store.getDirector(),
       employees: store.getEmployees(),
       pairings: store.getPairings(),
+      timetable: store.getTimetable(),
     };
   },
 
@@ -80,5 +85,6 @@ export const store = {
     write(KEYS.director, data.director || {});
     write(KEYS.employees, data.employees);
     write(KEYS.pairings, data.pairings || {});
+    if (data.timetable) write(KEYS.timetable, data.timetable);
   },
 };

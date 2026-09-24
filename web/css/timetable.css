@@ -1,0 +1,493 @@
+/* timetable.css — Στυλ για το Σύστημα Αυτόματης Δημιουργίας Ωρολογίου Προγράμματος
+   Εμπνευσμένο από το aSc Timetables & προσαρμοσμένο στην οπτική ταυτότητα της εφαρμογής */
+
+.timetable-app {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Wizard Navigation ─────────────────────────────────────────────────── */
+.timetable-wizard-nav {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--card);
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--rule);
+  overflow-x: auto;
+}
+
+.wizard-step-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: none;
+  font: 500 0.875rem var(--sans);
+  color: var(--ink-soft);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.wizard-step-btn:hover {
+  background: var(--wash);
+  color: var(--ink);
+}
+
+.wizard-step-btn.active {
+  background: var(--card);
+  border-color: var(--stamp);
+  color: var(--stamp-deep);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.wizard-step-btn .step-num {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--stamp);
+}
+
+/* ── Step Panels ────────────────────────────────────────────────────────── */
+.panel-step {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.step-intro h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.step-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+/* ── Τμήματα Chips ──────────────────────────────────────────────────────── */
+.classes-management-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.classes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 0.75rem;
+}
+
+.class-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--wash);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+
+.class-chip-info strong {
+  font-size: 1.125rem;
+  display: block;
+}
+
+.class-chip-info .class-grade {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.chip-delete {
+  background: none;
+  border: none;
+  color: var(--brick);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.25rem;
+}
+
+/* ── Πίνακες Εκπαιδευτικών & Μαθημάτων ───────────────────────────────────── */
+.teachers-table-wrap, .lessons-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+
+.teachers-table, .lessons-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.teachers-table th, .lessons-table th {
+  background: var(--paper);
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  text-align: left;
+  border-bottom: 1px solid var(--rule);
+}
+
+.teachers-table td, .lessons-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.875rem;
+}
+
+/* ── Μοντάλ Time-off ────────────────────────────────────────────────────── */
+.timeoff-dialog {
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 38rem;
+  background: var(--card);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.timeoff-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.timeoff-table th {
+  padding: 0.5rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  font-size: 0.8125rem;
+}
+
+.timeoff-cell {
+  border: 1px solid var(--rule);
+  text-align: center;
+  padding: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.1s ease;
+}
+
+.timeoff-cell.state-ok {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.timeoff-cell.state-no {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.timeoff-cell.state-warn {
+  background: #fefce8;
+  color: #d97706;
+}
+
+/* ── Διαδραστικός Πίνακας Ωρολογίου Προγράμματος (Matrix) ────────────────── */
+.matrix-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.matrix-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+
+.matrix-target-select {
+  padding: 0.5rem 1rem;
+  font: 500 0.875rem var(--sans);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--card);
+}
+
+.matrix-stats-badge {
+  margin-left: auto;
+  font-size: 0.875rem;
+}
+
+.matrix-grid-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--card);
+}
+
+.timetable-matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.timetable-matrix-table th {
+  background: #e2e8f0;
+  padding: 0.75rem 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-align: center;
+  border: 1px solid var(--rule);
+}
+
+.timetable-matrix-table .col-time {
+  width: 5.5rem;
+}
+
+.cell-period-label {
+  text-align: center;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 0.5rem;
+}
+
+.cell-period-label strong {
+  display: block;
+  font-size: 1rem;
+  color: var(--stamp);
+}
+
+.cell-period-label small {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--ink-soft);
+}
+
+.matrix-slot {
+  height: 5.5rem;
+  border: 1px solid var(--rule);
+  padding: 0.35rem;
+  vertical-align: top;
+  background: var(--card);
+  position: relative;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+/* Drag & Drop Feedback States */
+.matrix-slot.drag-over {
+  background: #f0fdf4 !important;
+  border: 2px dashed #16a34a !important;
+}
+
+.matrix-slot.slot-highlight-valid {
+  background: #f0fdf4;
+}
+
+.matrix-slot.slot-highlight-conflict {
+  background: #fef2f2;
+  cursor: not-allowed;
+}
+
+.matrix-slot.slot-time-off {
+  background: #fee2e2;
+  cursor: not-allowed;
+}
+
+.time-off-mark {
+  color: #b91c1c;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  text-align: center;
+  margin-top: 1.5rem;
+  font-weight: bold;
+}
+
+/* ── Κάρτα Μαθήματος (Timetable Card) ───────────────────────────────────── */
+.timetable-card {
+  background: #ffffff;
+  border: 1px solid var(--rule);
+  border-left-width: 4px;
+  border-radius: 4px;
+  padding: 0.4rem 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  cursor: grab;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.timetable-card:active {
+  cursor: grabbing;
+}
+
+.timetable-card.is-dragging {
+  opacity: 0.4;
+  transform: scale(0.95);
+}
+
+.timetable-card .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+}
+
+.timetable-card .card-subject {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-badge {
+  font-size: 0.625rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.card-badge.length {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.card-badge.split {
+  background: #fae8ff;
+  color: #86198f;
+}
+
+.timetable-card .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.timetable-card .card-teacher {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timetable-card .card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6875rem;
+  color: var(--stamp);
+  font-weight: 500;
+}
+
+.card-room {
+  background: #f1f5f9;
+  padding: 0.05rem 0.25rem;
+  border-radius: 2px;
+  font-family: var(--mono);
+}
+
+/* ── Συγκεντρωτικό Πανόραμα (Master Table) ─────────────────────────────────── */
+.master-table {
+  font-size: 0.75rem;
+}
+
+.master-table th.sub-period-th {
+  background: #cbd5e1;
+  font-size: 0.6875rem;
+  padding: 0.25rem;
+}
+
+.master-class-name {
+  background: var(--paper);
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid var(--rule);
+  padding: 0.5rem;
+}
+
+.matrix-slot.master-slot {
+  height: 3rem;
+  padding: 0.15rem;
+}
+
+.mini-card {
+  color: white;
+  border-radius: 3px;
+  padding: 0.2rem;
+  text-align: center;
+  font-size: 0.625rem;
+  line-height: 1.1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mini-card small {
+  display: block;
+  opacity: 0.85;
+}
+
+/* ── Καλάθι Μη Τοποθετημένων Καρτών ──────────────────────────────────────── */
+.unplaced-basket {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.basket-header h4 {
+  margin: 0;
+  color: #b45309;
+}
+
+.basket-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0.5rem;
+}
+
+/* ── Εκτύπωση ───────────────────────────────────────────────────────────── */
+@media print {
+  body {
+    background: white;
+    font-size: 10pt;
+  }
+  .masthead, nav, .timetable-wizard-nav, .matrix-toolbar, .solver-toolbar, .unplaced-basket, .step-actions {
+    display: none !important;
+  }
+  .panel-step {
+    border: none;
+    padding: 0;
+  }
+  .matrix-grid-wrapper {
+    border: none;
+  }
+  .timetable-matrix-table th {
+    background: #eee !important;
+    -webkit-print-color-adjust: exact;
+  }
+  .timetable-card {
+    box-shadow: none;
+    border: 1px solid #999;
+  }
+}

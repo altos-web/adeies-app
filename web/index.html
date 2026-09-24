@@ -6,11 +6,12 @@
 <title>Άδειες εκπαιδευτικών</title>
 <meta name="description" content="Έκδοση αιτήσεων και αποφάσεων αδειών εκπαιδευτικών.">
 <link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/timetable.css">
 </head>
 <body>
 
 <header class="masthead">
-  <h1>Εφαρμογή αδειών</h1>
+  <h1>Διαχείριση σχολείου</h1>
   <div class="banner" id="banner" hidden></div>
   <p class="issuer" id="issuer"></p>
 </header>
@@ -19,12 +20,14 @@
   <button data-tab="director" data-step="01">Διευθυντής &amp; σχολείο</button>
   <button data-tab="employees" data-step="02">Εργαζόμενοι</button>
   <button data-tab="leaves" data-step="03">Άδειες</button>
+  <button data-tab="timetable" data-step="04">Ωρολόγιο πρόγραμμα</button>
 </nav>
 
 <main>
   <section class="panel" id="tab-director" hidden></section>
   <section class="panel" id="tab-employees" hidden></section>
   <section class="panel" id="tab-leaves" hidden></section>
+  <section class="panel" id="tab-timetable" hidden></section>
 </main>
 
 <dialog id="employee-dialog">

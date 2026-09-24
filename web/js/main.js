@@ -4,6 +4,7 @@ import { fillDocx } from './fill.js';
 import { buildForm, refreshPlaceholders, selectField, toggleField } from './forms.js';
 import { debounce, documentFilename, download } from './output.js';
 import { store } from './store.js';
+import { TimetableUI } from './timetable/ui.js';
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -500,6 +501,15 @@ function escapeHtml(value) {
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 }
 
+let timetableUIInstance = null;
+function renderTimetable() {
+  const panel = $('#tab-timetable');
+  if (!timetableUIInstance) {
+    timetableUIInstance = new TimetableUI(panel);
+  }
+  timetableUIInstance.render();
+}
+
 function showTab(name) {
   for (const panel of document.querySelectorAll('.panel')) {
     panel.hidden = panel.id !== `tab-${name}`;
@@ -509,6 +519,7 @@ function showTab(name) {
   }
   if (name === 'employees') renderEmployees();
   if (name === 'leaves') renderLeaves();
+  if (name === 'timetable') renderTimetable();
 }
 
 // Τα banner τα δίνει ο χρήστης στο web/banners/· το build_web.py φτιάχνει τον
