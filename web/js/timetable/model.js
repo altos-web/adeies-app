@@ -99,6 +99,11 @@ export function normalizeTimetable(tt) {
       if (l.hours !== undefined && l.hours !== null && (l.defaultHours === undefined || l.defaultHours === null)) {
         l.defaultHours = l.hours;
       }
+      if (!l.distribution && Number(l.hours) > 0) {
+        const def = getDefaultLessonDistribution(l, l.hours);
+        l.distribution = Array.isArray(def) ? def.join('+') : String(def);
+        if (!l.defaultDistribution) l.defaultDistribution = l.distribution;
+      }
     });
 
     // Αυτόματος υπολογισμός των ανατεθειμένων ωρών ανά εκπαιδευτικό
@@ -130,8 +135,108 @@ export function normalizeTimetable(tt) {
   return tt;
 }
 
+// Επιστρέφει την προεπιλεγμένη παιδαγωγική κατανομή ωρών (Μονόωρα / Δίωρα)
+// ΣΗΜΑΝΤΙΚΟ: Τα δευτερεύοντα μαθήματα (Πληροφορική, Θρησκευτικά, Φυσική Αγωγή, Ιστορία κτλ.)
+// ΔΕΝ γίνονται συνεχόμενο δίωρο αλλά σπάνε σε 1+1 (μονόωρα σε διαφορετικές ημέρες)!
+export function getDefaultLessonDistribution(lesson, totalHours = null) {
+  const hrs = totalHours !== null ? Number(totalHours) : Number(lesson?.hours || 0);
+  if (!hrs || hrs <= 0) return [];
+  if (hrs === 1) return [1];
+
+  // Αν έχει οριστεί ρητά defaultDistribution στο αντικείμενο μαθήματος:
+  if (lesson?.defaultDistribution) {
+    return typeof lesson.defaultDistribution === 'string'
+      ? lesson.defaultDistribution.split('+').map(Number)
+      : lesson.defaultDistribution;
+  }
+
+  const sid = (lesson?.subjectId || '').toLowerCase();
+
+  // Δευτερεύοντα / μη βασικά μαθήματα: ΠΟΤΕ συνεχόμενο δίωρο! Πάντα 1+1 (ή 1+1+1)
+  const isSecondary = [
+    'pliroforiki', 'tpe',
+    'thriskeutika',
+    'gymnastiki',
+    'istoria',
+    'agglika',
+    'geografia', 'geografia_kpa',
+    'fysiki',
+    'kpa',
+    'ergastiria_dex',
+    'mousiki', 'eikastika', 'theatriki', 'texnologia', 'oikiaki', 'viologia', 'ximeia'
+  ].includes(sid);
+
+  if (hrs === 2) {
+    // Στα δευτερεύοντα μαθήματα (Πληροφορική, Θρησκευτικά, Γυμναστική, Ιστορία κτλ.): ΠΑΝΤΑ 1+1 (μονόωρα)!
+    // Μόνο αν είναι ρητά σπαστό (π.χ. 2η Ξένη Γλώσσα με κοινή ζώνη) ή allowDouble μπορεί να είναι [2].
+    if (isSecondary || !lesson?.isSplit) {
+      return [1, 1];
+    }
+    return [2];
+  }
+
+  if (hrs === 3) {
+    if (isSecondary || sid === 'arxaia') {
+      return [1, 1, 1];
+    }
+    return [2, 1];
+  }
+
+  if (hrs === 4) {
+    if (sid === 'math') return [1, 1, 1, 1]; // Μαθηματικά 4 μονόωρα
+    return [2, 1, 1]; // π.χ. Γλώσσα: 1 δίωρο έκθεσης + 2 μονόωρα
+  }
+
+  if (hrs === 5) {
+    if (sid === 'math') return [1, 1, 1, 1, 1]; // Μαθηματικά 5 μονόωρα (1 ανά ημέρα)
+    return [2, 1, 1, 1]; // Γλώσσα: 1 δίωρο + 3 μονόωρα
+  }
+
+  if (hrs === 6) return [2, 2, 2];
+  if (hrs === 7) return [2, 2, 1, 1, 1];
+  if (hrs === 8) return [2, 2, 2, 1, 1];
+  if (hrs === 9) return [2, 2, 2, 1, 1, 1];
+
+  return Array(hrs).fill(1);
+}
+
+// Επιστρέφει τις διαθέσιμες επιλογές κατανομής ωρών για dropdown επιλογής
+export function getAvailableDistributions(totalHours, lesson = null) {
+  const hrs = Number(totalHours);
+  if (!hrs || hrs <= 1) return [{ value: '1', label: '1 ώρα (Μονόωρο)' }];
+
+  const res = [];
+  if (hrs === 2) {
+    res.push({ value: '1+1', label: '1 + 1 (Μονόωρα σε διαφορετικές ημέρες — Συνιστάται)' });
+    res.push({ value: '2', label: '2 (Συνεχόμενο δίωρο)' });
+  } else if (hrs === 3) {
+    res.push({ value: '1+1+1', label: '1 + 1 + 1 (3 μονόωρα σε διαφορετικές ημέρες — Συνιστάται)' });
+    res.push({ value: '2+1', label: '2 + 1 (1 δίωρο + 1 μονόωρο)' });
+  } else if (hrs === 4) {
+    res.push({ value: '1+1+1+1', label: '1 + 1 + 1 + 1 (4 μονόωρα — 1 ανά ημέρα)' });
+    res.push({ value: '2+1+1', label: '2 + 1 + 1 (1 δίωρο + 2 μονόωρα)' });
+    res.push({ value: '2+2', label: '2 + 2 (2 δίωρα)' });
+  } else if (hrs === 5) {
+    res.push({ value: '1+1+1+1+1', label: '1 + 1 + 1 + 1 + 1 (5 μονόωρα — 1 ανά ημέρα)' });
+    res.push({ value: '2+1+1+1', label: '2 + 1 + 1 + 1 (1 δίωρο + 3 μονόωρα)' });
+    res.push({ value: '2+2+1', label: '2 + 2 + 1 (2 δίωρα + 1 μονόωρο)' });
+  } else if (hrs === 6) {
+    res.push({ value: '2+2+2', label: '2 + 2 + 2 (3 δίωρα)' });
+    res.push({ value: '2+1+1+1+1', label: '2 + 1 + 1 + 1 + 1 (1 δίωρο + 4 μονόωρα)' });
+    res.push({ value: '1+1+1+1+1+1', label: '6 μονόωρα' });
+  } else if (hrs >= 7) {
+    const defaultDist = Array(hrs).fill(1).join('+');
+    res.push({ value: defaultDist, label: `${hrs} μονόωρα` });
+    if (hrs >= 8) {
+      res.push({ value: `2+2+${Array(hrs - 4).fill(1).join('+')}`, label: `2 δίωρα + ${hrs - 4} μονόωρα` });
+    }
+  }
+
+  return res;
+}
+
 // Δημιουργία των καρτών (Cards) από τις δηλωμένες αναθέσεις μαθημάτων (Lessons)
-// Στο στυλ του aSc Timetables: Ένα μάθημα 4 ωρών μπορεί να σπάσει σε 1 δίωρο + 2 μονόωρα (2+1+1)
+// Στο στυλ του aSc Timetables: Ένα μάθημα 2 ωρών σπάει σε 1+1 για δευτερεύοντα ή μένει 2 για ειδικές περιπτώσεις
 // Αν οι ώρες ενός μαθήματος έχουν οριστεί σε 0, δεν παράγονται κάρτες (ανενεργό μάθημα)
 export function generateCardsFromLessons(lessons) {
   const cards = [];
@@ -139,16 +244,10 @@ export function generateCardsFromLessons(lessons) {
   for (const lesson of lessons) {
     const totalHours = Number(lesson.hours);
     if (!totalHours || totalHours <= 0) continue; // 0 ώρες: παράλειψη
-    let distribution = lesson.distribution; // π.χ. '2+2', '2+1+1', '1+1+1+1'
+    let distribution = lesson.distribution; // π.χ. '1+1', '2', '2+1+1'
 
     if (!distribution) {
-      if (totalHours === 1) distribution = [1];
-      else if (totalHours === 2) distribution = [2];
-      else if (totalHours === 3) distribution = [2, 1];
-      else if (totalHours === 4) distribution = [2, 1, 1];
-      else if (totalHours === 5) distribution = [2, 1, 1, 1];
-      else if (totalHours === 6) distribution = [2, 2, 2];
-      else if (totalHours >= 7) distribution = Array(totalHours).fill(1);
+      distribution = getDefaultLessonDistribution(lesson, totalHours);
     } else if (typeof distribution === 'string') {
       distribution = distribution.split('+').map(Number);
     }
@@ -216,6 +315,10 @@ export function populateCurriculumForClasses(timetable) {
       const lessonId = `les_${cls.id}_${item.id}`;
       // Αν είναι παράλληλο μάθημα (π.χ. 2η ξένη γλώσσα), συγχρονίζεται με τα υπόλοιπα τμήματα της ίδιας τάξης
       const syncGroupId = item.isSplit ? `sync_${cls.grade}_${item.id}` : null;
+      const defaultDistArr = item.defaultDistribution
+        ? (typeof item.defaultDistribution === 'string' ? item.defaultDistribution.split('+').map(Number) : item.defaultDistribution)
+        : getDefaultLessonDistribution(item, item.hours);
+      const distStr = Array.isArray(defaultDistArr) ? defaultDistArr.join('+') : String(defaultDistArr);
 
       lessons.push({
         id: lessonId,
@@ -229,6 +332,8 @@ export function populateCurriculumForClasses(timetable) {
         subjectColor: item.color,
         hours: item.hours,
         defaultHours: item.hours, // Επίσημη προεπιλογή βάσει νομοθεσίας
+        distribution: distStr,
+        defaultDistribution: distStr,
         branch: item.branch,
         teacherId: '', // Θα ανατεθεί από τον Διευθυντή
         teacherName: '— Χωρίς εκπαιδευτικό —',

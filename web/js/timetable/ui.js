@@ -4,7 +4,7 @@
 import { store } from '../store.js';
 import { DAYS_OF_WEEK, DEFAULT_BELL_TIMES, DIMOTIKO_ORGANICITIES, getBranchesForSchoolType, isBranchValidForSchoolType, SCHOOL_TYPES } from './curricula.js';
 import { TimetableMatrix } from './matrix.js';
-import { autoAssignTeachers, createInitialTimetable, normalizeTimetable, populateCurriculumForClasses } from './model.js';
+import { autoAssignTeachers, createInitialTimetable, getAvailableDistributions, getDefaultLessonDistribution, normalizeTimetable, populateCurriculumForClasses } from './model.js';
 import { TimetableSolver } from './solver.js';
 
 export class TimetableUI {
@@ -990,6 +990,7 @@ export class TimetableUI {
               <th>Τμήμα</th>
               <th>Μάθημα</th>
               <th style="min-width: 9rem;">Ώρες / Εβδ.</th>
+              <th style="min-width: 14rem;">Κατανομή (Δίωρα / Μονόωρα)</th>
               <th>Ειδικότητα</th>
               <th style="min-width: 17rem;">Ανάθεση Εκπαιδευτικού</th>
               <th>Ειδικός Χώρος</th>
@@ -1066,7 +1067,7 @@ export class TimetableUI {
     tbody.innerHTML = '';
     const allLessons = this.timetable.lessons || [];
     if (!allLessons.length) {
-      tbody.innerHTML = `<tr><td colspan="7" class="hint text-center">Δεν υπάρχουν μαθήματα. Πατήστε «Αυτόματη Φόρτωση Επίσημου Ωρολογίου Προγράμματος».</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" class="hint text-center">Δεν υπάρχουν μαθήματα. Πατήστε «Αυτόματη Φόρτωση Επίσημου Ωρολογίου Προγράμματος».</td></tr>`;
       return;
     }
 
@@ -1075,7 +1076,7 @@ export class TimetableUI {
       : allLessons.filter((l) => l.classId === filterClass);
 
     if (!lessons.length) {
-      tbody.innerHTML = `<tr><td colspan="7" class="hint text-center">Δεν υπάρχουν μαθήματα για το επιλεγμένο τμήμα.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" class="hint text-center">Δεν υπάρχουν μαθήματα για το επιλεγμένο τμήμα.</td></tr>`;
       return;
     }
 
@@ -1112,6 +1113,9 @@ export class TimetableUI {
       const isMultiGrade = cls && Array.isArray(cls.grades) && cls.grades.length > 1;
       const isZeroHours = Number(les.hours) === 0;
 
+      const distOptions = getAvailableDistributions(les.hours, les);
+      const curDist = les.distribution || (getDefaultLessonDistribution(les, les.hours).join('+'));
+
       const row = document.createElement('tr');
       if (isZeroHours) {
         row.className = 'lesson-row-zero';
@@ -1138,6 +1142,15 @@ export class TimetableUI {
               <span class="hours-preset-hint" title="Προεπιλογή βάσει νομοθεσίας">προεπ. ${les.defaultHours || les.hours}</span>
             `)}
           </div>
+        </td>
+        <td>
+          ${isZeroHours || Number(les.hours) <= 1 ? `
+            <span class="hint" style="font-size: 0.8125rem;">${isZeroHours ? '—' : '1 ώρα (Μονόωρο)'}</span>
+          ` : `
+            <select class="sel-distribution" title="Επιλέξτε πώς θα κατανεμηθούν οι ώρες του μαθήματος μέσα στην εβδομάδα (Μονόωρα ή Δίωρα)" style="font-size: 0.8125rem; padding: 0.25rem 0.4rem; border-radius: 4px; border: 1px solid var(--rule); width: 100%; max-width: 15rem; background: var(--card); color: var(--ink);">
+              ${distOptions.map((opt) => `<option value="${opt.value}" ${opt.value === curDist ? 'selected' : ''}>${opt.label}</option>`).join('')}
+            </select>
+          `}
         </td>
         <td><span class="branch-badge">${les.branch || '—'}</span></td>
         <td>
@@ -1184,6 +1197,9 @@ export class TimetableUI {
         if (val > 25) val = 25;
         les.hours = val;
         hoursInput.value = val;
+        // Ενημέρωση κατανομής βάσει των νέων ωρών
+        const newDef = getDefaultLessonDistribution(les, les.hours);
+        les.distribution = Array.isArray(newDef) ? newDef.join('+') : String(newDef);
         if (val === 0) {
           les.teacherId = '';
           les.teacherName = '— Χωρίς εκπαιδευτικό —';
@@ -1194,11 +1210,22 @@ export class TimetableUI {
         this.renderLessonsList(tbody, filterClass);
       };
 
-      // 2. Reset to default hours
+      // 2. Change distribution (Κατανομή σε δίωρα / μονόωρα)
+      const distSelect = row.querySelector('.sel-distribution');
+      if (distSelect) {
+        distSelect.onchange = (e) => {
+          les.distribution = e.target.value;
+          this.save();
+        };
+      }
+
+      // 3. Reset to default hours
       const resetBtn = row.querySelector('.btn-reset-hours');
       if (resetBtn) {
         resetBtn.onclick = () => {
           les.hours = les.defaultHours;
+          const newDef = getDefaultLessonDistribution(les, les.hours);
+          les.distribution = Array.isArray(newDef) ? newDef.join('+') : String(newDef);
           if (!les.teacherId && les.hours > 0 && this.timetable.teachers && this.timetable.teachers.length > 0) {
             autoAssignTeachers(this.timetable, { overwriteExisting: false });
           }
@@ -1207,7 +1234,7 @@ export class TimetableUI {
         };
       }
 
-      // 3. Open Teacher Assignment Pop-up Modal
+      // 4. Open Teacher Assignment Pop-up Modal
       const teacherBtn = row.querySelector('.btn-teacher-select');
       if (teacherBtn) {
         teacherBtn.onclick = () => {
@@ -1217,7 +1244,7 @@ export class TimetableUI {
         };
       }
 
-      // 4. Change room
+      // 5. Change room
       row.querySelector('.sel-room').onchange = (e) => {
         les.roomId = e.target.value;
         this.save();

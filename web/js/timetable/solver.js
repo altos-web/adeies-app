@@ -244,12 +244,12 @@ export class TimetableSolver {
     }
 
     // 3. Διασπορά μαθημάτων μέσα στην εβδομάδα (Day Spread)
-    // Αν το τμήμα έχει ήδη αυτό το μάθημα σήμερα, ελαττώνεται το score
+    // Αν το τμήμα έχει ήδη αυτό το μάθημα σήμερα, αποθαρρύνεται αυστηρά (ειδικά για 1+1 όπως Πληροφορική, Θρησκευτικά, Φυσική Αγωγή)
     const classSameSubjectToday = currentSchedule.filter(
       (c) => c.classId === card.classId && c.subjectId === card.subjectId && c.day === day && c.id !== card.id
     );
     if (classSameSubjectToday.length > 0) {
-      score -= 50;
+      score -= 160; // Αυστηρή αποφυγή επανάληψης του ίδιου μαθήματος την ίδια ημέρα
     }
 
     // 4. Συνέχεια ωραρίου τμήματος (ΑΠΟΛΥΤΟΣ ΚΑΝΟΝΑΣ: Όχι κενά στους μαθητές, έναρξη πάντα 1η ώρα)
