@@ -212,12 +212,21 @@ export class TimetableUI {
         item.className = 'class-chip';
         item.draggable = true;
         item.dataset.index = idx;
+
+        const isMulti = Array.isArray(cls.grades) && cls.grades.length > 1;
+        const gradeBadgesHtml = isMulti
+          ? `<div class="class-grade-tag multi" title="Συνδιδασκόμενο τμήμα (${cls.grades.length} τάξεις: ${cls.grades.join(', ')})">
+               <span class="multi-indicator">Συνδιδασκαλία</span>
+               <span class="grades-pills">${cls.grades.map((g) => `<span class="pill">${g}</span>`).join('')}</span>
+             </div>`
+          : `<div class="class-grade-tag single">Τάξη ${cls.grade || (cls.grades && cls.grades[0]) || ''}</div>`;
+
         item.innerHTML = `
           <div class="class-chip-content">
             <span class="drag-handle" title="Σύρετε για αναδιάταξη">⠿</span>
             <div class="class-chip-info" title="Κλικ για επεξεργασία">
-              <strong>${cls.name}</strong>
-              <span class="class-grade">Τάξη ${cls.grade}</span>
+              <strong class="class-title">${cls.name}</strong>
+              ${gradeBadgesHtml}
             </div>
           </div>
           <div class="chip-actions">
@@ -295,37 +304,111 @@ export class TimetableUI {
     return div;
   }
 
-  // Pop-up modal για επιλογή τάξης και ονόματος τμήματος
+  // Pop-up modal για επιλογή τάξης/τάξεων (μονοθεματικών ή συνδιδασκόμενων) και ονόματος τμήματος
   openClassModal(clsToEdit = null, onSaved = null) {
     const typeConfig = SCHOOL_TYPES[this.timetable.schoolType] || SCHOOL_TYPES.gymnasio;
     const dialog = document.createElement('dialog');
     dialog.className = 'class-dialog';
 
-    const defaultGrade = clsToEdit ? clsToEdit.grade : typeConfig.grades[0];
-    const suggestName = (gr) => {
-      const count = this.timetable.classes.filter((c) => c.grade === gr).length;
-      return `${gr}${count + 1}`;
+    // Αρχικές επιλεγμένες τάξεις
+    let initialGrades = [];
+    if (clsToEdit) {
+      if (Array.isArray(clsToEdit.grades) && clsToEdit.grades.length > 0) {
+        initialGrades = [...clsToEdit.grades];
+      } else if (clsToEdit.grade) {
+        if (clsToEdit.grade === 'Α_ΣΤ' || clsToEdit.grade === 'Α_Β_Γ_Δ_Ε_ΣΤ') {
+          initialGrades = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'ΣΤ'];
+        } else if (clsToEdit.grade === 'Α_Γ' || clsToEdit.grade === 'Α_Β_Γ') {
+          initialGrades = ['Α', 'Β', 'Γ'];
+        } else if (clsToEdit.grade === 'Δ_ΣΤ' || clsToEdit.grade === 'Δ_Ε_ΣΤ') {
+          initialGrades = ['Δ', 'Ε', 'ΣΤ'];
+        } else if (clsToEdit.grade === 'Α_Β') {
+          initialGrades = ['Α', 'Β'];
+        } else if (clsToEdit.grade === 'Γ_Δ') {
+          initialGrades = ['Γ', 'Δ'];
+        } else if (clsToEdit.grade === 'Ε_ΣΤ') {
+          initialGrades = ['Ε', 'ΣΤ'];
+        } else if (clsToEdit.grade.includes('_')) {
+          initialGrades = clsToEdit.grade.split('_');
+        } else {
+          initialGrades = [clsToEdit.grade];
+        }
+      }
+    }
+    if (initialGrades.length === 0) {
+      initialGrades = [typeConfig.grades[0]];
+    }
+
+    let isUserEditedName = Boolean(clsToEdit);
+
+    const suggestName = (selectedGrades) => {
+      if (!selectedGrades || selectedGrades.length === 0) return '';
+      if (selectedGrades.length === 1) {
+        const gr = selectedGrades[0];
+        const count = this.timetable.classes.filter((c) => {
+          if (clsToEdit && c.id === clsToEdit.id) return false;
+          return c.grades && c.grades.length === 1 && c.grades[0] === gr;
+        }).length;
+        return `${gr}${count + 1}`;
+      }
+      if (this.timetable.schoolType === 'dimotiko' && selectedGrades.length === 6) {
+        return 'Α-ΣΤ';
+      }
+      return selectedGrades.join('-');
     };
-    const defaultName = clsToEdit ? clsToEdit.name : suggestName(defaultGrade);
+
+    const defaultName = clsToEdit ? clsToEdit.name : suggestName(initialGrades);
 
     dialog.innerHTML = `
       <div class="dialog-content">
         <h3>${clsToEdit ? 'Επεξεργασία Τμήματος' : 'Προσθήκη Νέου Τμήματος'}</h3>
-        <p class="hint">Επιλέξτε την τάξη ανάλογα με τη βαθμίδα και ορίστε το όνομα του τμήματος.</p>
+        <p class="hint">
+          Επιλέξτε τις τάξεις που φοιτούν στο τμήμα. Στα ολιγοθέσια δημοτικά (1/θέσια έως 5/θέσια) μπορείτε να τσεκάρετε 2 ή περισσότερες τάξεις για <strong>συνδιδασκαλία</strong>.
+        </p>
 
-        <div class="form-grid" style="margin-top: 1.25rem;">
-          <label class="field">
-            <span class="label">Τάξη</span>
-            <select id="modal-class-grade">
-              ${typeConfig.grades.map(
-                (g) => `<option value="${g}" ${g === defaultGrade ? 'selected' : ''}>Τάξη ${g}</option>`
-              ).join('')}
-            </select>
-          </label>
+        <div style="margin-top: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem;">
+            <span class="label" style="font-weight: 600;">Τάξεις Τμήματος</span>
+            <span class="sublabel hint" style="font-size: 0.8125rem;">(Τσεκάρετε μία ή περισσότερες)</span>
+          </div>
 
-          <label class="field">
-            <span class="label">Όνομα Τμήματος</span>
-            <input type="text" id="modal-class-name" value="${defaultName}" placeholder="π.χ. Α1, Β2, Γ_ΘΕΤ" autofocus>
+          ${this.timetable.schoolType === 'dimotiko' ? `
+            <div class="grade-presets-bar">
+              <span class="presets-title">Συνήθεις συνδυασμοί:</span>
+              <button type="button" class="btn-preset-grade" data-grades="Α,Β,Γ,Δ,Ε,ΣΤ" title="1 τμήμα με όλες τις τάξεις">1/θ (Α-ΣΤ)</button>
+              <button type="button" class="btn-preset-grade" data-grades="Α,Β,Γ" title="Συνδιδασκαλία Α, Β, Γ">2/θ (Α-Β-Γ)</button>
+              <button type="button" class="btn-preset-grade" data-grades="Δ,Ε,ΣΤ" title="Συνδιδασκαλία Δ, Ε, ΣΤ">2/θ (Δ-Ε-ΣΤ)</button>
+              <button type="button" class="btn-preset-grade" data-grades="Α,Β" title="Συνδιδασκαλία Α, Β">3/θ (Α-Β)</button>
+              <button type="button" class="btn-preset-grade" data-grades="Γ,Δ" title="Συνδιδασκαλία Γ, Δ">3/θ & 4/θ (Γ-Δ)</button>
+              <button type="button" class="btn-preset-grade" data-grades="Ε,ΣΤ" title="Συνδιδασκαλία Ε, ΣΤ">Ε-ΣΤ</button>
+            </div>
+          ` : ''}
+
+          <div class="grade-checkboxes-grid" id="modal-grade-checkboxes">
+            ${typeConfig.grades.map((g) => {
+              const isChecked = initialGrades.includes(g);
+              return `
+                <label class="grade-checkbox-label">
+                  <input type="checkbox" name="modal-class-grade-cb" value="${g}" ${isChecked ? 'checked' : ''}>
+                  <div class="grade-box">
+                    <span class="grade-check-icon">✓</span>
+                    <span class="grade-name">Τάξη ${g}</span>
+                  </div>
+                </label>
+              `;
+            }).join('')}
+          </div>
+
+          <div id="modal-grade-status" class="grade-selection-status"></div>
+        </div>
+
+        <div class="form-grid" style="margin-top: 1rem;">
+          <label class="field" style="width: 100%;">
+            <span class="label" style="font-weight: 600;">Όνομα Τμήματος</span>
+            <input type="text" id="modal-class-name" value="${defaultName}" placeholder="π.χ. Α1, Α-Β, Γ-Δ, Α-ΣΤ" autofocus>
+            <span class="hint" style="font-size: 0.8125rem; margin-top: 0.25rem;">
+              Προτείνεται αυτόματα βάσει των επιλεγμένων τάξεων ή πληκτρολογήστε τη δική σας ονομασία.
+            </span>
           </label>
         </div>
 
@@ -336,14 +419,57 @@ export class TimetableUI {
       </div>
     `;
 
-    const gradeSelect = dialog.querySelector('#modal-class-grade');
+    const checkboxes = Array.from(dialog.querySelectorAll('input[name="modal-class-grade-cb"]'));
+    const statusEl = dialog.querySelector('#modal-grade-status');
     const nameInput = dialog.querySelector('#modal-class-name');
 
-    if (!clsToEdit) {
-      gradeSelect.onchange = () => {
-        nameInput.value = suggestName(gradeSelect.value);
+    const getSelectedGrades = () => {
+      return typeConfig.grades.filter((g) => {
+        const cb = checkboxes.find((c) => c.value === g);
+        return cb && cb.checked;
+      });
+    };
+
+    const updateStatusAndName = () => {
+      const selected = getSelectedGrades();
+      if (selected.length === 0) {
+        statusEl.innerHTML = '<span class="status-warning">⚠️ Παρακαλώ επιλέξτε τουλάχιστον μία τάξη.</span>';
+      } else if (selected.length === 1) {
+        statusEl.innerHTML = `<span class="status-ok">✓ Αυτόνομο τμήμα: <strong>Τάξη ${selected[0]}</strong></span>`;
+      } else if (this.timetable.schoolType === 'dimotiko' && selected.length === 6) {
+        statusEl.innerHTML = `<span class="status-multi">⚡ <strong>Συνδιδασκόμενο τμήμα (Μονοθέσιο)</strong>: Όλες οι τάξεις (Α, Β, Γ, Δ, Ε, ΣΤ)</span>`;
+      } else {
+        statusEl.innerHTML = `<span class="status-multi">⚡ <strong>Συνδιδασκόμενο τμήμα</strong> (${selected.length} τάξεις: <strong>${selected.join(', ')}</strong>)</span>`;
+      }
+
+      if (!isUserEditedName) {
+        nameInput.value = suggestName(selected);
+      }
+    };
+
+    checkboxes.forEach((cb) => {
+      cb.onchange = () => {
+        updateStatusAndName();
       };
-    }
+    });
+
+    nameInput.oninput = () => {
+      isUserEditedName = true;
+    };
+
+    // Quick presets handling
+    dialog.querySelectorAll('.btn-preset-grade').forEach((btn) => {
+      btn.onclick = () => {
+        const targetGrades = btn.dataset.grades.split(',');
+        checkboxes.forEach((cb) => {
+          cb.checked = targetGrades.includes(cb.value);
+        });
+        isUserEditedName = false;
+        updateStatusAndName();
+      };
+    });
+
+    updateStatusAndName();
 
     const close = () => {
       dialog.close();
@@ -353,21 +479,51 @@ export class TimetableUI {
     dialog.querySelector('.btn-cancel').onclick = close;
 
     const save = () => {
-      const grade = gradeSelect.value.trim().toUpperCase();
+      const selectedGrades = getSelectedGrades();
+      if (selectedGrades.length === 0) {
+        alert('Παρακαλώ επιλέξτε τουλάχιστον μία τάξη για το τμήμα.');
+        return;
+      }
+
       const name = nameInput.value.trim().toUpperCase();
       if (!name) {
         alert('Παρακαλώ εισαγάγετε όνομα τμήματος.');
         return;
       }
 
+      // Κανονικοποίηση κωδικού τάξης (canonical grade identifier)
+      let canonicalGrade = selectedGrades.join('_');
+      if (selectedGrades.length === 1) {
+        canonicalGrade = selectedGrades[0];
+      } else if (this.timetable.schoolType === 'dimotiko') {
+        const joined = selectedGrades.join('');
+        if (selectedGrades.length === 6) canonicalGrade = 'Α_ΣΤ';
+        else if (joined === 'ΑΒΓ') canonicalGrade = 'Α_Γ';
+        else if (joined === 'ΔΕΣΤ') canonicalGrade = 'Δ_ΣΤ';
+        else if (joined === 'ΑΒ') canonicalGrade = 'Α_Β';
+        else if (joined === 'ΓΔ') canonicalGrade = 'Γ_Δ';
+        else if (joined === 'ΕΣΤ') canonicalGrade = 'Ε_ΣΤ';
+      }
+
       if (clsToEdit) {
-        clsToEdit.grade = grade;
         clsToEdit.name = name;
+        clsToEdit.grade = canonicalGrade;
+        clsToEdit.grades = selectedGrades;
+
+        // Ενημέρωση των υπαρχόντων μαθημάτων αυτού του τμήματος
+        (this.timetable.lessons || []).forEach((l) => {
+          if (l.classId === clsToEdit.id) {
+            l.className = name;
+            l.grade = canonicalGrade;
+            l.grades = [...selectedGrades];
+          }
+        });
       } else {
         this.timetable.classes.push({
           id: `c_${Date.now()}`,
           name,
-          grade,
+          grade: canonicalGrade,
+          grades: selectedGrades,
         });
       }
 
@@ -764,7 +920,10 @@ export class TimetableUI {
           <label for="filter-class" class="hint" style="font-size: 0.8125rem;">Προβολή τμήματος:</label>
           <select id="filter-class" style="padding: 0.35rem 0.6rem; border-radius: 4px; border: 1px solid var(--rule); font-family: var(--sans); font-size: 0.8125rem;">
             <option value="all">Όλα τα τμήματα</option>
-            ${(this.timetable.classes || []).map((c) => `<option value="${c.id}">${c.name} (${c.grade} Τάξη)</option>`).join('')}
+            ${(this.timetable.classes || []).map((c) => {
+              const grLabel = c.grades && c.grades.length > 1 ? `Συνδιδασκαλία: ${c.grades.join(', ')}` : `Τάξη ${c.grade}`;
+              return `<option value="${c.id}">${c.name} (${grLabel})</option>`;
+            }).join('')}
           </select>
         </div>
       </div>
@@ -870,9 +1029,15 @@ export class TimetableUI {
         }
       }
 
+      const cls = (this.timetable.classes || []).find((c) => c.id === les.classId);
+      const isMultiGrade = cls && Array.isArray(cls.grades) && cls.grades.length > 1;
+
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td><strong>${les.className || les.classId}</strong></td>
+        <td>
+          <strong>${les.className || les.classId}</strong>
+          ${isMultiGrade ? `<br><span class="badge warn" style="font-size: 0.72rem; padding: 0.1rem 0.35rem; margin-top: 0.2rem; display: inline-block;">Συνδ/λία (${cls.grades.join('-')})</span>` : ''}
+        </td>
         <td>
           <span class="badge" style="border-left: 3px solid ${les.subjectColor || '#3b82f6'}; font-weight: 500;">
             ${les.subjectName}

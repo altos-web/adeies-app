@@ -68,12 +68,12 @@ export const DIMOTIKO_ORGANICITIES = {
     periodsPerDay: 6,
     grades: ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'ΣΤ'],
     defaultClasses: [
-      { id: 'c_a1', name: 'Α1', grade: 'Α' },
-      { id: 'c_b1', name: 'Β1', grade: 'Β' },
-      { id: 'c_g1', name: 'Γ1', grade: 'Γ' },
-      { id: 'c_d1', name: 'Δ1', grade: 'Δ' },
-      { id: 'c_e1', name: 'Ε1', grade: 'Ε' },
-      { id: 'c_st1', name: 'ΣΤ1', grade: 'ΣΤ' },
+      { id: 'c_a1', name: 'Α1', grade: 'Α', grades: ['Α'] },
+      { id: 'c_b1', name: 'Β1', grade: 'Β', grades: ['Β'] },
+      { id: 'c_g1', name: 'Γ1', grade: 'Γ', grades: ['Γ'] },
+      { id: 'c_d1', name: 'Δ1', grade: 'Δ', grades: ['Δ'] },
+      { id: 'c_e1', name: 'Ε1', grade: 'Ε', grades: ['Ε'] },
+      { id: 'c_st1', name: 'ΣΤ1', grade: 'ΣΤ', grades: ['ΣΤ'] },
     ],
     bell: 'primary',
   },
@@ -84,7 +84,7 @@ export const DIMOTIKO_ORGANICITIES = {
     periodsPerDay: 5,
     grades: ['Α_ΣΤ'],
     defaultClasses: [
-      { id: 'c_all', name: 'Α-ΣΤ', grade: 'Α_ΣΤ' },
+      { id: 'c_all', name: 'Α-ΣΤ', grade: 'Α_ΣΤ', grades: ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'ΣΤ'] },
     ],
     bell: 'primary_oligothesia',
   },
@@ -95,8 +95,8 @@ export const DIMOTIKO_ORGANICITIES = {
     periodsPerDay: 5,
     grades: ['Α_Γ', 'Δ_ΣΤ'],
     defaultClasses: [
-      { id: 'c_t1', name: 'Α-Β-Γ', grade: 'Α_Γ' },
-      { id: 'c_t2', name: 'Δ-Ε-ΣΤ', grade: 'Δ_ΣΤ' },
+      { id: 'c_t1', name: 'Α-Β-Γ', grade: 'Α_Γ', grades: ['Α', 'Β', 'Γ'] },
+      { id: 'c_t2', name: 'Δ-Ε-ΣΤ', grade: 'Δ_ΣΤ', grades: ['Δ', 'Ε', 'ΣΤ'] },
     ],
     bell: 'primary_oligothesia',
   },
@@ -107,9 +107,9 @@ export const DIMOTIKO_ORGANICITIES = {
     periodsPerDay: 5,
     grades: ['Α_Β', 'Γ_Δ', 'Ε_ΣΤ'],
     defaultClasses: [
-      { id: 'c_t1', name: 'Α-Β', grade: 'Α_Β' },
-      { id: 'c_t2', name: 'Γ-Δ', grade: 'Γ_Δ' },
-      { id: 'c_t3', name: 'Ε-ΣΤ', grade: 'Ε_ΣΤ' },
+      { id: 'c_t1', name: 'Α-Β', grade: 'Α_Β', grades: ['Α', 'Β'] },
+      { id: 'c_t2', name: 'Γ-Δ', grade: 'Γ_Δ', grades: ['Γ', 'Δ'] },
+      { id: 'c_t3', name: 'Ε-ΣΤ', grade: 'Ε_ΣΤ', grades: ['Ε', 'ΣΤ'] },
     ],
     bell: 'primary_oligothesia',
   },
@@ -120,10 +120,10 @@ export const DIMOTIKO_ORGANICITIES = {
     periodsPerDay: 6,
     grades: ['Α', 'Β', 'Γ_Δ', 'Ε_ΣΤ'],
     defaultClasses: [
-      { id: 'c_a', name: 'Α1', grade: 'Α' },
-      { id: 'c_b', name: 'Β1', grade: 'Β' },
-      { id: 'c_gd', name: 'Γ-Δ', grade: 'Γ_Δ' },
-      { id: 'c_est', name: 'Ε-ΣΤ', grade: 'Ε_ΣΤ' },
+      { id: 'c_a', name: 'Α1', grade: 'Α', grades: ['Α'] },
+      { id: 'c_b', name: 'Β1', grade: 'Β', grades: ['Β'] },
+      { id: 'c_gd', name: 'Γ-Δ', grade: 'Γ_Δ', grades: ['Γ', 'Δ'] },
+      { id: 'c_est', name: 'Ε-ΣΤ', grade: 'Ε_ΣΤ', grades: ['Ε', 'ΣΤ'] },
     ],
     bell: 'primary',
   },
@@ -134,11 +134,11 @@ export const DIMOTIKO_ORGANICITIES = {
     periodsPerDay: 6,
     grades: ['Α', 'Β', 'Γ', 'Δ', 'Ε_ΣΤ'],
     defaultClasses: [
-      { id: 'c_a', name: 'Α1', grade: 'Α' },
-      { id: 'c_b', name: 'Β1', grade: 'Β' },
-      { id: 'c_g', name: 'Γ1', grade: 'Γ' },
-      { id: 'c_d', name: 'Δ1', grade: 'Δ' },
-      { id: 'c_est', name: 'Ε-ΣΤ', grade: 'Ε_ΣΤ' },
+      { id: 'c_a', name: 'Α1', grade: 'Α', grades: ['Α'] },
+      { id: 'c_b', name: 'Β1', grade: 'Β', grades: ['Β'] },
+      { id: 'c_g', name: 'Γ1', grade: 'Γ', grades: ['Γ'] },
+      { id: 'c_d', name: 'Δ1', grade: 'Δ', grades: ['Δ'] },
+      { id: 'c_est', name: 'Ε-ΣΤ', grade: 'Ε_ΣΤ', grades: ['Ε', 'ΣΤ'] },
     ],
     bell: 'primary',
   },
@@ -495,3 +495,9 @@ export const CURRICULA = {
     ],
   },
 };
+
+// Aliases για ολιγοθέσια τμήματα συνδιδασκαλίας Δημοτικού
+CURRICULA.dimotiko['Α_Β_Γ'] = CURRICULA.dimotiko['Α_Γ'];
+CURRICULA.dimotiko['Δ_Ε_ΣΤ'] = CURRICULA.dimotiko['Δ_ΣΤ'];
+CURRICULA.dimotiko['Α_Β_Γ_Δ_Ε_ΣΤ'] = CURRICULA.dimotiko['Α_ΣΤ'];
+

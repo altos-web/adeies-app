@@ -79,7 +79,10 @@ export class TimetableMatrix {
 
       let options = [];
       if (this.currentView === 'class') {
-        options = this.timetable.classes.map((c) => [c.id, `Τμήμα ${c.name} (${c.grade} Τάξη)`]);
+        options = this.timetable.classes.map((c) => {
+          const grLabel = c.grades && c.grades.length > 1 ? `Συνδιδασκαλία: ${c.grades.join(', ')}` : `${c.grade} Τάξη`;
+          return [c.id, `Τμήμα ${c.name} (${grLabel})`];
+        });
       } else if (this.currentView === 'teacher') {
         options = this.timetable.teachers.map((t) => [t.id, `${t.name} (${t.branch || 'Εκπαιδευτικός'})`]);
       } else if (this.currentView === 'room') {

@@ -9,17 +9,17 @@ export function createInitialTimetable(schoolType = 'gymnasio') {
 
   const defaultClasses = schoolType === 'dimotiko'
     ? [
-        { id: 'c_a1', name: 'Α1', grade: 'Α' },
-        { id: 'c_b1', name: 'Β1', grade: 'Β' },
-        { id: 'c_g1', name: 'Γ1', grade: 'Γ' },
-        { id: 'c_d1', name: 'Δ1', grade: 'Δ' },
-        { id: 'c_e1', name: 'Ε1', grade: 'Ε' },
-        { id: 'c_st1', name: 'ΣΤ1', grade: 'ΣΤ' },
+        { id: 'c_a1', name: 'Α1', grade: 'Α', grades: ['Α'] },
+        { id: 'c_b1', name: 'Β1', grade: 'Β', grades: ['Β'] },
+        { id: 'c_g1', name: 'Γ1', grade: 'Γ', grades: ['Γ'] },
+        { id: 'c_d1', name: 'Δ1', grade: 'Δ', grades: ['Δ'] },
+        { id: 'c_e1', name: 'Ε1', grade: 'Ε', grades: ['Ε'] },
+        { id: 'c_st1', name: 'ΣΤ1', grade: 'ΣΤ', grades: ['ΣΤ'] },
       ]
     : [
-        { id: 'c_1', name: 'Α1', grade: 'Α' },
-        { id: 'c_2', name: 'Α2', grade: 'Α' },
-        { id: 'c_3', name: 'Β1', grade: 'Β' },
+        { id: 'c_1', name: 'Α1', grade: 'Α', grades: ['Α'] },
+        { id: 'c_2', name: 'Α2', grade: 'Α', grades: ['Α'] },
+        { id: 'c_3', name: 'Β1', grade: 'Β', grades: ['Β'] },
       ];
 
   return {
@@ -55,14 +55,43 @@ export function normalizeTimetable(tt) {
   if (!Array.isArray(tt.classes)) tt.classes = [];
   if (tt.schoolType === 'dimotiko' && tt.classes.length === 0) {
     tt.classes = [
-      { id: 'c_a1', name: 'Α1', grade: 'Α' },
-      { id: 'c_b1', name: 'Β1', grade: 'Β' },
-      { id: 'c_g1', name: 'Γ1', grade: 'Γ' },
-      { id: 'c_d1', name: 'Δ1', grade: 'Δ' },
-      { id: 'c_e1', name: 'Ε1', grade: 'Ε' },
-      { id: 'c_st1', name: 'ΣΤ1', grade: 'ΣΤ' },
+      { id: 'c_a1', name: 'Α1', grade: 'Α', grades: ['Α'] },
+      { id: 'c_b1', name: 'Β1', grade: 'Β', grades: ['Β'] },
+      { id: 'c_g1', name: 'Γ1', grade: 'Γ', grades: ['Γ'] },
+      { id: 'c_d1', name: 'Δ1', grade: 'Δ', grades: ['Δ'] },
+      { id: 'c_e1', name: 'Ε1', grade: 'Ε', grades: ['Ε'] },
+      { id: 'c_st1', name: 'ΣΤ1', grade: 'ΣΤ', grades: ['ΣΤ'] },
     ];
   }
+  tt.classes.forEach((c) => {
+    if (!Array.isArray(c.grades) || c.grades.length === 0) {
+      if (c.grade && typeof c.grade === 'string') {
+        if (c.grade === 'Α_ΣΤ' || c.grade === 'Α_Β_Γ_Δ_Ε_ΣΤ') {
+          c.grades = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'ΣΤ'];
+        } else if (c.grade === 'Α_Γ' || c.grade === 'Α_Β_Γ') {
+          c.grades = ['Α', 'Β', 'Γ'];
+        } else if (c.grade === 'Δ_ΣΤ' || c.grade === 'Δ_Ε_ΣΤ') {
+          c.grades = ['Δ', 'Ε', 'ΣΤ'];
+        } else if (c.grade === 'Α_Β') {
+          c.grades = ['Α', 'Β'];
+        } else if (c.grade === 'Γ_Δ') {
+          c.grades = ['Γ', 'Δ'];
+        } else if (c.grade === 'Ε_ΣΤ') {
+          c.grades = ['Ε', 'ΣΤ'];
+        } else if (c.grade.includes('_')) {
+          c.grades = c.grade.split('_');
+        } else {
+          c.grades = [c.grade];
+        }
+      } else {
+        c.grades = ['Α'];
+        c.grade = 'Α';
+      }
+    }
+    if (!c.grade) {
+      c.grade = c.grades.join('_');
+    }
+  });
   if (!Array.isArray(tt.teachers)) tt.teachers = [];
   if (!Array.isArray(tt.lessons)) tt.lessons = [];
   else {
@@ -139,7 +168,35 @@ export function populateCurriculumForClasses(timetable) {
   const lessons = [];
 
   for (const cls of classes) {
-    const template = curriculaForSchool[cls.grade] || [];
+    let template = curriculaForSchool[cls.grade];
+
+    if (!template || template.length === 0) {
+      if (Array.isArray(cls.grades) && cls.grades.length > 0) {
+        if (cls.grades.length === 6) {
+          template = curriculaForSchool['Α_ΣΤ'];
+        } else if (cls.grades.length === 3) {
+          const gStr = cls.grades.join('');
+          if (gStr === 'ΑΒΓ') template = curriculaForSchool['Α_Γ'];
+          else if (gStr === 'ΔΕΣΤ') template = curriculaForSchool['Δ_ΣΤ'];
+        } else if (cls.grades.length === 2) {
+          const gStr = cls.grades.join('');
+          if (gStr === 'ΑΒ') template = curriculaForSchool['Α_Β'];
+          else if (gStr === 'ΓΔ') template = curriculaForSchool['Γ_Δ'];
+          else if (gStr === 'ΕΣΤ') template = curriculaForSchool['Ε_ΣΤ'];
+        } else if (cls.grades.length === 1) {
+          template = curriculaForSchool[cls.grades[0]];
+        }
+      }
+    }
+
+    if (!template || template.length === 0) {
+      if (Array.isArray(cls.grades) && cls.grades.length > 0) {
+        template = curriculaForSchool[cls.grades[cls.grades.length - 1]] || curriculaForSchool['Α'] || [];
+      } else {
+        template = curriculaForSchool['Α'] || [];
+      }
+    }
+
     for (const item of template) {
       const lessonId = `les_${cls.id}_${item.id}`;
       // Αν είναι παράλληλο μάθημα (π.χ. 2η ξένη γλώσσα), συγχρονίζεται με τα υπόλοιπα τμήματα της ίδιας τάξης
@@ -150,6 +207,7 @@ export function populateCurriculumForClasses(timetable) {
         classId: cls.id,
         className: cls.name,
         grade: cls.grade,
+        grades: Array.isArray(cls.grades) ? [...cls.grades] : [cls.grade],
         subjectId: item.id,
         subjectName: item.name,
         subjectShort: item.short,
