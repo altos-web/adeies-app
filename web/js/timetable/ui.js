@@ -2,7 +2,7 @@
 // Συντονίζει τα βήματα καταχώρισης (Σχολείο, Τμήματα, Εκπαιδευτικοί Time-off, Αναθέσεις, Solver & Matrix).
 
 import { store } from '../store.js';
-import { DAYS_OF_WEEK, DEFAULT_BELL_TIMES, DIMOTIKO_ORGANICITIES, SCHOOL_TYPES } from './curricula.js';
+import { DAYS_OF_WEEK, DEFAULT_BELL_TIMES, DIMOTIKO_ORGANICITIES, getBranchesForSchoolType, isBranchValidForSchoolType, SCHOOL_TYPES } from './curricula.js';
 import { TimetableMatrix } from './matrix.js';
 import { autoAssignTeachers, createInitialTimetable, normalizeTimetable, populateCurriculumForClasses } from './model.js';
 import { TimetableSolver } from './solver.js';
@@ -649,12 +649,15 @@ export class TimetableUI {
       const assigned = lessons
         .filter((les) => les.teacherId === t.id)
         .reduce((sum, les) => sum + (Number(les.hours) || 0), 0);
-      t.assignedHours = assigned;
+      const isValidBranch = isBranchValidForSchoolType(t.branch, this.timetable.schoolType);
+      const branchBadgeHtml = isValidBranch
+        ? `<span class="branch-badge">${t.branch || '—'}</span>`
+        : `<span class="branch-badge" style="background: #fee2e2; color: #991b1b; border-color: #fca5a5;" title="Ο κλάδος ${t.branch} δεν ανήκει στη βαθμίδα αυτού του σχολείου">${t.branch || '—'} ⚠️</span>`;
 
       const row = document.createElement('tr');
       row.innerHTML = `
         <td><strong style="font-size: 0.9375rem;">${t.name}</strong></td>
-        <td><span class="branch-badge">${t.branch || '—'}</span></td>
+        <td>${branchBadgeHtml}</td>
         <td>
           <input type="number" min="1" max="30" value="${t.requiredHours || 24}" class="input-hours" style="width: 4.5rem; font-size: 0.9375rem; font-weight: bold; text-align: center;"> <span style="font-weight: 500;">ώρες</span>
         </td>
@@ -711,28 +714,13 @@ export class TimetableUI {
     const defaultName = teacherToEdit ? teacherToEdit.name : '';
     const defaultBranch = teacherToEdit ? teacherToEdit.branch : (this.timetable.schoolType === 'dimotiko' ? 'ΠΕ70' : 'ΠΕ02');
 
-    const commonBranches = [
-      { code: 'ΠΕ70', label: 'ΠΕ70 - Δάσκαλοι' },
-      { code: 'ΠΕ60', label: 'ΠΕ60 - Νηπιαγωγοί' },
-      { code: 'ΠΕ02', label: 'ΠΕ02 - Φιλόλογοι' },
-      { code: 'ΠΕ03', label: 'ΠΕ03 - Μαθηματικοί' },
-      { code: 'ΠΕ04.01', label: 'ΠΕ04.01 - Φυσικοί' },
-      { code: 'ΠΕ04.02', label: 'ΠΕ04.02 - Χημικοί' },
-      { code: 'ΠΕ04.04', label: 'ΠΕ04.04 - Βιολόγοι' },
-      { code: 'ΠΕ04.05', label: 'ΠΕ04.05 - Γεωλόγοι' },
-      { code: 'ΠΕ06', label: 'ΠΕ06 - Αγγλικής' },
-      { code: 'ΠΕ05', label: 'ΠΕ05 - Γαλλικής' },
-      { code: 'ΠΕ07', label: 'ΠΕ07 - Γερμανικής' },
-      { code: 'ΠΕ11', label: 'ΠΕ11 - Φυσικής Αγωγής' },
-      { code: 'ΠΕ79.01', label: 'ΠΕ79.01 - Μουσικής' },
-      { code: 'ΠΕ08', label: 'ΠΕ08 - Εικαστικών' },
-      { code: 'ΠΕ86', label: 'ΠΕ86 - Πληροφορικής' },
-      { code: 'ΠΕ91.01', label: 'ΠΕ91.01 - Θεατρικής Αγωγής' },
-      { code: 'ΠΕ80', label: 'ΠΕ80 - Οικονομίας' },
+    const schoolBranches = getBranchesForSchoolType(this.timetable.schoolType);
+    const branchOptions = [
+      ...schoolBranches,
       { code: 'other', label: '— Άλλος κλάδος (πληκτρολόγηση) —' },
     ];
 
-    const isKnownBranch = commonBranches.some((b) => b.code === defaultBranch);
+    const isKnownBranch = branchOptions.some((b) => b.code === defaultBranch);
 
     dialog.innerHTML = `
       <div class="dialog-content">
@@ -748,10 +736,10 @@ export class TimetableUI {
           </label>
 
           <label class="field">
-            <span class="label">Κλάδος / Ειδικότητα</span>
+            <span class="label">Κλάδος / Ειδικότητα (${this.timetable.schoolType === 'dimotiko' ? 'Πρωτοβάθμια' : 'Δευτεροβάθμια'})</span>
             <div style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
               <select id="tmodal-branch-select">
-                ${commonBranches.map(
+                ${branchOptions.map(
                   (b) => `<option value="${b.code}" ${b.code === (isKnownBranch ? defaultBranch : 'other') ? 'selected' : ''}>${b.label}</option>`
                 ).join('')}
               </select>

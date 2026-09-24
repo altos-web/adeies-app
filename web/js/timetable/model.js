@@ -1,7 +1,7 @@
 // model.js — Μοντέλο Δεδομένων & Κανόνες Εγκυρότητας Ωρολογίου Προγράμματος
 // Υποστηρίζει Τμήματα, Εκπαιδευτικούς, Διαθεσιμότητα (Time-off), Αίθουσες, Μαθήματα/Κάρτες και Διασπάσεις Τμημάτων.
 
-import { CURRICULA, DAYS_OF_WEEK, DEFAULT_BELL_TIMES, DIMOTIKO_ORGANICITIES, SCHOOL_TYPES, SPECIAL_ROOMS } from './curricula.js';
+import { CURRICULA, DAYS_OF_WEEK, DEFAULT_BELL_TIMES, DIMOTIKO_ORGANICITIES, isBranchValidForSchoolType, SCHOOL_TYPES, SPECIAL_ROOMS } from './curricula.js';
 
 export function createInitialTimetable(schoolType = 'gymnasio') {
   const typeConfig = SCHOOL_TYPES[schoolType] || SCHOOL_TYPES.gymnasio;
@@ -243,8 +243,9 @@ export function populateCurriculumForClasses(timetable) {
 // Έλεγχος συμβατότητας κλάδου/ειδικότητας εκπαιδευτικού με το μάθημα
 export function isBranchMatch(teacherBranch, lessonBranch) {
   if (!teacherBranch || !lessonBranch) return false;
-  const tb = String(teacherBranch).trim().toUpperCase();
-  const lb = String(lessonBranch).trim().toUpperCase();
+  const strip = (s) => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toUpperCase();
+  const tb = strip(teacherBranch);
+  const lb = strip(lessonBranch);
 
   if (tb === lb) return true;
 
@@ -263,10 +264,23 @@ export function isBranchMatch(teacherBranch, lessonBranch) {
   const lbBase = lb.split('.')[0];
   if (tb === lbBase || tbBase === lb || tbBase === lbBase) return true;
 
+  // Έλεγχος εύρους κλάδων (π.χ. 'ΠΕ81-84' ή 'ΠΕ81-89')
+  const rangeMatch = lb.match(/^ΠΕ(\d{2})-(\d{2})$/);
+  if (rangeMatch) {
+    const from = parseInt(rangeMatch[1], 10);
+    const to = parseInt(rangeMatch[2], 10);
+    const tbNumMatch = tb.match(/^ΠΕ(\d{2})/);
+    if (tbNumMatch) {
+      const tbNum = parseInt(tbNumMatch[1], 10);
+      if (tbNum === 86 && to <= 85) return false; // Η Πληροφορική (ΠΕ86) δεν εμπίπτει στην Τεχνολογία (ΠΕ81-84)
+      if (tbNum >= from && tbNum <= to) return true;
+    }
+    return false;
+  }
+
   // Ειδικές περιπτώσεις τεχνικών/επαγγελματικών κλάδων
-  if (lb.includes('ΠΕ8') && tb.startsWith('ΠΕ8')) return true;
-  if (lb.includes('ΤΕ') && tb.startsWith('ΤΕ')) return true;
-  if (lb.includes('ΔΕ') && tb.startsWith('ΔΕ')) return true;
+  if (lb.startsWith('ΤΕ') && tb.startsWith('ΤΕ')) return true;
+  if (lb.startsWith('ΔΕ') && tb.startsWith('ΔΕ')) return true;
   if (lb === 'ΟΛΟΙ' || lb === 'ALL') return true;
 
   return false;
@@ -330,8 +344,11 @@ export function autoAssignTeachers(timetable, { overwriteExisting = false } = {}
     const lesHours = Number(les.hours) || 0;
     if (lesHours <= 0) continue;
 
-    // Εύρεση εκπαιδευτικών με συμβατή ειδικότητα
-    const matchingTeachers = teachers.filter((t) => isBranchMatch(t.branch, les.branch));
+    // Εύρεση εκπαιδευτικών με συμβατή ειδικότητα που ανήκουν στη βαθμίδα του σχολείου
+    const matchingTeachers = teachers.filter((t) => {
+      if (!isBranchValidForSchoolType(t.branch, timetable.schoolType)) return false;
+      return isBranchMatch(t.branch, les.branch);
+    });
     if (!matchingTeachers.length) continue;
 
     let chosenTeacher = null;

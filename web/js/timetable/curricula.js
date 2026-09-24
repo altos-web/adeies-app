@@ -501,3 +501,114 @@ CURRICULA.dimotiko['Α_Β_Γ'] = CURRICULA.dimotiko['Α_Γ'];
 CURRICULA.dimotiko['Δ_Ε_ΣΤ'] = CURRICULA.dimotiko['Δ_ΣΤ'];
 CURRICULA.dimotiko['Α_Β_Γ_Δ_Ε_ΣΤ'] = CURRICULA.dimotiko['Α_ΣΤ'];
 
+// ── Επίσημη Κατηγοριοποίηση Κλάδων Εκπαιδευτικών ανά Βαθμίδα Σχολείου ──────
+// Βάσει του ελληνικού νομοθετικού πλαισίου:
+// 1. Πρωτοβάθμια (Δημοτικό): Αποκλειστικά ΠΕ70/ΠΕ71 και οι κοινές ειδικότητες.
+// 2. Δευτεροβάθμια (Γυμνάσιο/ΓΕΛ/ΕΠΑΛ): Ποτέ ΠΕ70/ΠΕ60. Περιλαμβάνει καθηγητές ειδικοτήτων και τεχνικούς κλάδους.
+// 3. Κοινές Ειδικότητες: Διδάσκουν τόσο στην Πρωτοβάθμια όσο και στη Δευτεροβάθμια Εκπαίδευση.
+export const TEACHER_BRANCHES = {
+  // Αποκλειστικοί κλάδοι Δημοτικού Σχολείου (Πρωτοβάθμια)
+  dimotiko_only: [
+    { code: 'ΠΕ70', label: 'ΠΕ70 - Δάσκαλοι' },
+    { code: 'ΠΕ71', label: 'ΠΕ71 - Δάσκαλοι Ειδικής Αγωγής (ΕΑΕ)' },
+  ],
+
+  // Κοινές Ειδικότητες (διδάσκουν και στο Δημοτικό και στη Δευτεροβάθμια)
+  common: [
+    { code: 'ΠΕ06', label: 'ΠΕ06 - Αγγλικής Φιλολογίας' },
+    { code: 'ΠΕ11', label: 'ΠΕ11 - Φυσικής Αγωγής (Γυμναστές)' },
+    { code: 'ΠΕ86', label: 'ΠΕ86 - Πληροφορικής' },
+    { code: 'ΠΕ79.01', label: 'ΠΕ79.01 - Μουσικής' },
+    { code: 'ΠΕ08', label: 'ΠΕ08 - Εικαστικών / Καλών Τεχνών' },
+    { code: 'ΠΕ05', label: 'ΠΕ05 - Γαλλικής Φιλολογίας' },
+    { code: 'ΠΕ07', label: 'ΠΕ07 - Γερμανικής Φιλολογίας' },
+    { code: 'ΠΕ91.01', label: 'ΠΕ91.01 - Θεατρικής Αγωγής' },
+    { code: 'ΠΕ91.02', label: 'ΠΕ91.02 - Δραματικής Τέχνης' },
+  ],
+
+  // Δευτεροβάθμια: Γενικής Παιδείας & Θετικών/Θεωρητικών Επιστημών (Γυμνάσιο, ΓΕΛ, ΕΠΑΛ)
+  secondary_general: [
+    { code: 'ΠΕ01', label: 'ΠΕ01 - Θεολόγοι' },
+    { code: 'ΠΕ02', label: 'ΠΕ02 - Φιλόλογοι' },
+    { code: 'ΠΕ03', label: 'ΠΕ03 - Μαθηματικοί' },
+    { code: 'ΠΕ04.01', label: 'ΠΕ04.01 - Φυσικοί' },
+    { code: 'ΠΕ04.02', label: 'ΠΕ04.02 - Χημικοί' },
+    { code: 'ΠΕ04.04', label: 'ΠΕ04.04 - Βιολόγοι' },
+    { code: 'ΠΕ04.05', label: 'ΠΕ04.05 - Γεωλόγοι' },
+    { code: 'ΠΕ78', label: 'ΠΕ78 - Κοινωνικών Επιστημών' },
+    { code: 'ΠΕ80', label: 'ΠΕ80 - Οικονομίας' },
+    { code: 'ΠΕ34', label: 'ΠΕ34 - Ιταλικής Φιλολογίας' },
+  ],
+
+  // ΕΠΑΛ / Τεχνολογικοί και Εργαστηριακοί Κλάδοι
+  epal_vocational: [
+    { code: 'ΠΕ81', label: 'ΠΕ81 - Πολιτικών Μηχανικών / Αρχιτεκτόνων' },
+    { code: 'ΠΕ82', label: 'ΠΕ82 - Μηχανολόγων' },
+    { code: 'ΠΕ83', label: 'ΠΕ83 - Ηλεκτρολόγων' },
+    { code: 'ΠΕ84', label: 'ΠΕ84 - Ηλεκτρονικών' },
+    { code: 'ΠΕ85', label: 'ΠΕ85 - Χημικών Μηχανικών' },
+    { code: 'ΠΕ87.01', label: 'ΠΕ87.01 - Ιατρικής' },
+    { code: 'ΠΕ87.02', label: 'ΠΕ87.02 - Νοσηλευτικής' },
+    { code: 'ΠΕ88.01', label: 'ΠΕ88.01 - Γεωπόνοι' },
+    { code: 'ΠΕ89.01', label: 'ΠΕ89.01 - Εφαρμοσμένων Τεχνών' },
+    { code: 'ΤΕ01', label: 'ΤΕ01 - Τεχνολόγοι Εργαστηρίων' },
+    { code: 'ΔΕ01', label: 'ΔΕ01 - Εκπαιδευτικοί Εργαστηρίων' },
+  ],
+};
+
+// Επιστρέφει τις έγκυρες ειδικότητες για συγκεκριμένο τύπο σχολείου
+export function getBranchesForSchoolType(schoolType) {
+  if (schoolType === 'dimotiko') {
+    return [
+      ...TEACHER_BRANCHES.dimotiko_only,
+      ...TEACHER_BRANCHES.common,
+    ];
+  }
+  if (schoolType === 'gymnasio') {
+    return [
+      ...TEACHER_BRANCHES.secondary_general,
+      ...TEACHER_BRANCHES.common,
+      { code: 'ΠΕ82', label: 'ΠΕ82 - Μηχανολόγων (Τεχνολογία)' },
+      { code: 'ΠΕ83', label: 'ΠΕ83 - Ηλεκτρολόγων (Τεχνολογία)' },
+      { code: 'ΠΕ88.01', label: 'ΠΕ88.01 - Γεωπονίας (Τεχνολογία)' },
+    ];
+  }
+  if (schoolType === 'gel') {
+    return [
+      ...TEACHER_BRANCHES.secondary_general,
+      ...TEACHER_BRANCHES.common.filter((b) => !b.code.startsWith('ΠΕ91')),
+    ];
+  }
+  if (schoolType === 'epal') {
+    return [
+      ...TEACHER_BRANCHES.secondary_general,
+      ...TEACHER_BRANCHES.common.filter((b) => !b.code.startsWith('ΠΕ91')),
+      ...TEACHER_BRANCHES.epal_vocational,
+    ];
+  }
+  return [
+    ...TEACHER_BRANCHES.secondary_general,
+    ...TEACHER_BRANCHES.common,
+  ];
+}
+
+// Ελέγχει αν ένας κλάδος είναι συμβατός με τον τύπο σχολείου
+export function isBranchValidForSchoolType(branchCode, schoolType) {
+  if (!branchCode) return true;
+  const b = String(branchCode).trim().toUpperCase();
+
+  if (schoolType === 'dimotiko') {
+    // Στο Δημοτικό επιτρέπονται ΜΟΝΟ ΠΕ70/ΠΕ71 και οι κοινές ειδικότητες
+    // ΠΟΤΕ ΠΕ01, ΠΕ02, ΠΕ03, ΠΕ04, ΠΕ78, ΠΕ80, ΠΕ81-89
+    const allowedPrefixes = ['ΠΕ70', 'ΠΕ71', 'ΠΕ06', 'ΠΕ11', 'ΠΕ86', 'ΠΕ79', 'ΠΕ08', 'ΠΕ05', 'ΠΕ07', 'ΠΕ91'];
+    return allowedPrefixes.some((p) => b.startsWith(p));
+  }
+
+  // Στη Δευτεροβάθμια (Γυμνάσιο, ΓΕΛ, ΕΠΑΛ) ΠΟΤΕ ΠΕ70 (δάσκαλοι) ή ΠΕ60 (νηπιαγωγοί)
+  if (b.startsWith('ΠΕ70') || b.startsWith('ΠΕ71') || b.startsWith('ΠΕ60')) {
+    return false;
+  }
+
+  return true;
+}
+
