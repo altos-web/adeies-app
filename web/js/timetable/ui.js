@@ -4,53 +4,76 @@
 import { store } from '../store.js';
 import { DAYS_OF_WEEK, SCHOOL_TYPES } from './curricula.js';
 import { TimetableMatrix } from './matrix.js';
-import { createInitialTimetable, populateCurriculumForClasses } from './model.js';
+import { createInitialTimetable, normalizeTimetable, populateCurriculumForClasses } from './model.js';
 import { TimetableSolver } from './solver.js';
 
 export class TimetableUI {
   constructor(container) {
     this.container = container;
     this.activeStep = 1; // 1: Σχολείο/Τμήματα, 2: Εκπαιδευτικοί/Time-off, 3: Αναθέσεις, 4: Πρόγραμμα (Solver & Matrix)
-    this.timetable = store.getTimetable() || createInitialTimetable('gymnasio');
+    this.timetable = normalizeTimetable(store.getTimetable() || createInitialTimetable('gymnasio'));
     this.matrix = null;
   }
 
   render() {
+    this.timetable = normalizeTimetable(this.timetable);
     this.container.innerHTML = '';
 
-    const wrap = document.createElement('div');
-    wrap.className = 'timetable-app';
+    try {
+      const wrap = document.createElement('div');
+      wrap.className = 'timetable-app';
 
-    // 1. Wizard Steps Bar
-    const stepsNav = this.createStepsNav();
-    wrap.append(stepsNav);
+      // 1. Wizard Steps Bar
+      const stepsNav = this.createStepsNav();
+      wrap.append(stepsNav);
 
-    // 2. Active Step Content
-    const stepContent = document.createElement('div');
-    stepContent.className = 'timetable-step-content';
+      // 2. Active Step Content
+      const stepContent = document.createElement('div');
+      stepContent.className = 'timetable-step-content';
 
-    switch (this.activeStep) {
-      case 1:
-        stepContent.append(this.renderStep1School());
-        break;
-      case 2:
-        stepContent.append(this.renderStep2Teachers());
-        break;
-      case 3:
-        stepContent.append(this.renderStep3Lessons());
-        break;
-      case 4:
-        stepContent.append(this.renderStep4Schedule());
-        break;
-      default:
-        break;
+      switch (this.activeStep) {
+        case 1:
+          stepContent.append(this.renderStep1School());
+          break;
+        case 2:
+          stepContent.append(this.renderStep2Teachers());
+          break;
+        case 3:
+          stepContent.append(this.renderStep3Lessons());
+          break;
+        case 4:
+          stepContent.append(this.renderStep4Schedule());
+          break;
+        default:
+          break;
+      }
+      wrap.append(stepContent);
+
+      this.container.append(wrap);
+    } catch (err) {
+      console.error('Error rendering timetable UI:', err);
+      this.container.innerHTML = `
+        <div class="panel" style="padding: 2rem; border-left: 4px solid var(--danger, #ef4444); background: #fff; margin: 1rem;">
+          <h3 style="color: #b91c1c; margin-top: 0;">Σφάλμα εμφάνισης ωρολογίου προγράμματος</h3>
+          <p>${err.message || 'Παρουσιάστηκε μη αναμενόμενο σφάλμα κατά τη φόρτωση των δεδομένων.'}</p>
+          <div class="toolbar" style="margin-top: 1rem;">
+            <button class="primary" id="btn-recover-tt">Επαναφορά Αρχικών Δεδομένων Ωρολογίου</button>
+          </div>
+        </div>
+      `;
+      const btn = this.container.querySelector('#btn-recover-tt');
+      if (btn) {
+        btn.onclick = () => {
+          this.timetable = createInitialTimetable('gymnasio');
+          this.save();
+          this.render();
+        };
+      }
     }
-    wrap.append(stepContent);
-
-    this.container.append(wrap);
   }
 
   save() {
+    this.timetable = normalizeTimetable(this.timetable);
     store.setTimetable(this.timetable);
   }
 
@@ -414,14 +437,16 @@ export class TimetableUI {
 
   renderTeachersList(tbody) {
     tbody.innerHTML = '';
-    if (!this.timetable.teachers.length) {
+    const teachers = this.timetable.teachers || [];
+    if (!teachers.length) {
       tbody.innerHTML = `<tr><td colspan="6" class="hint text-center">Δεν έχει καταχωριστεί κανένας εκπαιδευτικός. Πατήστε «Συγχρονισμός» ή «Προσθήκη».</td></tr>`;
       return;
     }
 
-    this.timetable.teachers.forEach((t) => {
+    const lessons = this.timetable.lessons || [];
+    teachers.forEach((t) => {
       // Υπολογισμός ανατεθειμένων ωρών από τα μαθήματα
-      const assigned = this.timetable.lessons
+      const assigned = lessons
         .filter((les) => les.teacherId === t.id)
         .reduce((sum, les) => sum + (Number(les.hours) || 0), 0);
       t.assignedHours = assigned;
@@ -558,7 +583,7 @@ export class TimetableUI {
 
       <div class="toolbar">
         <button class="primary" id="btn-load-curriculum">📋 Αυτόματη Φόρτωση Επίσημου Ωρολογίου Προγράμματος</button>
-        <span class="badge info">${this.timetable.lessons.length} ενεργά μαθήματα</span>
+        <span class="badge info">${(this.timetable.lessons || []).length} ενεργά μαθήματα</span>
       </div>
 
       <div class="lessons-table-wrap">
@@ -609,12 +634,13 @@ export class TimetableUI {
 
   renderLessonsList(tbody) {
     tbody.innerHTML = '';
-    if (!this.timetable.lessons.length) {
+    const lessons = this.timetable.lessons || [];
+    if (!lessons.length) {
       tbody.innerHTML = `<tr><td colspan="7" class="hint text-center">Δεν υπάρχουν μαθήματα. Πατήστε «Αυτόματη Φόρτωση Επίσημου Ωρολογίου Προγράμματος».</td></tr>`;
       return;
     }
 
-    this.timetable.lessons.forEach((les) => {
+    lessons.forEach((les) => {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td><strong>${les.className || les.classId}</strong></td>
@@ -685,7 +711,8 @@ export class TimetableUI {
     // Run Solver
     div.querySelector('#btn-run-solver').onclick = () => {
       // Έλεγχος αν υπάρχουν ανατεθειμένοι καθηγητές
-      const unassignedCount = this.timetable.lessons.filter((l) => !l.teacherId).length;
+      const lessons = this.timetable.lessons || [];
+      const unassignedCount = lessons.filter((l) => !l.teacherId).length;
       if (unassignedCount > 0) {
         if (!confirm(`Υπάρχουν ${unassignedCount} μαθήματα χωρίς ανάθεση εκπαιδευτικού. Θέλετε να συνεχίσετε;`)) {
           return;

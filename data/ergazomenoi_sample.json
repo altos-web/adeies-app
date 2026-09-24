@@ -480,6 +480,22 @@
       { "id": "emp_15", "name": "ΚΩΝΣΤΑΝΤΙΝΙΔΟΥ ΕΥΑΓΓΕΛΙΑ", "branch": "ΠΕ80", "requiredHours": 16, "assignedHours": 0, "timeOff": {} },
       { "id": "emp_16", "name": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ", "branch": "ΠΕ08", "requiredHours": 6, "assignedHours": 0, "timeOff": {} },
       { "id": "emp_17", "name": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ", "branch": "ΠΕ79.01", "requiredHours": 6, "assignedHours": 0, "timeOff": {} }
-    ]
+    ],
+    "lessons": [],
+    "rooms": [
+      { "id": "room_gen", "name": "Αίθουσα Τμήματος", "isSpecial": false },
+      { "id": "room_gym", "name": "Γυμναστήριο / Αύλειος Χώρος", "isSpecial": true, "capacity": 2 },
+      { "id": "room_cs", "name": "Εργαστήριο Πληροφορικής", "isSpecial": true, "capacity": 1 },
+      { "id": "room_sci", "name": "Εργαστήριο Φυσικών Επιστημών", "isSpecial": true, "capacity": 1 }
+    ],
+    "schedule": [],
+    "unplacedCards": [],
+    "rules": {
+      "maxConsecutiveSameSubject": 2,
+      "maxConsecutiveTeacherHours": 4,
+      "maxTeacherGapsPerDay": 1,
+      "preferMorningDifficultSubjects": true,
+      "maxGymSimultaneousClasses": 2
+    }
   }
 }

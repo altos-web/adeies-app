@@ -33,10 +33,38 @@ export function createInitialTimetable(schoolType = 'gymnasio') {
   };
 }
 
+// Εξασφάλιση ότι όλα τα πεδία και οι πίνακες του ωρολογίου υπάρχουν και είναι έγκυροι
+export function normalizeTimetable(tt) {
+  if (!tt || typeof tt !== 'object') return createInitialTimetable('gymnasio');
+  if (!tt.schoolType) tt.schoolType = 'gymnasio';
+  const typeConfig = SCHOOL_TYPES[tt.schoolType] || SCHOOL_TYPES.gymnasio;
+  if (!tt.periodsPerDay) tt.periodsPerDay = typeConfig.periodsPerDay || 7;
+  if (!Array.isArray(tt.classes)) tt.classes = [];
+  if (!Array.isArray(tt.teachers)) tt.teachers = [];
+  if (!Array.isArray(tt.lessons)) tt.lessons = [];
+  if (!Array.isArray(tt.rooms) || tt.rooms.length === 0) tt.rooms = JSON.parse(JSON.stringify(SPECIAL_ROOMS));
+  if (!Array.isArray(tt.schedule)) tt.schedule = [];
+  if (!Array.isArray(tt.unplacedCards)) tt.unplacedCards = [];
+  if (!Array.isArray(tt.bellTimes)) {
+    tt.bellTimes = tt.schoolType === 'dimotiko' ? DEFAULT_BELL_TIMES.primary : DEFAULT_BELL_TIMES.secondary;
+  }
+  if (!tt.rules) {
+    tt.rules = {
+      maxConsecutiveSameSubject: 2,
+      maxConsecutiveTeacherHours: 4,
+      maxTeacherGapsPerDay: 1,
+      preferMorningDifficultSubjects: true,
+      maxGymSimultaneousClasses: 2,
+    };
+  }
+  return tt;
+}
+
 // Δημιουργία των καρτών (Cards) από τις δηλωμένες αναθέσεις μαθημάτων (Lessons)
 // Στο στυλ του aSc Timetables: Ένα μάθημα 4 ωρών μπορεί να σπάσει σε 1 δίωρο + 2 μονόωρα (2+1+1)
 export function generateCardsFromLessons(lessons) {
   const cards = [];
+  if (!Array.isArray(lessons)) return cards;
   for (const lesson of lessons) {
     const totalHours = Number(lesson.hours) || 1;
     let distribution = lesson.distribution; // π.χ. '2+2', '2+1+1', '1+1+1+1'
