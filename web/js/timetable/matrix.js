@@ -107,10 +107,12 @@ export class TimetableMatrix {
     // Στατιστικά / Μετρητές
     const statsBadge = document.createElement('div');
     statsBadge.className = 'matrix-stats-badge';
-    const totalSlots = this.timetable.schedule.length;
-    const unplacedCount = this.timetable.unplacedCards?.length || 0;
-    statsBadge.innerHTML = `<strong>${totalSlots}</strong> τοποθετημένες κάρτες ${
-      unplacedCount > 0 ? `· <span class="badge danger">${unplacedCount} ατοποθέτητες</span>` : '· <span class="badge success">100% Πλήρες</span>'
+    const totalPlacedHours = (this.timetable.schedule || []).reduce((sum, c) => sum + (c.length || 1), 0);
+    const totalLessonHours = (this.timetable.lessons || []).reduce((sum, l) => sum + (Number(l.hours) || 0), 0);
+    const unplacedHours = (this.timetable.unplacedCards || []).reduce((sum, c) => sum + (c.length || 1), 0);
+    const placedCardsCount = this.timetable.schedule.length;
+    statsBadge.innerHTML = `<strong>${totalPlacedHours}</strong> / ${totalLessonHours} ώρες (${placedCardsCount} κάρτες) ${
+      unplacedHours > 0 ? `· <span class="badge danger">${unplacedHours} ώρες ατοποθέτητες</span>` : '· <span class="badge success">100% Πλήρες</span>'
     }`;
     bar.append(statsBadge);
 
@@ -165,10 +167,10 @@ export class TimetableMatrix {
           }
         }
 
-        // Αναζήτηση τοποθετημένων καρτών σε αυτό το slot
+        // Αναζήτηση τοποθετημένων καρτών σε αυτό το slot (συμπεριλαμβανομένων δίωρων/πολύωρων)
         const cardsInSlot = this.getCardsForSlot(day, period);
         cardsInSlot.forEach((card) => {
-          cell.append(this.createCardElement(card));
+          cell.append(this.createCardElement(card, period));
         });
 
         // Drag & Drop event listeners στο κελί
@@ -228,15 +230,20 @@ export class TimetableMatrix {
           cell.dataset.period = period;
           cell.dataset.classId = cls.id;
 
-          const cards = this.timetable.schedule.filter(
-            (c) => c.classId === cls.id && c.day === day && c.period === period
-          );
+          const cards = this.timetable.schedule.filter((c) => {
+            if (c.classId !== cls.id || c.day !== day) return false;
+            const len = c.length || 1;
+            return period >= c.period && period < c.period + len;
+          });
           cards.forEach((card) => {
+            const isMulti = (card.length || 1) > 1;
+            const part = period - card.period + 1;
             const miniCard = document.createElement('div');
-            miniCard.className = 'mini-card';
+            miniCard.className = `mini-card ${isMulti ? (part === 1 ? 'mini-card-multi-start' : 'mini-card-multi-cont') : ''}`;
             miniCard.style.backgroundColor = card.subjectColor || '#3b82f6';
-            miniCard.title = `${card.subjectName} · ${card.teacherName || ''}`;
-            miniCard.innerHTML = `<strong>${card.subjectShort || card.subjectId}</strong><small>${card.teacherName ? card.teacherName.split(' ')[0] : ''}</small>`;
+            miniCard.title = `${card.subjectName} · ${card.teacherName || ''} (${isMulti ? `Δίωρο: Ώρα ${part}/${card.length}` : '1 ώρα'})`;
+            const partBadge = isMulti ? `<small class="mini-part">(${part}/${card.length})</small>` : '';
+            miniCard.innerHTML = `<strong>${card.subjectShort || card.subjectId} ${partBadge}</strong><small>${card.teacherName ? card.teacherName.split(' ')[0] : ''}</small>`;
             cell.append(miniCard);
           });
 
@@ -253,7 +260,8 @@ export class TimetableMatrix {
   // Επιστρέφει τις κάρτες που αντιστοιχούν στο τρέχον επιλεγμένο φίλτρο για το slot
   getCardsForSlot(day, period) {
     return this.timetable.schedule.filter((card) => {
-      if (card.day !== day || card.period !== period) return false;
+      const len = card.length || 1;
+      if (card.day !== day || period < card.period || period >= card.period + len) return false;
       if (this.currentView === 'class') {
         return card.classId === this.selectedTargetId;
       }
@@ -268,11 +276,26 @@ export class TimetableMatrix {
   }
 
   // Δημιουργία οπτικής κάρτας μαθήματος (aSc Timetables design)
-  createCardElement(card) {
+  createCardElement(card, currentPeriod = null) {
     const cardEl = document.createElement('div');
     cardEl.className = 'timetable-card';
     cardEl.draggable = true;
     cardEl.dataset.cardId = card.id;
+
+    const isMulti = (card.length || 1) > 1;
+    const part = (currentPeriod && card.period) ? (currentPeriod - card.period + 1) : 1;
+    const totalParts = card.length || 1;
+
+    if (isMulti && currentPeriod) {
+      cardEl.classList.add('card-multi');
+      if (part === 1) {
+        cardEl.classList.add('card-multi-first');
+      } else if (part === totalParts) {
+        cardEl.classList.add('card-multi-last');
+      } else {
+        cardEl.classList.add('card-multi-middle');
+      }
+    }
 
     // Χρώμα θέματος κάρτας
     const baseColor = card.subjectColor || '#2563eb';
@@ -283,11 +306,18 @@ export class TimetableMatrix {
     const teacher = this.timetable.teachers.find((t) => t.id === card.teacherId);
     const room = this.timetable.rooms.find((r) => r.id === card.roomId);
 
+    let lengthBadgeText = '';
+    if (isMulti) {
+      const lenName = totalParts === 2 ? 'Δίωρο' : totalParts === 3 ? 'Τρίωρο' : `${totalParts}ωρο`;
+      lengthBadgeText = currentPeriod ? `${lenName} (${part}/${totalParts})` : `${lenName} (${totalParts} ώρ.)`;
+    }
+
     cardEl.innerHTML = `
       <div class="card-header">
         <span class="card-subject" title="${card.subjectName}">${card.subjectShort || card.subjectName}</span>
-        ${card.length > 1 ? `<span class="card-badge length">Δίωρο</span>` : ''}
+        ${lengthBadgeText ? `<span class="card-badge length ${part > 1 ? 'is-cont' : ''}">${lengthBadgeText}</span>` : ''}
         ${card.isSplit ? `<span class="card-badge split">Σπαστό</span>` : ''}
+        ${currentPeriod ? `<button type="button" class="card-unplace-btn" title="Αφαίρεση από το πρόγραμμα (στο καλάθι)">✕</button>` : ''}
       </div>
       <div class="card-body">
         <span class="card-teacher">${teacher ? teacher.name : (card.teacherName || '—')}</span>
@@ -295,8 +325,27 @@ export class TimetableMatrix {
           <span class="card-class">${cls ? cls.name : (card.className || '')}</span>
           ${room && room.id !== 'room_gen' ? `<span class="card-room">${room.short || room.name}</span>` : ''}
         </span>
+        ${isMulti && part > 1 ? `<span class="card-continuation-hint">↳ συνέχεια από ${currentPeriod - 1}η ώρα</span>` : ''}
       </div>
     `;
+
+    // Unplace button click handler
+    const unplaceBtn = cardEl.querySelector('.card-unplace-btn');
+    if (unplaceBtn) {
+      unplaceBtn.onclick = (e) => {
+        e.stopPropagation();
+        const scheduleIndex = this.timetable.schedule.findIndex((c) => c.id === card.id);
+        if (scheduleIndex >= 0) {
+          const [removed] = this.timetable.schedule.splice(scheduleIndex, 1);
+          delete removed.day;
+          delete removed.period;
+          this.timetable.unplacedCards = this.timetable.unplacedCards || [];
+          this.timetable.unplacedCards.push(removed);
+          if (this.onUpdate) this.onUpdate(this.timetable);
+          this.render();
+        }
+      };
+    }
 
     // Drag handlers
     cardEl.addEventListener('dragstart', (e) => {
@@ -399,10 +448,40 @@ export class TimetableMatrix {
     basket.innerHTML = `
       <div class="basket-header">
         <h4>Καλάθι Μη Τοποθετημένων Καρτών (${unplaced.length})</h4>
-        <small>Σύρετε τις κάρτες στον πίνακα για χειροκίνητη τοποθέτηση.</small>
+        <small>Σύρετε τις κάρτες στον πίνακα για τοποθέτηση ή σύρετε κάρτες εδώ για αφαίρεση.</small>
       </div>
       <div class="basket-cards"></div>
     `;
+
+    // Drop handler for basket
+    basket.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (!this.draggedCard) return;
+      e.dataTransfer.dropEffect = 'move';
+      basket.classList.add('basket-drag-over');
+    });
+
+    basket.addEventListener('dragleave', () => {
+      basket.classList.remove('basket-drag-over');
+    });
+
+    basket.addEventListener('drop', (e) => {
+      e.preventDefault();
+      basket.classList.remove('basket-drag-over');
+      if (!this.draggedCard) return;
+
+      const card = this.draggedCard;
+      const scheduleIndex = this.timetable.schedule.findIndex((c) => c.id === card.id);
+      if (scheduleIndex >= 0) {
+        const [removed] = this.timetable.schedule.splice(scheduleIndex, 1);
+        delete removed.day;
+        delete removed.period;
+        this.timetable.unplacedCards = this.timetable.unplacedCards || [];
+        this.timetable.unplacedCards.push(removed);
+        if (this.onUpdate) this.onUpdate(this.timetable);
+        this.render();
+      }
+    });
 
     const cardsContainer = basket.querySelector('.basket-cards');
     unplaced.forEach((card) => {
@@ -412,3 +491,4 @@ export class TimetableMatrix {
     return basket;
   }
 }
+

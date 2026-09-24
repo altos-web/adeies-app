@@ -721,6 +721,63 @@
   font-family: var(--mono);
 }
 
+/* Multi-period lesson styling (Δίωρα) */
+.timetable-card.card-multi-first {
+  border-bottom: 2px dashed rgba(37, 99, 235, 0.35);
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  margin-bottom: 0.15rem;
+}
+
+.timetable-card.card-multi-last {
+  border-top: 2px dashed rgba(37, 99, 235, 0.35);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  margin-top: 0.15rem;
+}
+
+.timetable-card.card-multi-middle {
+  border-top: 2px dashed rgba(37, 99, 235, 0.35);
+  border-bottom: 2px dashed rgba(37, 99, 235, 0.35);
+  border-radius: 2px;
+  margin-top: 0.15rem;
+  margin-bottom: 0.15rem;
+}
+
+.card-badge.length.is-cont {
+  background: #e0e7ff;
+  color: #3730a3;
+  font-weight: 600;
+}
+
+.card-continuation-hint {
+  font-size: 0.625rem;
+  color: var(--stamp);
+  font-style: italic;
+  display: block;
+  margin-top: 0.1rem;
+}
+
+.card-unplace-btn {
+  background: transparent;
+  border: none;
+  color: var(--stamp);
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0.1rem 0.25rem;
+  cursor: pointer;
+  border-radius: 3px;
+  opacity: 0.6;
+  margin-left: auto;
+  transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.card-unplace-btn:hover {
+  opacity: 1;
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
 /* ── Συγκεντρωτικό Πανόραμα (Master Table) ─────────────────────────────────── */
 .master-table {
   font-size: 0.75rem;
@@ -759,6 +816,23 @@
 
 .mini-card small {
   display: block;
+  opacity: 0.85;
+}
+
+.mini-card.mini-card-multi-start {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 1px dashed rgba(255, 255, 255, 0.45);
+}
+
+.mini-card.mini-card-multi-cont {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  opacity: 0.92;
+}
+
+.mini-part {
+  font-size: 0.7em;
   opacity: 0.85;
 }
 
@@ -1106,13 +1180,18 @@
   gap: 0.5rem;
 }
 
+.unplaced-basket.basket-drag-over {
+  border-color: #2563eb !important;
+  background: #eff6ff !important;
+}
+
 /* ── Εκτύπωση ───────────────────────────────────────────────────────────── */
 @media print {
   body {
     background: white;
     font-size: 10pt;
   }
-  .masthead, nav, .timetable-wizard-nav, .matrix-toolbar, .solver-toolbar, .unplaced-basket, .step-actions {
+  .masthead, nav, .timetable-wizard-nav, .matrix-toolbar, .solver-toolbar, .unplaced-basket, .step-actions, .card-unplace-btn {
     display: none !important;
   }
   .panel-step {
