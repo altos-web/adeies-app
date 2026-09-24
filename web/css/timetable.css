@@ -522,6 +522,328 @@
   opacity: 0.85;
 }
 
+/* ── Έλεγχος Ωρών Μαθήματος (Lesson Hours Control) ────────────────────────── */
+.lesson-hours-ctrl {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.input-lesson-hours {
+  width: 3.5rem;
+  padding: 0.25rem 0.4rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  font: 600 0.9375rem var(--mono);
+  text-align: center;
+  background: var(--card);
+  color: var(--ink);
+  transition: all 0.15s ease;
+}
+
+.input-lesson-hours:focus {
+  border-color: var(--stamp);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--wash);
+}
+
+.hours-unit {
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.btn-reset-hours {
+  background: var(--wash);
+  border: 1px solid var(--rule);
+  color: var(--stamp);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.6875rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.btn-reset-hours:hover {
+  background: var(--card);
+  border-color: var(--stamp);
+}
+
+.hours-preset-hint {
+  font-size: 0.6875rem;
+  color: var(--ink-soft);
+  background: var(--field);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+/* ── Κουμπί Επιλογής Εκπαιδευτικού (Αντικατάσταση Dropdown) ──────────────── */
+.btn-teacher-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  width: 100%;
+  min-width: 15rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 5px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--sans);
+  transition: all 0.15s ease;
+}
+
+.btn-teacher-select:hover {
+  border-color: var(--stamp);
+  background: var(--wash);
+}
+
+.btn-teacher-select.unassigned {
+  border-style: dashed;
+  color: var(--stamp);
+  background: #fafbfa;
+}
+
+.btn-teacher-select.unassigned:hover {
+  background: var(--wash);
+  border-color: var(--stamp);
+}
+
+.btn-teacher-select .assigned-teacher-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  overflow: hidden;
+}
+
+.btn-teacher-select .assigned-teacher-label strong {
+  font-size: 0.84375rem;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-teacher-select .edit-icon {
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+  margin-left: auto;
+}
+
+/* ── Pop-up Modal Ανάθεσης Εκπαιδευτικού (Teacher Assign Dialog) ─────────── */
+.teacher-assign-dialog {
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 0;
+  max-width: 38rem;
+  width: 95%;
+  background: var(--card);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.teacher-assign-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.teacher-picker-content {
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+}
+
+.teacher-picker-header {
+  padding: 1.25rem 1.5rem;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.teacher-picker-header h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.125rem;
+  color: var(--ink);
+}
+
+.btn-close-picker {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.btn-close-picker:hover {
+  background: var(--rule);
+  color: var(--ink);
+}
+
+.picker-search-bar {
+  padding: 0.875rem 1.5rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.picker-search-input {
+  width: 100%;
+  padding: 0.6rem 0.875rem;
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  font-size: 0.875rem;
+  font-family: var(--sans);
+  background: var(--field);
+  box-sizing: border-box;
+}
+
+.picker-search-input:focus {
+  background: var(--card);
+  border-color: var(--stamp);
+  outline: none;
+}
+
+.picker-filter-chips {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+
+.filter-chip {
+  padding: 0.25rem 0.65rem;
+  border-radius: 12px;
+  border: 1px solid var(--rule);
+  background: none;
+  font-size: 0.75rem;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.filter-chip.active {
+  background: var(--stamp);
+  color: #fff;
+  border-color: var(--stamp);
+}
+
+.teacher-pick-list {
+  overflow-y: auto;
+  padding: 0.75rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.teachers-group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.teacher-pick-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--card);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  gap: 0.75rem;
+}
+
+.teacher-pick-item:hover {
+  background: var(--wash);
+  border-color: var(--stamp);
+  transform: translateY(-1px);
+}
+
+.teacher-pick-item.selected {
+  border-color: var(--stamp);
+  background: var(--wash);
+  box-shadow: 0 0 0 1px var(--stamp);
+}
+
+.teacher-pick-item.branch-match {
+  border-left: 4px solid var(--stamp);
+}
+
+.teacher-pick-item.clear-assign {
+  background: #fafbfa;
+  border-style: dashed;
+  margin-bottom: 0.5rem;
+}
+
+.teacher-pick-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.teacher-pick-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.teacher-pick-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--ink);
+}
+
+.teacher-pick-sub {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.teacher-pick-hours {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.rem-badge {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.rem-badge.rem-positive {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.rem-badge.rem-zero {
+  background: var(--field);
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
+}
+
+.rem-badge.rem-negative {
+  background: #fee2e2;
+  color: var(--brick);
+  border: 1px solid #fecaca;
+}
+
 /* ── Καλάθι Μη Τοποθετημένων Καρτών ──────────────────────────────────────── */
 .unplaced-basket {
   background: #fffbeb;

@@ -42,6 +42,11 @@ export function normalizeTimetable(tt) {
   if (!Array.isArray(tt.classes)) tt.classes = [];
   if (!Array.isArray(tt.teachers)) tt.teachers = [];
   if (!Array.isArray(tt.lessons)) tt.lessons = [];
+  else {
+    tt.lessons.forEach((l) => {
+      if (l.hours && !l.defaultHours) l.defaultHours = l.hours;
+    });
+  }
   if (!Array.isArray(tt.rooms) || tt.rooms.length === 0) tt.rooms = JSON.parse(JSON.stringify(SPECIAL_ROOMS));
   if (!Array.isArray(tt.schedule)) tt.schedule = [];
   if (!Array.isArray(tt.unplacedCards)) tt.unplacedCards = [];
@@ -127,6 +132,7 @@ export function populateCurriculumForClasses(timetable) {
         subjectShort: item.short,
         subjectColor: item.color,
         hours: item.hours,
+        defaultHours: item.hours, // Επίσημη προεπιλογή βάσει νομοθεσίας
         branch: item.branch,
         teacherId: '', // Θα ανατεθεί από τον Διευθυντή
         teacherName: '— Χωρίς εκπαιδευτικό —',

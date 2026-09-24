@@ -578,12 +578,22 @@ export class TimetableUI {
     div.innerHTML = `
       <div class="step-intro">
         <h3>Βήμα 3: Μαθήματα & Αναθέσεις Διδασκαλίας</h3>
-        <p class="hint">Φορτώστε το επίσημο αναλυτικό πρόγραμμα και αναθέστε τους καθηγητές στα μαθήματα κάθε τμήματος.</p>
+        <p class="hint">
+          Ορίστε τις ώρες διδασκαλίας κάθε μαθήματος ανά τμήμα (προεπιλεγμένες βάσει νομοθεσίας) και αναθέστε τους κατάλληλους εκπαιδευτικούς μέσω του αναδυόμενου πίνακα διαθεσιμότητας.
+        </p>
       </div>
 
-      <div class="toolbar">
+      <div class="toolbar" style="flex-wrap: wrap; gap: 0.75rem;">
         <button class="primary" id="btn-load-curriculum">📋 Αυτόματη Φόρτωση Επίσημου Ωρολογίου Προγράμματος</button>
         <span class="badge info">${(this.timetable.lessons || []).length} ενεργά μαθήματα</span>
+
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 0.5rem;">
+          <label for="filter-class" class="hint" style="font-size: 0.8125rem;">Προβολή τμήματος:</label>
+          <select id="filter-class" style="padding: 0.35rem 0.6rem; border-radius: 4px; border: 1px solid var(--rule); font-family: var(--sans); font-size: 0.8125rem;">
+            <option value="all">Όλα τα τμήματα</option>
+            ${(this.timetable.classes || []).map((c) => `<option value="${c.id}">${c.name} (${c.grade} Τάξη)</option>`).join('')}
+          </select>
+        </div>
       </div>
 
       <div class="lessons-table-wrap">
@@ -592,9 +602,9 @@ export class TimetableUI {
             <tr>
               <th>Τμήμα</th>
               <th>Μάθημα</th>
-              <th>Ώρες / Εβδ.</th>
+              <th style="min-width: 9rem;">Ώρες / Εβδ.</th>
               <th>Ειδικότητα</th>
-              <th>Ανάθεση Εκπαιδευτικού</th>
+              <th style="min-width: 17rem;">Ανάθεση Εκπαιδευτικού</th>
               <th>Ειδικός Χώρος</th>
               <th>Σπαστό / Παράλληλο</th>
             </tr>
@@ -609,6 +619,8 @@ export class TimetableUI {
       </div>
     `;
 
+    let activeFilterClass = 'all';
+
     div.querySelector('#btn-load-curriculum').onclick = () => {
       if (confirm('Θέλετε να φορτώσετε το επίσημο ωρολόγιο πρόγραμμα για όλα τα τμήματα; Αυτό θα αντικαταστήσει τα υπάρχοντα μαθήματα.')) {
         populateCurriculumForClasses(this.timetable);
@@ -618,7 +630,15 @@ export class TimetableUI {
     };
 
     const tbody = div.querySelector('#lessons-tbody');
-    this.renderLessonsList(tbody);
+    const classFilter = div.querySelector('#filter-class');
+    if (classFilter) {
+      classFilter.onchange = (e) => {
+        activeFilterClass = e.target.value;
+        this.renderLessonsList(tbody, activeFilterClass);
+      };
+    }
+
+    this.renderLessonsList(tbody, activeFilterClass);
 
     div.querySelector('#btn-back-step-2').onclick = () => {
       this.activeStep = 2;
@@ -632,36 +652,94 @@ export class TimetableUI {
     return div;
   }
 
-  renderLessonsList(tbody) {
+  renderLessonsList(tbody, filterClass = 'all') {
     tbody.innerHTML = '';
-    const lessons = this.timetable.lessons || [];
-    if (!lessons.length) {
+    const allLessons = this.timetable.lessons || [];
+    if (!allLessons.length) {
       tbody.innerHTML = `<tr><td colspan="7" class="hint text-center">Δεν υπάρχουν μαθήματα. Πατήστε «Αυτόματη Φόρτωση Επίσημου Ωρολογίου Προγράμματος».</td></tr>`;
       return;
     }
 
+    const lessons = filterClass === 'all'
+      ? allLessons
+      : allLessons.filter((l) => l.classId === filterClass);
+
+    if (!lessons.length) {
+      tbody.innerHTML = `<tr><td colspan="7" class="hint text-center">Δεν υπάρχουν μαθήματα για το επιλεγμένο τμήμα.</td></tr>`;
+      return;
+    }
+
+    // Helper: Υπολογισμός υπολειπόμενων ωρών εκπαιδευτικού
+    const getTeacherStats = (t) => {
+      const assigned = allLessons
+        .filter((l) => l.teacherId === t.id)
+        .reduce((sum, l) => sum + (Number(l.hours) || 0), 0);
+      const remaining = (t.requiredHours || 20) - assigned;
+      return { assigned, remaining };
+    };
+
     lessons.forEach((les) => {
+      const teacher = (this.timetable.teachers || []).find((t) => t.id === les.teacherId);
+      let teacherRemainingInfo = '';
+      let remClass = '';
+
+      if (teacher) {
+        const { remaining } = getTeacherStats(teacher);
+        if (remaining > 0) {
+          remClass = 'rem-positive';
+          teacherRemainingInfo = `(απομένουν ${remaining} ώρες)`;
+        } else if (remaining === 0) {
+          remClass = 'rem-zero';
+          teacherRemainingInfo = '(απομένουν 0 ώρες)';
+        } else {
+          remClass = 'rem-negative';
+          teacherRemainingInfo = `(0 ώρες / +${Math.abs(remaining)} υπερωρία)`;
+        }
+      }
+
       const row = document.createElement('tr');
       row.innerHTML = `
         <td><strong>${les.className || les.classId}</strong></td>
         <td>
-          <span class="badge" style="border-left: 3px solid ${les.subjectColor || '#3b82f6'};">
+          <span class="badge" style="border-left: 3px solid ${les.subjectColor || '#3b82f6'}; font-weight: 500;">
             ${les.subjectName}
           </span>
         </td>
-        <td><strong>${les.hours}</strong> ώρες</td>
+        <td>
+          <div class="lesson-hours-ctrl">
+            <input type="number" min="1" max="15" value="${les.hours}" class="input-lesson-hours" title="Ώρες ανά εβδομάδα (κλικ για αλλαγή)">
+            <span class="hours-unit">ώρ.</span>
+            ${les.defaultHours && les.defaultHours !== les.hours ? `
+              <button type="button" class="btn-reset-hours" title="Επαναφορά στην επίσημη προεπιλογή (${les.defaultHours} ώρες)">↺ ${les.defaultHours}</button>
+            ` : `
+              <span class="hours-preset-hint" title="Προεπιλογή βάσει νομοθεσίας">προεπ. ${les.defaultHours || les.hours}</span>
+            `}
+          </div>
+        </td>
         <td><small>${les.branch || '—'}</small></td>
         <td>
-          <select class="sel-teacher">
-            <option value="">— Χωρίς ανάθεση —</option>
-            ${this.timetable.teachers.map(
-              (t) => `<option value="${t.id}" ${t.id === les.teacherId ? 'selected' : ''}>${t.name} (${t.branch})</option>`
-            ).join('')}
-          </select>
+          ${teacher ? `
+            <button type="button" class="btn-teacher-select assigned" title="Κλικ για αλλαγή ανάθεσης εκπαιδευτικού">
+              <div class="assigned-teacher-label">
+                <strong>${teacher.name}</strong>
+                <span class="badge muted" style="font-size: 0.6875rem;">${teacher.branch || '—'}</span>
+              </div>
+              <span class="rem-badge ${remClass}" style="font-size: 0.75rem;">
+                ${teacherRemainingInfo}
+              </span>
+              <span class="edit-icon">✎</span>
+            </button>
+          ` : `
+            <button type="button" class="btn-teacher-select unassigned" title="Κλικ για επιλογή εκπαιδευτικού από τη λίστα">
+              <span style="font-size: 1rem; font-weight: bold; color: var(--stamp);">＋</span>
+              <span>Επιλογή Εκπαιδευτικού</span>
+              ${les.branch ? `<span class="badge highlight" style="font-size: 0.7rem; margin-left: auto;">${les.branch}</span>` : ''}
+            </button>
+          `}
         </td>
         <td>
           <select class="sel-room">
-            ${this.timetable.rooms.map(
+            ${(this.timetable.rooms || []).map(
               (r) => `<option value="${r.id}" ${r.id === les.roomId ? 'selected' : ''}>${r.name}</option>`
             ).join('')}
           </select>
@@ -671,14 +749,35 @@ export class TimetableUI {
         </td>
       `;
 
-      row.querySelector('.sel-teacher').onchange = (e) => {
-        const tId = e.target.value;
-        const teacher = this.timetable.teachers.find((t) => t.id === tId);
-        les.teacherId = tId;
-        les.teacherName = teacher ? teacher.name : '';
+      // 1. Change hours input
+      const hoursInput = row.querySelector('.input-lesson-hours');
+      hoursInput.onchange = (e) => {
+        const val = Math.max(1, parseInt(e.target.value, 10) || 1);
+        les.hours = val;
+        hoursInput.value = val;
         this.save();
+        this.renderLessonsList(tbody, filterClass);
       };
 
+      // 2. Reset to default hours
+      const resetBtn = row.querySelector('.btn-reset-hours');
+      if (resetBtn) {
+        resetBtn.onclick = () => {
+          les.hours = les.defaultHours;
+          this.save();
+          this.renderLessonsList(tbody, filterClass);
+        };
+      }
+
+      // 3. Open Teacher Assignment Pop-up Modal
+      const teacherBtn = row.querySelector('.btn-teacher-select');
+      teacherBtn.onclick = () => {
+        this.openTeacherAssignModal(les, () => {
+          this.renderLessonsList(tbody, filterClass);
+        });
+      };
+
+      // 4. Change room
       row.querySelector('.sel-room').onchange = (e) => {
         les.roomId = e.target.value;
         this.save();
@@ -686,6 +785,235 @@ export class TimetableUI {
 
       tbody.append(row);
     });
+  }
+
+  // Pop-up modal ανάθεσης εκπαιδευτικού με εμφάνιση όλων των εκπαιδευτικών
+  // και των υπολειπόμενων ωρών τους σε παρένθεση βάσει υποχρεωτικού ωραρίου
+  openTeacherAssignModal(lesson, onSaved = null) {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'teacher-assign-dialog';
+
+    const teachers = this.timetable.teachers || [];
+    const allLessons = this.timetable.lessons || [];
+
+    // Helper υπολογισμού υπολειπόμενων ωρών
+    const getTeacherStats = (t) => {
+      const assigned = allLessons
+        .filter((l) => l.teacherId === t.id)
+        .reduce((sum, l) => sum + (Number(l.hours) || 0), 0);
+      const remaining = (t.requiredHours || 20) - assigned;
+      return { assigned, remaining };
+    };
+
+    const hasTeachers = teachers.length > 0;
+
+    dialog.innerHTML = `
+      <div class="dialog-content teacher-picker-content">
+        <div class="teacher-picker-header">
+          <div>
+            <h3>Ανάθεση Εκπαιδευτικού</h3>
+            <p class="hint" style="margin: 0.25rem 0 0;">
+              <strong>${lesson.subjectName}</strong> &bull; Τμήμα <strong>${lesson.className}</strong>
+              &bull; <strong>${lesson.hours} ώρες/εβδομάδα</strong>
+              ${lesson.branch ? ` &bull; Ειδικότητα: <span class="badge info">${lesson.branch}</span>` : ''}
+            </p>
+          </div>
+          <button type="button" class="btn-close-picker" aria-label="Κλείσιμο">&times;</button>
+        </div>
+
+        ${hasTeachers ? `
+          <div class="picker-search-bar">
+            <input type="text" class="picker-search-input" placeholder="🔍 Αναζήτηση εκπαιδευτικού με όνομα ή ειδικότητα (π.χ. ΠΕ02, Γεώργιος)..." autofocus>
+            <div class="picker-filter-chips">
+              <button type="button" class="filter-chip active" data-filter="all">Όλοι (${teachers.length})</button>
+              ${lesson.branch ? `<button type="button" class="filter-chip" data-filter="branch">Ειδικότητας (${lesson.branch})</button>` : ''}
+              <button type="button" class="filter-chip" data-filter="available">Με διαθέσιμες ώρες</button>
+            </div>
+          </div>
+
+          <div class="teacher-pick-list">
+            <!-- Επιλογή καθαρισμού / Χωρίς ανάθεση -->
+            <div class="teacher-pick-item clear-assign${!lesson.teacherId ? ' selected' : ''}" data-id="">
+              <div class="teacher-pick-info">
+                <span class="teacher-pick-name" style="color: var(--ink-soft);">— Χωρίς ανάθεση (Κενό μάθημα) —</span>
+                <span class="teacher-pick-sub">Αφαίρεση τρέχουσας ανάθεσης από το μάθημα</span>
+              </div>
+              <div class="teacher-pick-hours">
+                <span class="badge muted">Καθαρισμός</span>
+              </div>
+            </div>
+
+            <!-- Λίστα όλων των εκπαιδευτικών -->
+            <div class="teachers-group-list" id="picker-teachers-container"></div>
+          </div>
+        ` : `
+          <div style="padding: 2.5rem; text-align: center;">
+            <p class="hint" style="font-size: 1rem;">Δεν έχουν καταχωριστεί εκπαιδευτικοί στο ωρολόγιο πρόγραμμα.</p>
+            <button type="button" class="primary btn-goto-teachers" style="margin-top: 1rem;">
+              Μετάβαση στο Βήμα 2 (Εκπαιδευτικοί)
+            </button>
+          </div>
+        `}
+      </div>
+    `;
+
+    const close = () => {
+      dialog.close();
+      dialog.remove();
+    };
+
+    const closeBtn = dialog.querySelector('.btn-close-picker');
+    if (closeBtn) closeBtn.onclick = close;
+
+    // Click outside to close (backdrop)
+    dialog.onclick = (e) => {
+      if (e.target === dialog) close();
+    };
+
+    const gotoBtn = dialog.querySelector('.btn-goto-teachers');
+    if (gotoBtn) {
+      gotoBtn.onclick = () => {
+        close();
+        this.activeStep = 2;
+        this.render();
+      };
+      document.body.append(dialog);
+      dialog.showModal();
+      return;
+    }
+
+    const container = dialog.querySelector('#picker-teachers-container');
+    const searchInput = dialog.querySelector('.picker-search-input');
+    const filterChips = dialog.querySelectorAll('.filter-chip');
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    const renderTeachersListInPicker = () => {
+      container.innerHTML = '';
+
+      // Ταξινόμηση:
+      // 1. Τρέχουσα ανάθεση πρώτα
+      // 2. Συμβατή ειδικότητα
+      // 3. Με διαθέσιμες ώρες
+      // 4. Αλφαβητικά
+      const sortedTeachers = [...teachers].sort((a, b) => {
+        const isCurA = lesson.teacherId === a.id;
+        const isCurB = lesson.teacherId === b.id;
+        if (isCurA && !isCurB) return -1;
+        if (!isCurA && isCurB) return 1;
+
+        const matchA = lesson.branch && (a.branch === lesson.branch || a.branch.startsWith(lesson.branch) || lesson.branch.startsWith(a.branch));
+        const matchB = lesson.branch && (b.branch === lesson.branch || b.branch.startsWith(lesson.branch) || lesson.branch.startsWith(b.branch));
+        if (matchA && !matchB) return -1;
+        if (!matchA && matchB) return 1;
+
+        return a.name.localeCompare(b.name, 'el');
+      });
+
+      let visibleCount = 0;
+
+      sortedTeachers.forEach((t) => {
+        const { assigned, remaining } = getTeacherStats(t);
+        const isCurrent = lesson.teacherId === t.id;
+        const isMatchingBranch = lesson.branch && (
+          t.branch === lesson.branch ||
+          t.branch.startsWith(lesson.branch) ||
+          lesson.branch.startsWith(t.branch)
+        );
+
+        // Filters
+        if (currentFilter === 'branch' && !isMatchingBranch) return;
+        if (currentFilter === 'available' && remaining <= 0) return;
+
+        // Search
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          const matchesName = t.name.toLowerCase().includes(q);
+          const matchesBranch = (t.branch || '').toLowerCase().includes(q);
+          if (!matchesName && !matchesBranch) return;
+        }
+
+        visibleCount++;
+
+        let remClass = 'rem-positive';
+        let remText = `(απομένουν ${remaining} ώρες)`;
+        if (remaining === 0) {
+          remClass = 'rem-zero';
+          remText = '(απομένουν 0 ώρες)';
+        } else if (remaining < 0) {
+          remClass = 'rem-negative';
+          remText = `(απομένουν 0 ώρες / υπερωρία +${Math.abs(remaining)})`;
+        }
+
+        const item = document.createElement('div');
+        item.className = `teacher-pick-item${isCurrent ? ' selected' : ''}${isMatchingBranch ? ' branch-match' : ''}`;
+        item.innerHTML = `
+          <div class="teacher-pick-info">
+            <div class="teacher-pick-title-row">
+              <span class="teacher-pick-name">${t.name}</span>
+              <span class="badge ${isMatchingBranch ? 'success' : 'muted'}">${t.branch || '—'}</span>
+              ${isCurrent ? '<span class="badge" style="background: var(--stamp); color: white;">✓ Τρέχουσα Ανάθεση</span>' : ''}
+              ${isMatchingBranch && !isCurrent ? '<span class="badge highlight">Συμβατός Κλάδος</span>' : ''}
+            </div>
+            <span class="teacher-pick-sub">
+              Υποχρεωτικό ωράριο: <strong>${t.requiredHours || 20} ώρες</strong> &bull; Ήδη ανατεθειμένες: <strong>${assigned} ώρες</strong>
+            </span>
+          </div>
+
+          <div class="teacher-pick-hours">
+            <span class="rem-badge ${remClass}">${remText}</span>
+          </div>
+        `;
+
+        item.onclick = () => {
+          lesson.teacherId = t.id;
+          lesson.teacherName = t.name;
+          this.save();
+          close();
+          if (onSaved) onSaved();
+        };
+
+        container.append(item);
+      });
+
+      if (visibleCount === 0) {
+        container.innerHTML = `<div class="hint text-center" style="padding: 1.5rem;">Δεν βρέθηκε εκπαιδευτικός με τα επιλεγμένα κριτήρια.</div>`;
+      }
+    };
+
+    // Clear assignment item click
+    const clearItem = dialog.querySelector('.teacher-pick-item.clear-assign');
+    if (clearItem) {
+      clearItem.onclick = () => {
+        lesson.teacherId = '';
+        lesson.teacherName = '— Χωρίς εκπαιδευτικό —';
+        this.save();
+        close();
+        if (onSaved) onSaved();
+      };
+    }
+
+    // Search input
+    searchInput.oninput = (e) => {
+      searchQuery = e.target.value.trim();
+      renderTeachersListInPicker();
+    };
+
+    // Filter chips
+    filterChips.forEach((chip) => {
+      chip.onclick = () => {
+        filterChips.forEach((c) => c.classList.remove('active'));
+        chip.classList.add('active');
+        currentFilter = chip.dataset.filter;
+        renderTeachersListInPicker();
+      };
+    });
+
+    renderTeachersListInPicker();
+
+    document.body.append(dialog);
+    dialog.showModal();
   }
 
   // ── ΒΗΜΑ 4: Πρόγραμμα & Επίλυση (Matrix & Solver) ─────────────────────────
