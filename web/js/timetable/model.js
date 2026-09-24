@@ -100,6 +100,17 @@ export function normalizeTimetable(tt) {
         l.defaultHours = l.hours;
       }
     });
+
+    // Αυτόματος υπολογισμός των ανατεθειμένων ωρών ανά εκπαιδευτικό
+    const hoursMap = {};
+    tt.lessons.forEach((l) => {
+      if (l.teacherId && Number(l.hours) > 0) {
+        hoursMap[l.teacherId] = (hoursMap[l.teacherId] || 0) + Number(l.hours);
+      }
+    });
+    tt.teachers.forEach((t) => {
+      t.assignedHours = hoursMap[t.id] || 0;
+    });
   }
   if (!Array.isArray(tt.rooms) || tt.rooms.length === 0) tt.rooms = JSON.parse(JSON.stringify(SPECIAL_ROOMS));
   if (!Array.isArray(tt.schedule)) tt.schedule = [];

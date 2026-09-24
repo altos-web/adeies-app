@@ -120,7 +120,7 @@
       "tilefono_katoikias": "2521034567",
       "kinito": "6972223344",
       "email_ekpaideutikou": "e.ioannidou@sch.gr",
-      "ypoxreotiko_orario": 12,
+      "ypoxreotiko_orario": 13,
       "anatetheimenes_ores": 13,
       "anathesi_mathimaton": [
         "Α2: Νεοελληνική Γλώσσα & Γραμματεία (5 ώρ.)",
@@ -183,7 +183,7 @@
       "tilefono_katoikias": "2521045678",
       "kinito": "6973334455",
       "email_ekpaideutikou": "n.karagiannis@sch.gr",
-      "ypoxreotiko_orario": 18,
+      "ypoxreotiko_orario": 19,
       "anatetheimenes_ores": 19,
       "anathesi_mathimaton": [
         "Α1: Νεοελληνική Γλώσσα & Γραμματεία (5 ώρ.)",
@@ -294,7 +294,7 @@
       "tilefono_katoikias": "2521056789",
       "kinito": "6974445566",
       "email_ekpaideutikou": "m.vasileiou@sch.gr",
-      "ypoxreotiko_orario": 10,
+      "ypoxreotiko_orario": 11,
       "anatetheimenes_ores": 11,
       "anathesi_mathimaton": [
         "Β1: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)",
@@ -514,7 +514,7 @@
       "tilefono_katoikias": "2521090123",
       "kinito": "6978889900",
       "email_ekpaideutikou": "a.stavropoulou@sch.gr",
-      "ypoxreotiko_orario": 4,
+      "ypoxreotiko_orario": 3,
       "anatetheimenes_ores": 3,
       "anathesi_mathimaton": [
         "Β1: Χημεία (1 ώρ.)",
@@ -949,7 +949,7 @@
       "tilefono_katoikias": "2521056714",
       "kinito": "6986667788",
       "email_ekpaideutikou": "e.konstantinidou@sch.gr",
-      "ypoxreotiko_orario": 3,
+      "ypoxreotiko_orario": 2,
       "anatetheimenes_ores": 2,
       "anathesi_mathimaton": [
         "Α1: Οικιακή Οικονομία (1 ώρ.)",
@@ -1201,7 +1201,7 @@
       "tilefono_katoikias": "2521090234",
       "kinito": "6980001122",
       "email_ekpaideutikou": "ch.varela@sch.gr",
-      "ypoxreotiko_orario": 3,
+      "ypoxreotiko_orario": 2,
       "anatetheimenes_ores": 2,
       "anathesi_mathimaton": [
         "Γ1: Κοινωνική & Πολιτική Αγωγή (2 ώρ.)"
@@ -1311,7 +1311,7 @@
       "tilefono_katoikias": "2521092456",
       "kinito": "6982223344",
       "email_ekpaideutikou": "a.spyropoulou@sch.gr",
-      "ypoxreotiko_orario": 10,
+      "ypoxreotiko_orario": 9,
       "anatetheimenes_ores": 9,
       "anathesi_mathimaton": [
         "Β2: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)",
@@ -1471,7 +1471,7 @@
         "id": "emp_02",
         "name": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ",
         "branch": "ΠΕ02",
-        "requiredHours": 12,
+        "requiredHours": 13,
         "assignedHours": 13,
         "timeOff": {},
         "anathesi_mathimaton": [
@@ -1515,7 +1515,7 @@
         "id": "emp_03",
         "name": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ",
         "branch": "ΠΕ02",
-        "requiredHours": 18,
+        "requiredHours": 19,
         "assignedHours": 19,
         "timeOff": {},
         "anathesi_mathimaton": [
@@ -1607,7 +1607,7 @@
         "id": "emp_04",
         "name": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ",
         "branch": "ΠΕ02",
-        "requiredHours": 10,
+        "requiredHours": 11,
         "assignedHours": 11,
         "timeOff": {},
         "anathesi_mathimaton": [
@@ -1751,7 +1751,7 @@
         "id": "emp_08",
         "name": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ",
         "branch": "ΠΕ04.02",
-        "requiredHours": 4,
+        "requiredHours": 3,
         "assignedHours": 3,
         "timeOff": {
           "4-1": "no",
@@ -2082,7 +2082,7 @@
         "id": "emp_15",
         "name": "ΚΩΝΣΤΑΝΤΙΝΙΔΟΥ ΕΥΑΓΓΕΛΙΑ",
         "branch": "ΠΕ80",
-        "requiredHours": 3,
+        "requiredHours": 2,
         "assignedHours": 2,
         "timeOff": {},
         "anathesi_mathimaton": [
@@ -2258,7 +2258,7 @@
         "id": "emp_19",
         "name": "ΒΑΡΕΛΑ ΧΡΙΣΤΙΝΑ",
         "branch": "ΠΕ78",
-        "requiredHours": 3,
+        "requiredHours": 2,
         "assignedHours": 2,
         "timeOff": {},
         "anathesi_mathimaton": [
@@ -2330,7 +2330,7 @@
         "id": "emp_21",
         "name": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ",
         "branch": "ΠΕ02",
-        "requiredHours": 10,
+        "requiredHours": 9,
         "assignedHours": 9,
         "timeOff": {},
         "anathesi_mathimaton": [
@@ -5898,7 +5898,7 @@
         "id": "emp_02",
         "onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ",
         "klados": "ΠΕ02",
-        "ypoxreotiko_orario": 12,
+        "ypoxreotiko_orario": 13,
         "anatetheimenes_ores": 13,
         "mathimata": [
           "Α2: Νεοελληνική Γλώσσα & Γραμματεία (5 ώρ.)",
@@ -5911,7 +5911,7 @@
         "id": "emp_03",
         "onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ",
         "klados": "ΠΕ02",
-        "ypoxreotiko_orario": 18,
+        "ypoxreotiko_orario": 19,
         "anatetheimenes_ores": 19,
         "mathimata": [
           "Α1: Νεοελληνική Γλώσσα & Γραμματεία (5 ώρ.)",
@@ -5930,7 +5930,7 @@
         "id": "emp_04",
         "onoma": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ",
         "klados": "ΠΕ02",
-        "ypoxreotiko_orario": 10,
+        "ypoxreotiko_orario": 11,
         "anatetheimenes_ores": 11,
         "mathimata": [
           "Β1: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)",
@@ -5978,7 +5978,7 @@
         "id": "emp_08",
         "onoma": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ",
         "klados": "ΠΕ04.02",
-        "ypoxreotiko_orario": 4,
+        "ypoxreotiko_orario": 3,
         "anatetheimenes_ores": 3,
         "mathimata": [
           "Β1: Χημεία (1 ώρ.)",
@@ -6069,7 +6069,7 @@
         "id": "emp_15",
         "onoma": "ΚΩΝΣΤΑΝΤΙΝΙΔΟΥ ΕΥΑΓΓΕΛΙΑ",
         "klados": "ΠΕ80",
-        "ypoxreotiko_orario": 3,
+        "ypoxreotiko_orario": 2,
         "anatetheimenes_ores": 2,
         "mathimata": [
           "Α1: Οικιακή Οικονομία (1 ώρ.)",
@@ -6121,7 +6121,7 @@
         "id": "emp_19",
         "onoma": "ΒΑΡΕΛΑ ΧΡΙΣΤΙΝΑ",
         "klados": "ΠΕ78",
-        "ypoxreotiko_orario": 3,
+        "ypoxreotiko_orario": 2,
         "anatetheimenes_ores": 2,
         "mathimata": [
           "Γ1: Κοινωνική & Πολιτική Αγωγή (2 ώρ.)"
@@ -6145,7 +6145,7 @@
         "id": "emp_21",
         "onoma": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ",
         "klados": "ΠΕ02",
-        "ypoxreotiko_orario": 10,
+        "ypoxreotiko_orario": 9,
         "anatetheimenes_ores": 9,
         "mathimata": [
           "Β2: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)",

@@ -1082,10 +1082,11 @@ export class TimetableUI {
     // Helper: Υπολογισμός υπολειπόμενων ωρών εκπαιδευτικού
     const getTeacherStats = (t) => {
       const assigned = allLessons
-        .filter((l) => l.teacherId === t.id)
+        .filter((l) => l.teacherId === t.id && Number(l.hours) > 0)
         .reduce((sum, l) => sum + (Number(l.hours) || 0), 0);
-      const remaining = (t.requiredHours || 20) - assigned;
-      return { assigned, remaining };
+      const req = Number(t.requiredHours) || 20;
+      const remaining = req - assigned;
+      return { assigned, req, remaining };
     };
 
     lessons.forEach((les) => {
@@ -1094,16 +1095,16 @@ export class TimetableUI {
       let remClass = '';
 
       if (teacher) {
-        const { remaining } = getTeacherStats(teacher);
+        const { assigned, req, remaining } = getTeacherStats(teacher);
         if (remaining > 0) {
           remClass = 'rem-positive';
-          teacherRemainingInfo = `(απομένουν ${remaining} ώρες)`;
+          teacherRemainingInfo = `${assigned}/${req} ώρ. (απομέν${remaining === 1 ? 'ει 1 ώρα' : `ουν ${remaining} ώρες`})`;
         } else if (remaining === 0) {
           remClass = 'rem-zero';
-          teacherRemainingInfo = '(απομένουν 0 ώρες)';
+          teacherRemainingInfo = `${assigned}/${req} ώρ. (πλήρες ωράριο ✓)`;
         } else {
           remClass = 'rem-negative';
-          teacherRemainingInfo = `(0 ώρες / +${Math.abs(remaining)} υπερωρία)`;
+          teacherRemainingInfo = `${assigned}/${req} ώρ. (+${Math.abs(remaining)} ${Math.abs(remaining) === 1 ? 'ώρα υπερωρία' : 'ώρες υπερωρία'} ⚠️)`;
         }
       }
 
@@ -1238,10 +1239,11 @@ export class TimetableUI {
     // Helper υπολογισμού υπολειπόμενων ωρών
     const getTeacherStats = (t) => {
       const assigned = allLessons
-        .filter((l) => l.teacherId === t.id)
+        .filter((l) => l.teacherId === t.id && Number(l.hours) > 0)
         .reduce((sum, l) => sum + (Number(l.hours) || 0), 0);
-      const remaining = (t.requiredHours || 20) - assigned;
-      return { assigned, remaining };
+      const req = Number(t.requiredHours) || 20;
+      const remaining = req - assigned;
+      return { assigned, req, remaining };
     };
 
     const hasTeachers = teachers.length > 0;
@@ -1253,9 +1255,14 @@ export class TimetableUI {
             <h3>Ανάθεση Εκπαιδευτικού</h3>
             <p class="hint" style="margin: 0.25rem 0 0;">
               <strong>${lesson.subjectName}</strong> &bull; Τμήμα <strong>${lesson.className}</strong>
-              &bull; <strong>${lesson.hours} ώρες/εβδομάδα</strong>
+              &bull; <strong>Διάρκεια: ${lesson.hours} ώρες/εβδομάδα</strong>
               ${lesson.branch ? ` &bull; Ειδικότητα: <span class="badge info">${lesson.branch}</span>` : ''}
             </p>
+            ${lesson.teacherName && lesson.teacherId ? `
+              <div style="margin-top: 0.4rem; padding: 0.35rem 0.6rem; background: var(--paper-warm, #f8f6f0); border-left: 3px solid var(--stamp); font-size: 0.8125rem; color: var(--ink);">
+                Τρέχουσα ανάθεση: <strong>${lesson.teacherName}</strong>. Αν επιλέξετε άλλον εκπαιδευτικό, οι <strong>${lesson.hours} ώρες</strong> θα αφαιρεθούν από τον/την ${lesson.teacherName} και θα προστεθούν στον νέο.
+              </div>
+            ` : ''}
           </div>
           <button type="button" class="btn-close-picker" aria-label="Κλείσιμο">&times;</button>
         </div>
@@ -1266,7 +1273,8 @@ export class TimetableUI {
             <div class="picker-filter-chips">
               <button type="button" class="filter-chip active" data-filter="all">Όλοι (${teachers.length})</button>
               ${lesson.branch ? `<button type="button" class="filter-chip" data-filter="branch">Ειδικότητας (${lesson.branch})</button>` : ''}
-              <button type="button" class="filter-chip" data-filter="available">Με διαθέσιμες ώρες</button>
+              <button type="button" class="filter-chip" data-filter="fits">Χωρίς υπερωρία (χωράνε ${lesson.hours} ώρ.)</button>
+              <button type="button" class="filter-chip" data-filter="available">Με διαθέσιμο ωράριο</button>
             </div>
           </div>
 
@@ -1353,7 +1361,8 @@ export class TimetableUI {
       let visibleCount = 0;
 
       sortedTeachers.forEach((t) => {
-        const { assigned, remaining } = getTeacherStats(t);
+        const { assigned, req, remaining } = getTeacherStats(t);
+        const lessonHours = Number(lesson.hours) || 0;
         const isCurrent = lesson.teacherId === t.id;
         const isMatchingBranch = lesson.branch && (
           t.branch === lesson.branch ||
@@ -1361,9 +1370,14 @@ export class TimetableUI {
           lesson.branch.startsWith(t.branch)
         );
 
+        // Υπολογισμός κατάστασης μετά την ανάθεση αυτού του μαθήματος
+        const afterAssigned = isCurrent ? assigned : (assigned + lessonHours);
+        const afterRemaining = req - afterAssigned;
+
         // Filters
         if (currentFilter === 'branch' && !isMatchingBranch) return;
-        if (currentFilter === 'available' && remaining <= 0) return;
+        if (currentFilter === 'fits' && !isCurrent && afterRemaining < 0) return;
+        if (currentFilter === 'available' && remaining <= 0 && !isCurrent) return;
 
         // Search
         if (searchQuery) {
@@ -1375,14 +1389,24 @@ export class TimetableUI {
 
         visibleCount++;
 
-        let remClass = 'rem-positive';
-        let remText = `(απομένουν ${remaining} ώρες)`;
-        if (remaining === 0) {
-          remClass = 'rem-zero';
-          remText = '(απομένουν 0 ώρες)';
-        } else if (remaining < 0) {
-          remClass = 'rem-negative';
-          remText = `(απομένουν 0 ώρες / υπερωρία +${Math.abs(remaining)})`;
+        let curStatusHtml = '';
+        if (remaining > 0) {
+          curStatusHtml = `<span style="color: var(--accent); font-weight: 600;">απομέν${remaining === 1 ? 'ει 1 ώρα' : `ουν ${remaining} ώρες`}</span>`;
+        } else if (remaining === 0) {
+          curStatusHtml = `<span style="color: #059669; font-weight: 600;">πλήρες ωράριο</span>`;
+        } else {
+          curStatusHtml = `<span style="color: #dc2626; font-weight: 600;">+${Math.abs(remaining)} ${Math.abs(remaining) === 1 ? 'ώρα υπερωρία' : 'ώρες υπερωρία'}</span>`;
+        }
+
+        let afterBadgeHtml = '';
+        if (isCurrent) {
+          afterBadgeHtml = `<span class="rem-badge rem-zero" style="font-size: 0.8125rem;">✓ Ήδη ανατεθειμένο (${assigned}/${req} ώρ.)</span>`;
+        } else if (afterRemaining > 0) {
+          afterBadgeHtml = `<span class="rem-badge rem-positive" style="font-size: 0.8125rem;">➔ Μετά: <strong>${afterAssigned}/${req} ώρ.</strong> (θα απομέν${afterRemaining === 1 ? 'ει 1 ώρα' : `ουν ${afterRemaining} ώρες`})</span>`;
+        } else if (afterRemaining === 0) {
+          afterBadgeHtml = `<span class="rem-badge rem-zero" style="font-size: 0.8125rem;">➔ Μετά: <strong>${afterAssigned}/${req} ώρ.</strong> (ακριβώς πλήρες ✓)</span>`;
+        } else {
+          afterBadgeHtml = `<span class="rem-badge rem-negative" style="font-size: 0.8125rem; font-weight: 600;">➔ Μετά: <strong>${afterAssigned}/${req} ώρ.</strong> (+${Math.abs(afterRemaining)} ${Math.abs(afterRemaining) === 1 ? 'ώρα υπερωρία ⚠️' : 'ώρες υπερωρία ⚠️'})</span>`;
         }
 
         const item = document.createElement('div');
@@ -1396,12 +1420,12 @@ export class TimetableUI {
               ${isMatchingBranch && !isCurrent ? '<span class="badge highlight">Συμβατός Κλάδος</span>' : ''}
             </div>
             <span class="teacher-pick-sub">
-              Υποχρεωτικό ωράριο: <strong>${t.requiredHours || 24} ώρες</strong> &bull; Ήδη ανατεθειμένες: <strong>${assigned} ώρες</strong>
+              Υποχρεωτικό: <strong>${req} ώρ.</strong> &bull; Τρέχουσες ανατεθειμένες: <strong>${assigned} ώρ.</strong> (${curStatusHtml})
             </span>
           </div>
 
-          <div class="teacher-pick-hours">
-            <span class="rem-badge ${remClass}">${remText}</span>
+          <div class="teacher-pick-hours" style="text-align: right;">
+            ${afterBadgeHtml}
           </div>
         `;
 
