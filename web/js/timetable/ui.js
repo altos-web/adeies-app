@@ -4,7 +4,7 @@
 import { store } from '../store.js';
 import { DAYS_OF_WEEK, DEFAULT_BELL_TIMES, DIMOTIKO_ORGANICITIES, getBranchesForSchoolType, isBranchValidForSchoolType, SCHOOL_TYPES } from './curricula.js';
 import { TimetableMatrix } from './matrix.js';
-import { autoAssignTeachers, createInitialTimetable, getAvailableDistributions, getDefaultLessonDistribution, normalizeTimetable, populateCurriculumForClasses } from './model.js';
+import { autoAssignTeachers, buildBellTimes, createInitialTimetable, getAvailableDistributions, getDefaultLessonDistribution, normalizeTimetable, populateCurriculumForClasses, splitMultigradeLesson, syncSpecialClasses } from './model.js';
 import { TimetableSolver } from './solver.js';
 
 export class TimetableUI {
@@ -180,6 +180,54 @@ export class TimetableUI {
               ).join('')}
             </select>
           </label>
+
+          <div class="programs-options-card" style="grid-column: 1 / -1; margin-top: 0.5rem; padding: 1rem 1.25rem; border: 1px solid var(--rule); border-radius: 6px; background: var(--card);">
+            <div style="font-weight: 600; font-size: 0.9375rem; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.5rem;">
+              <span>Πρόσθετα Προγράμματα Δημοτικού (Προαιρετικά — Π.Δ. 79/2017 &amp; Ν. 4957/2022)</span>
+            </div>
+            <p class="hint" style="font-size: 0.8125rem; margin-bottom: 0.85rem;">
+              Ενεργοποιήστε την Πρωινή Ζώνη ή το Ολοήμερο Πρόγραμμα αν λειτουργούν στη σχολική μονάδα.
+            </p>
+            
+            <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+              <!-- 1. Πρωινή Ζώνη -->
+              <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer;">
+                <input type="checkbox" id="cb-has-proini-zoni" ${this.timetable.hasProiniZoni ? 'checked' : ''} style="margin-top: 0.2rem;">
+                <div>
+                  <strong style="font-size: 0.875rem;">🌅 Πρωινή Ζώνη (07:00 - 08:00)</strong>
+                  <div class="hint" style="font-size: 0.8125rem;">5 ώρες/εβδομάδα (1 ώρα καθημερινά 07:00 - 08:00, πριν την έναρξη των πρωινών μαθημάτων).</div>
+                </div>
+              </label>
+
+              <!-- 2. Ολοήμερο Πρόγραμμα -->
+              <div style="border-top: 1px solid var(--rule); padding-top: 0.85rem;">
+                <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer;">
+                  <input type="checkbox" id="cb-has-oloimero" ${this.timetable.hasOloimero ? 'checked' : ''} style="margin-top: 0.2rem;">
+                  <div>
+                    <strong style="font-size: 0.875rem;">☀️ Ολοήμερο Πρόγραμμα</strong>
+                    <div class="hint" style="font-size: 0.8125rem;">Πρόγραμμα μετά τη λήξη των πρωινών μαθημάτων (Διατροφική Αγωγή / Σίτιση, Μελέτη-Προετοιμασία, Δραστηριότητες).</div>
+                  </div>
+                </label>
+
+                <div id="oloimero-details-panel" style="margin-top: 0.75rem; margin-left: 1.8rem; display: ${this.timetable.hasOloimero ? 'flex' : 'none'}; flex-direction: column; gap: 0.6rem; padding: 0.75rem 1rem; background: var(--wash); border-radius: 5px; border: 1px solid var(--rule);">
+                  <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+                    <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.875rem;">
+                      <input type="radio" name="rb-oloimero-type" value="basic" ${(this.timetable.oloimeroType || 'basic') === 'basic' ? 'checked' : ''}>
+                      <span><strong>Βασικό Ολοήμερο (έως 16:00)</strong> — 3 ώρες/ημέρα (15 ώρες/εβδ.)</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.875rem;">
+                      <input type="radio" name="rb-oloimero-type" value="expanded" ${this.timetable.oloimeroType === 'expanded' ? 'checked' : ''}>
+                      <span><strong>Αναβαθμισμένο Ολοήμερο (έως 17:30)</strong> — 5 ώρες/ημέρα (25 ώρες/εβδ.)</span>
+                    </label>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; margin-top: 0.25rem;">
+                    <span>Αριθμός τμημάτων Ολοημέρου:</span>
+                    <input type="number" id="input-oloimero-count" min="1" max="6" value="${this.timetable.oloimeroCount || 1}" style="width: 4rem; padding: 0.2rem 0.4rem; border: 1px solid var(--rule); border-radius: 4px; text-align: center; font-weight: 600;">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         ` : ''}
       </div>
 
@@ -224,8 +272,8 @@ export class TimetableUI {
         if (confirm(`Προσαρμογή τμημάτων και ωρών στη λειτουργικότητα «${org.shortName}»; Αυτό θα ενημερώσει τα τμήματα και τις ώρες ανά ημέρα.`)) {
           this.timetable.dimotikoOrganicity = orgId;
           this.timetable.periodsPerDay = org.periodsPerDay;
-          this.timetable.bellTimes = JSON.parse(JSON.stringify(DEFAULT_BELL_TIMES[org.bell]));
           this.timetable.classes = JSON.parse(JSON.stringify(org.defaultClasses));
+          this.timetable.bellTimes = buildBellTimes(this.timetable);
           populateCurriculumForClasses(this.timetable);
           if (this.timetable.teachers && this.timetable.teachers.length > 0) {
             autoAssignTeachers(this.timetable, { overwriteExisting: false });
@@ -240,15 +288,82 @@ export class TimetableUI {
       };
     }
 
+    // Πρωινή Ζώνη Listener
+    const cbProiniZoni = div.querySelector('#cb-has-proini-zoni');
+    if (cbProiniZoni) {
+      cbProiniZoni.onchange = (e) => {
+        this.timetable.hasProiniZoni = e.target.checked;
+        syncSpecialClasses(this.timetable);
+        this.timetable.bellTimes = buildBellTimes(this.timetable);
+        populateCurriculumForClasses(this.timetable);
+        if (this.timetable.teachers && this.timetable.teachers.length > 0) {
+          autoAssignTeachers(this.timetable, { overwriteExisting: false });
+        }
+        this.save();
+        renderClassesList();
+      };
+    }
+
+    // Ολοήμερο Listener
+    const cbOloimero = div.querySelector('#cb-has-oloimero');
+    const oloPanel = div.querySelector('#oloimero-details-panel');
+    if (cbOloimero) {
+      cbOloimero.onchange = (e) => {
+        this.timetable.hasOloimero = e.target.checked;
+        if (oloPanel) oloPanel.style.display = e.target.checked ? 'flex' : 'none';
+        this.timetable.periodsPerDay = e.target.checked ? (this.timetable.oloimeroType === 'expanded' ? 11 : 9) : 6;
+        syncSpecialClasses(this.timetable);
+        this.timetable.bellTimes = buildBellTimes(this.timetable);
+        populateCurriculumForClasses(this.timetable);
+        if (this.timetable.teachers && this.timetable.teachers.length > 0) {
+          autoAssignTeachers(this.timetable, { overwriteExisting: false });
+        }
+        this.save();
+        renderClassesList();
+      };
+    }
+
+    // Τύπος Ολοημέρου (Βασικό / Αναβαθμισμένο)
+    div.querySelectorAll('input[name="rb-oloimero-type"]').forEach((rb) => {
+      rb.onchange = (e) => {
+        this.timetable.oloimeroType = e.target.value;
+        this.timetable.periodsPerDay = this.timetable.oloimeroType === 'expanded' ? 11 : 9;
+        this.timetable.bellTimes = buildBellTimes(this.timetable);
+        populateCurriculumForClasses(this.timetable);
+        if (this.timetable.teachers && this.timetable.teachers.length > 0) {
+          autoAssignTeachers(this.timetable, { overwriteExisting: false });
+        }
+        this.save();
+        renderClassesList();
+      };
+    });
+
+    // Αριθμός Τμημάτων Ολοημέρου
+    const inputOloCount = div.querySelector('#input-oloimero-count');
+    if (inputOloCount) {
+      inputOloCount.onchange = (e) => {
+        const cnt = Math.max(1, Math.min(6, parseInt(e.target.value, 10) || 1));
+        this.timetable.oloimeroCount = cnt;
+        inputOloCount.value = cnt;
+        syncSpecialClasses(this.timetable);
+        populateCurriculumForClasses(this.timetable);
+        if (this.timetable.teachers && this.timetable.teachers.length > 0) {
+          autoAssignTeachers(this.timetable, { overwriteExisting: false });
+        }
+        this.save();
+        renderClassesList();
+      };
+    }
+
     // Reset 6 classes button for Dimotiko
     const resetDimotikoBtn = div.querySelector('#btn-reset-dimotiko-classes');
     if (resetDimotikoBtn) {
       resetDimotikoBtn.onclick = () => {
         if (confirm('Επαναφορά των 6 αυτόνομων τμημάτων (Α1, Β1, Γ1, Δ1, Ε1, ΣΤ1);')) {
           this.timetable.dimotikoOrganicity = '6th_plus';
-          this.timetable.periodsPerDay = 6;
-          this.timetable.bellTimes = JSON.parse(JSON.stringify(DEFAULT_BELL_TIMES.primary));
+          this.timetable.periodsPerDay = this.timetable.hasOloimero ? (this.timetable.oloimeroType === 'expanded' ? 11 : 9) : 6;
           this.timetable.classes = JSON.parse(JSON.stringify(DIMOTIKO_ORGANICITIES['6th_plus'].defaultClasses));
+          this.timetable.bellTimes = buildBellTimes(this.timetable);
           populateCurriculumForClasses(this.timetable);
           if (this.timetable.teachers && this.timetable.teachers.length > 0) {
             autoAssignTeachers(this.timetable, { overwriteExisting: false });
@@ -273,42 +388,79 @@ export class TimetableUI {
         item.draggable = true;
         item.dataset.index = idx;
 
-        const isMulti = Array.isArray(cls.grades) && cls.grades.length > 1;
+        const isSpecialPZ = cls.isProiniZoni || cls.id === 'c_proini_zoni';
+        const isSpecialOlo = cls.isOloimero || cls.id.startsWith('c_olo_');
+        const isMulti = !isSpecialPZ && !isSpecialOlo && Array.isArray(cls.grades) && cls.grades.length > 1;
+
         const cycleBadge = isMulti
           ? `<span class="badge info" style="font-size: 0.75rem; margin-left: 0.4rem; padding: 0.15rem 0.45rem;" title="Εκπαιδευτικός Κύκλος Συνδιδασκαλίας (Π.Δ. 79/2017)">Κύκλος ${cls.cycle || 'Α'}΄</span>`
           : '';
-        const gradeBadgesHtml = isMulti
-          ? `<div class="class-grade-tag multi" title="Συνδιδασκόμενο τμήμα (${cls.grades.length} τάξεις: ${cls.grades.join(', ')})">
+
+        let gradeBadgesHtml = '';
+        if (isSpecialPZ) {
+          gradeBadgesHtml = `<div class="class-grade-tag single" style="background: #e0e7ff; color: #3730a3; border-color: #c7d2fe;">🌅 Πρωινή Ζώνη (07:00 - 08:00)</div>`;
+        } else if (isSpecialOlo) {
+          gradeBadgesHtml = `<div class="class-grade-tag single" style="background: #ecfdf5; color: #065f46; border-color: #a7f3d0;">☀️ Ολοήμερο Πρόγραμμα</div>`;
+        } else if (isMulti) {
+          gradeBadgesHtml = `<div class="class-grade-tag multi" title="Συνδιδασκόμενο τμήμα (${cls.grades.length} τάξεις: ${cls.grades.join(', ')})">
                <span class="multi-indicator">Συνδιδασκαλία</span>
                <span class="grades-pills">${cls.grades.map((g) => `<span class="pill">${g}</span>`).join('')}</span>
                ${cycleBadge}
-             </div>`
-          : `<div class="class-grade-tag single">Τάξη ${cls.grade || (cls.grades && cls.grades[0]) || ''}</div>`;
+             </div>`;
+        } else {
+          gradeBadgesHtml = `<div class="class-grade-tag single">Τάξη ${cls.grade || (cls.grades && cls.grades[0]) || ''}</div>`;
+        }
 
         item.innerHTML = `
           <div class="class-chip-content">
             <span class="drag-handle" title="Σύρετε για αναδιάταξη">⠿</span>
-            <div class="class-chip-info" title="Κλικ για επεξεργασία">
+            <div class="class-chip-info" title="${isSpecialPZ || isSpecialOlo ? '' : 'Κλικ για επεξεργασία'}">
               <strong class="class-title">${cls.name}</strong>
               ${gradeBadgesHtml}
             </div>
           </div>
           <div class="chip-actions">
-            <button class="chip-edit" title="Επεξεργασία">✎</button>
+            ${isSpecialPZ || isSpecialOlo ? '' : '<button class="chip-edit" title="Επεξεργασία">✎</button>'}
             <button class="chip-delete danger" title="Διαγραφή">✕</button>
           </div>
         `;
 
         // Click to edit
-        const handleEdit = () => {
-          this.openClassModal(cls, () => renderClassesList());
-        };
-        item.querySelector('.class-chip-content').onclick = handleEdit;
-        item.querySelector('.chip-edit').onclick = handleEdit;
+        if (!isSpecialPZ && !isSpecialOlo) {
+          const handleEdit = () => {
+            this.openClassModal(cls, () => renderClassesList());
+          };
+          item.querySelector('.class-chip-content').onclick = handleEdit;
+          item.querySelector('.chip-edit').onclick = handleEdit;
+        }
 
         // Delete
         item.querySelector('.chip-delete').onclick = (e) => {
           e.stopPropagation();
+          if (isSpecialPZ) {
+            if (confirm('Απενεργοποίηση της Πρωινής Ζώνης;')) {
+              this.timetable.hasProiniZoni = false;
+              syncSpecialClasses(this.timetable);
+              this.timetable.bellTimes = buildBellTimes(this.timetable);
+              this.save();
+              this.render();
+            }
+            return;
+          }
+          if (isSpecialOlo) {
+            if (confirm(`Διαγραφή του τμήματος ${cls.name};`)) {
+              if ((this.timetable.oloimeroCount || 1) <= 1) {
+                this.timetable.hasOloimero = false;
+              } else {
+                this.timetable.oloimeroCount = (this.timetable.oloimeroCount || 1) - 1;
+              }
+              syncSpecialClasses(this.timetable);
+              this.timetable.bellTimes = buildBellTimes(this.timetable);
+              this.save();
+              this.render();
+            }
+            return;
+          }
           if (confirm(`Διαγραφή του τμήματος ${cls.name};`)) {
             this.timetable.classes.splice(idx, 1);
             this.save();
@@ -1214,6 +1366,9 @@ export class TimetableUI {
           <span class="badge" style="border-left: 3px solid ${les.subjectColor || '#3b82f6'}; font-weight: 500;">
             ${les.subjectName}
           </span>
+          ${les.isProiniZoni ? `<br><span class="badge info" style="font-size: 0.72rem; margin-top: 0.2rem; display: inline-block;">0η ώρα (07:00-08:00)</span>` : ''}
+          ${les.isOloimero ? `<br><span class="badge success" style="font-size: 0.72rem; margin-top: 0.2rem; display: inline-block;">${les.fixedPeriod}η ώρα</span>` : ''}
+          ${les.splitGrade ? `<br><span class="badge warn" style="font-size: 0.72rem; margin-top: 0.2rem; display: inline-block;">Μόνο Τάξη ${les.splitGrade}΄</span>` : ''}
         </td>
         <td>
           <div class="lesson-hours-ctrl">
@@ -1270,7 +1425,20 @@ export class TimetableUI {
           </select>
         </td>
         <td>
-          ${les.isSplit ? `<span class="badge danger">Παράλληλο (${les.splitType || 'Split'})</span>` : '<span class="badge muted">Ολόκληρο</span>'}
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            ${les.isSplit
+              ? `<span class="badge danger">${les.splitGrade ? `Σπάσιμο: Τάξη ${les.splitGrade}΄` : `Παράλληλο (${les.splitType || 'Split'})`}</span>`
+              : (les.isProiniZoni
+                ? '<span class="badge info">Πρωινή Ζώνη</span>'
+                : (les.isOloimero
+                  ? '<span class="badge success">Ολοήμερο</span>'
+                  : '<span class="badge muted">Ολόκληρο</span>'))}
+            ${isMultiGrade && !les.isProiniZoni && !les.isOloimero ? `
+              <button type="button" class="btn-split-lesson" style="font-size: 0.72rem; padding: 0.2rem 0.4rem; border-radius: 4px; border: 1px solid var(--rule); background: var(--wash); cursor: pointer; white-space: nowrap; margin-top: 0.15rem;" title="Διαχωρισμός του μαθήματος για συγκεκριμένη τάξη της συνδιδασκαλίας (π.χ. Αγγλικά μόνο στη Δ΄ ενώ η Γ΄ κάνει άλλο μάθημα ταυτόχρονα)">
+                ✂️ Σπάσιμο Τάξης
+              </button>
+            ` : ''}
+          </div>
         </td>
       `;
 
@@ -1335,8 +1503,82 @@ export class TimetableUI {
         this.save();
       };
 
+      // 6. Split multigrade lesson button
+      const splitBtn = row.querySelector('.btn-split-lesson');
+      if (splitBtn) {
+        splitBtn.onclick = () => {
+          this.openSplitLessonModal(les, () => {
+            this.renderLessonsList(tbody, filterClass);
+          });
+        };
+      }
+
       tbody.append(row);
     });
+  }
+
+  // Pop-up modal για σπάσιμο συνδιδασκαλίας (απόσχιση τάξης σε ανεξάρτητο μάθημα)
+  openSplitLessonModal(lesson, onSaved = null) {
+    const cls = (this.timetable.classes || []).find((c) => c.id === lesson.classId);
+    if (!cls || !Array.isArray(cls.grades) || cls.grades.length <= 1) {
+      alert('Το σπάσιμο μαθήματος υποστηρίζεται μόνο σε συνδιδασκόμενα τμήματα (με 2 ή περισσότερες τάξεις).');
+      return;
+    }
+
+    const dialog = document.createElement('dialog');
+    dialog.className = 'class-dialog';
+
+    dialog.innerHTML = `
+      <div class="dialog-content">
+        <h3>✂️ Σπάσιμο Συνδιδασκαλίας — ${lesson.subjectName}</h3>
+        <p class="hint">
+          Στα ολιγοθέσια σχολεία, ένα συνδιδασκόμενο τμήμα μπορεί να «σπάσει» ώστε ένας εκπαιδευτικός να αναλάβει μία συγκεκριμένη τάξη για ένα μάθημα (π.χ. Αγγλικά στη Δ΄), ενώ ένας άλλος εκπαιδευτικός διδάσκει ταυτόχρονα την άλλη τάξη (π.χ. Μαθηματικά στη Γ΄).
+        </p>
+
+        <div style="margin-top: 1.25rem;">
+          <label class="field" style="width: 100%;">
+            <span class="label" style="font-weight: 600;">Επιλογή Τάξης προς Απόσχιση</span>
+            <select id="split-target-grade" style="width: 100%; padding: 0.5rem; border: 1px solid var(--rule); border-radius: 4px; font-family: var(--sans);">
+              ${cls.grades.map((g) => `<option value="${g}">Τάξη ${g}΄</option>`).join('')}
+            </select>
+          </label>
+        </div>
+
+        <div style="margin-top: 1rem;">
+          <label class="field" style="width: 100%;">
+            <span class="label" style="font-weight: 600;">Ώρες ανά Εβδομάδα</span>
+            <input type="number" id="split-hours" min="1" max="15" value="${Math.max(1, Math.round(lesson.hours / 2))}" style="width: 100%; padding: 0.5rem; border: 1px solid var(--rule); border-radius: 4px; font-family: var(--sans);">
+            <span class="hint" style="font-size: 0.8125rem; margin-top: 0.25rem;">
+              Πόσες ώρες θα διδάσκεται το ανεξάρτητο μάθημα στην αποσχισθείσα τάξη.
+            </span>
+          </label>
+        </div>
+
+        <div class="toolbar" style="margin-top: 1.5rem; justify-content: flex-end;">
+          <button type="button" class="btn-cancel">Άκυρο</button>
+          <button type="button" class="primary btn-save">✂️ Δημιουργία Σπαστού Μαθήματος</button>
+        </div>
+      </div>
+    `;
+
+    dialog.querySelector('.btn-cancel').onclick = () => {
+      dialog.close();
+      dialog.remove();
+    };
+
+    dialog.querySelector('.btn-save').onclick = () => {
+      const targetGrade = dialog.querySelector('#split-target-grade').value;
+      const hours = parseInt(dialog.querySelector('#split-hours').value, 10) || 1;
+
+      splitMultigradeLesson(this.timetable, lesson.id, targetGrade, hours);
+      this.save();
+      dialog.close();
+      dialog.remove();
+      if (onSaved) onSaved();
+    };
+
+    document.body.append(dialog);
+    dialog.showModal();
   }
 
   // Pop-up modal ανάθεσης εκπαιδευτικού με εμφάνιση όλων των εκπαιδευτικών

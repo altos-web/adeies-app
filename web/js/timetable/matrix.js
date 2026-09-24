@@ -136,25 +136,52 @@ export class TimetableMatrix {
     thead.append(headerRow);
     table.append(thead);
 
-    // Σώμα: Ώρες (1η έως 6η ή 7η)
+    // Σώμα: Ώρες (Πρωινή Ζώνη 0, Πρωινό 1-6/7, Ολοήμερο 7-11)
     const tbody = document.createElement('tbody');
-    const periodsCount = this.timetable.periodsPerDay || 7;
     const bellTimes = this.timetable.bellTimes || [];
+    let periodsToRender = [];
+    if (bellTimes.length > 0) {
+      periodsToRender = bellTimes.map((b) => b.period);
+    } else {
+      periodsToRender = Array.from({ length: this.timetable.periodsPerDay || 7 }, (_, i) => i + 1);
+    }
 
-    for (let period = 1; period <= periodsCount; period++) {
-      const row = document.createElement('tr');
-      const timeInfo = bellTimes[period - 1];
+    let showedOloimeroDivider = false;
+
+    for (const period of periodsToRender) {
+      const timeInfo = bellTimes.find((b) => b.period === period);
       const timeLabel = timeInfo ? `${timeInfo.start} - ${timeInfo.end}` : '';
+
+      // Διαχωριστικό Ολοημέρου πριν την 7η ώρα
+      if (period >= 7 && !showedOloimeroDivider) {
+        showedOloimeroDivider = true;
+        const divRow = document.createElement('tr');
+        divRow.className = 'matrix-section-row';
+        const oloEndTime = this.timetable.oloimeroType === 'expanded' ? '17:30' : '16:00';
+        divRow.innerHTML = `<td colspan="6" class="matrix-section-divider">☀️ Ολοήμερο Πρόγραμμα (${timeInfo ? timeInfo.start : '13:15'} - ${oloEndTime})</td>`;
+        tbody.append(divRow);
+      }
+
+      const row = document.createElement('tr');
+      if (period === 0) row.className = 'row-proini-zoni';
+      else if (period >= 7) row.className = 'row-oloimero';
 
       const timeTd = document.createElement('td');
       timeTd.className = 'cell-period-label';
-      timeTd.innerHTML = `<strong>${period}η</strong><small>${timeLabel}</small>`;
+      if (period === 0) {
+        timeTd.innerHTML = `<strong>ΠΖ</strong><small>${timeLabel || '07:00-08:00'}</small>`;
+        timeTd.title = 'Πρωινή Ζώνη (07:00 - 08:00)';
+      } else {
+        timeTd.innerHTML = `<strong>${period}η</strong><small>${timeLabel}</small>`;
+      }
       row.append(timeTd);
 
       // Στήλες για κάθε μέρα (1 έως 5)
       for (let day = 1; day <= 5; day++) {
         const cell = document.createElement('td');
         cell.className = 'matrix-slot';
+        if (period === 0) cell.classList.add('slot-proini-zoni');
+        else if (period >= 7) cell.classList.add('slot-oloimero');
         cell.dataset.day = day;
         cell.dataset.period = period;
 
@@ -189,25 +216,35 @@ export class TimetableMatrix {
     const table = document.createElement('table');
     table.className = 'timetable-matrix-table master-table';
 
+    const bellTimes = this.timetable.bellTimes || [];
+    const periodsToRender = bellTimes.length > 0
+      ? bellTimes.map((b) => b.period)
+      : Array.from({ length: this.timetable.periodsPerDay || 7 }, (_, i) => i + 1);
+
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
     headerRow.innerHTML = '<th>Τμήμα</th>';
     DAYS_OF_WEEK.forEach((day) => {
       const th = document.createElement('th');
-      th.colSpan = this.timetable.periodsPerDay;
+      th.colSpan = periodsToRender.length;
       th.textContent = day.name;
       headerRow.append(th);
     });
     thead.append(headerRow);
 
-    // Υπο-κεφαλίδα με τους αριθμούς ωρών (1-7) για κάθε μέρα
+    // Υπο-κεφαλίδα με τους αριθμούς ωρών για κάθε μέρα
     const subHeader = document.createElement('tr');
     subHeader.innerHTML = '<th></th>';
     DAYS_OF_WEEK.forEach(() => {
-      for (let p = 1; p <= this.timetable.periodsPerDay; p++) {
+      for (const p of periodsToRender) {
         const th = document.createElement('th');
         th.className = 'sub-period-th';
-        th.textContent = `${p}`;
+        if (p === 0) {
+          th.textContent = 'ΠΖ';
+          th.title = 'Πρωινή Ζώνη (07:00 - 08:00)';
+        } else {
+          th.textContent = `${p}`;
+        }
         subHeader.append(th);
       }
     });
@@ -223,9 +260,11 @@ export class TimetableMatrix {
       row.append(clsTd);
 
       for (let day = 1; day <= 5; day++) {
-        for (let period = 1; period <= this.timetable.periodsPerDay; period++) {
+        for (const period of periodsToRender) {
           const cell = document.createElement('td');
           cell.className = 'matrix-slot master-slot';
+          if (period === 0) cell.classList.add('master-slot-pz');
+          else if (period >= 7) cell.classList.add('master-slot-olo');
           cell.dataset.day = day;
           cell.dataset.period = period;
           cell.dataset.classId = cls.id;
@@ -243,7 +282,8 @@ export class TimetableMatrix {
             miniCard.style.backgroundColor = card.subjectColor || '#3b82f6';
             miniCard.title = `${card.subjectName} · ${card.teacherName || ''} (${isMulti ? `Δίωρο: Ώρα ${part}/${card.length}` : '1 ώρα'})`;
             const partBadge = isMulti ? `<small class="mini-part">(${part}/${card.length})</small>` : '';
-            miniCard.innerHTML = `<strong>${card.subjectShort || card.subjectId} ${partBadge}</strong><small>${card.teacherName ? card.teacherName.split(' ')[0] : ''}</small>`;
+            const splitPrefix = card.splitGrade ? `[${card.splitGrade}] ` : '';
+            miniCard.innerHTML = `<strong>${splitPrefix}${card.subjectShort || card.subjectId} ${partBadge}</strong><small>${card.teacherName ? card.teacherName.split(' ')[0] : ''}</small>`;
             cell.append(miniCard);
           });
 
@@ -316,7 +356,9 @@ export class TimetableMatrix {
       <div class="card-header">
         <span class="card-subject" title="${card.subjectName}">${card.subjectShort || card.subjectName}</span>
         ${lengthBadgeText ? `<span class="card-badge length ${part > 1 ? 'is-cont' : ''}">${lengthBadgeText}</span>` : ''}
-        ${card.isSplit ? `<span class="card-badge badge-split">Σπαστό</span>` : ''}
+        ${card.isSplit ? `<span class="card-badge badge-split" title="Σπαστό μάθημα">${card.splitGrade ? `Τάξη ${card.splitGrade}΄` : 'Σπαστό'}</span>` : ''}
+        ${card.isProiniZoni ? `<span class="card-badge badge-pz" title="Πρωινή Ζώνη">ΠΖ</span>` : ''}
+        ${card.isOloimero ? `<span class="card-badge badge-olo" title="Ολοήμερο Πρόγραμμα">ΟΛΟ</span>` : ''}
         ${currentPeriod ? `<button type="button" class="card-unplace-btn" title="Αφαίρεση από το πρόγραμμα (στο καλάθι)">✕</button>` : ''}
       </div>
       <div class="card-body">

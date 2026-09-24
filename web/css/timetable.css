@@ -1185,6 +1185,69 @@
   background: #eff6ff !important;
 }
 
+/* ── Πρωινή Ζώνη & Ολοήμερο Πρόγραμμα (Morning Zone & All-Day Styling) ── */
+.row-proini-zoni td.cell-period-label {
+  background: #f5f3ff;
+  color: #4338ca;
+  border-left: 3px solid #6366f1;
+}
+
+.slot-proini-zoni {
+  background: rgba(99, 102, 241, 0.03);
+}
+
+.master-slot-pz {
+  background: rgba(99, 102, 241, 0.04);
+}
+
+.matrix-section-row td.matrix-section-divider {
+  background: #fffbeb;
+  color: #92400e;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  padding: 0.45rem 0.75rem;
+  text-align: left;
+  border-top: 2px solid #fde68a;
+  border-bottom: 2px solid #fde68a;
+  letter-spacing: 0.01em;
+}
+
+.row-oloimero td.cell-period-label {
+  background: #ecfdf5;
+  color: #065f46;
+  border-left: 3px solid #10b981;
+}
+
+.slot-oloimero {
+  background: rgba(16, 185, 129, 0.02);
+}
+
+.master-slot-olo {
+  background: rgba(16, 185, 129, 0.03);
+}
+
+.card-badge.badge-pz {
+  background: #e0e7ff;
+  color: #3730a3;
+  font-weight: 600;
+}
+
+.card-badge.badge-olo {
+  background: #d1fae5;
+  color: #065f46;
+  font-weight: 600;
+}
+
+.card-badge.badge-split-grade {
+  background: #fef3c7;
+  color: #92400e;
+  font-weight: 600;
+}
+
+.programs-options-card label:hover {
+  opacity: 0.95;
+}
+
 /* ── Εκτύπωση ───────────────────────────────────────────────────────────── */
 @media print {
   body {

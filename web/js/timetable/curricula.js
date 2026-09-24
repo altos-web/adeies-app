@@ -45,8 +45,9 @@ export const DEFAULT_BELL_TIMES = {
     { period: 1, start: '08:15', end: '09:00', label: '1η ώρα' },
     { period: 2, start: '09:05', end: '09:45', label: '2η ώρα' },
     { period: 3, start: '10:00', end: '10:45', label: '3η ώρα' },
-    { period: 4, start: '11:00', end: '11:45', label: '4η ώρα' },
+    { period: 4, start: '10:55', end: '11:40', label: '4η ώρα' },
     { period: 5, start: '11:55', end: '12:35', label: '5η ώρα' },
+    { period: 6, start: '12:45', end: '13:30', label: '6η ώρα' },
   ],
   secondary: [
     { period: 1, start: '08:15', end: '09:00', label: '1η ώρα' },
@@ -57,13 +58,28 @@ export const DEFAULT_BELL_TIMES = {
     { period: 6, start: '12:40', end: '13:25', label: '6η ώρα' },
     { period: 7, start: '13:30', end: '14:10', label: '7η ώρα' },
   ],
+  proini_zoni: { period: 0, start: '07:00', end: '08:00', label: 'Πρωινή Ζώνη' },
+  oloimero_primary: [
+    { period: 7, start: '13:20', end: '14:00', label: '1η Ολοημέρου (Σίτιση)' },
+    { period: 8, start: '14:15', end: '15:00', label: '2η Ολοημέρου (Μελέτη)' },
+    { period: 9, start: '15:15', end: '16:00', label: '3η Ολοημέρου (Δραστηριότητες)' },
+    { period: 10, start: '16:00', end: '16:45', label: '4η Αναβαθμισμένου (Όμιλοι)' },
+    { period: 11, start: '16:45', end: '17:30', label: '5η Αναβαθμισμένου (Όμιλοι)' },
+  ],
+  oloimero_oligothesia: [
+    { period: 7, start: '13:40', end: '14:15', label: '1η Ολοημέρου (Σίτιση)' },
+    { period: 8, start: '14:15', end: '15:00', label: '2η Ολοημέρου (Μελέτη)' },
+    { period: 9, start: '15:15', end: '16:00', label: '3η Ολοημέρου (Δραστηριότητες)' },
+    { period: 10, start: '16:00', end: '16:45', label: '4η Αναβαθμισμένου (Όμιλοι)' },
+    { period: 11, start: '16:45', end: '17:30', label: '5η Αναβαθμισμένου (Όμιλοι)' },
+  ],
 };
 
 // Λειτουργικότητα Δημοτικών Σχολείων βάσει νομοθεσίας (ΥΑ 83939/Δ1/19-5-2017 & Π.Δ. 79/2017)
 export const DIMOTIKO_ORGANICITIES = {
   '6th_plus': {
     id: '6th_plus',
-    name: '6/θέσιο & άνω (Ενιαίου Τύπου — 30 ώρ./εβδ., 6 αυτόνομα τμήματα Α-ΣΤ)',
+    name: '6/θέσιο & άνω (Ενιαίου Τύπου — 30 ώρ./εβδ., 6 αυτόνομα τμήματα Α-ΣΤ, λήξη 13:15)',
     shortName: '6/θέσιο & άνω',
     periodsPerDay: 6,
     grades: ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'ΣΤ'],
@@ -79,9 +95,9 @@ export const DIMOTIKO_ORGANICITIES = {
   },
   '1th': {
     id: '1th',
-    name: '1/θέσιο (Μονοθέσιο — 25 ώρ./εβδ., 1 τμήμα συνδιδασκαλίας Α-ΣΤ)',
+    name: '1/θέσιο (Μονοθέσιο — 30 ώρ./εβδ., 1 ενιαίο τμήμα συνδιδασκαλίας Α-ΣΤ, λήξη 13:30)',
     shortName: '1/θέσιο (Μονοθέσιο)',
-    periodsPerDay: 5,
+    periodsPerDay: 6,
     grades: ['Α_ΣΤ'],
     defaultClasses: [
       { id: 'c_all', name: 'Α-ΣΤ', grade: 'Α_ΣΤ', grades: ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'ΣΤ'] },
@@ -90,9 +106,9 @@ export const DIMOTIKO_ORGANICITIES = {
   },
   '2th': {
     id: '2th',
-    name: '2/θέσιο (Διθέσιο — 25 ώρ./εβδ., 2 τμήματα: Α-Β-Γ & Δ-Ε-ΣΤ)',
+    name: '2/θέσιο (Διθέσιο — 30 ώρ./εβδ., 2 τμήματα: Α-Β-Γ & Δ-Ε-ΣΤ, λήξη 13:30)',
     shortName: '2/θέσιο (Διθέσιο)',
-    periodsPerDay: 5,
+    periodsPerDay: 6,
     grades: ['Α_Γ', 'Δ_ΣΤ'],
     defaultClasses: [
       { id: 'c_t1', name: 'Α-Β-Γ', grade: 'Α_Γ', grades: ['Α', 'Β', 'Γ'] },
@@ -102,9 +118,9 @@ export const DIMOTIKO_ORGANICITIES = {
   },
   '3th': {
     id: '3th',
-    name: '3/θέσιο (Τριθέσιο — 25 ώρ./εβδ., 3 τμήματα: Α-Β, Γ-Δ, Ε-ΣΤ)',
+    name: '3/θέσιο (Τριθέσιο — 30 ώρ./εβδ., 3 τμήματα: Α-Β, Γ-Δ, Ε-ΣΤ, λήξη 13:30)',
     shortName: '3/θέσιο (Τριθέσιο)',
-    periodsPerDay: 5,
+    periodsPerDay: 6,
     grades: ['Α_Β', 'Γ_Δ', 'Ε_ΣΤ'],
     defaultClasses: [
       { id: 'c_t1', name: 'Α-Β', grade: 'Α_Β', grades: ['Α', 'Β'] },
@@ -115,7 +131,7 @@ export const DIMOTIKO_ORGANICITIES = {
   },
   '4th': {
     id: '4th',
-    name: '4/θέσιο (30 ώρ./εβδ., 4 τμήματα: Α, Β, Γ-Δ, Ε-ΣΤ)',
+    name: '4/θέσιο (30 ώρ./εβδ., 4 τμήματα: Α, Β, Γ-Δ, Ε-ΣΤ, λήξη 13:15/13:30)',
     shortName: '4/θέσιο',
     periodsPerDay: 6,
     grades: ['Α', 'Β', 'Γ_Δ', 'Ε_ΣΤ'],
@@ -129,7 +145,7 @@ export const DIMOTIKO_ORGANICITIES = {
   },
   '5th': {
     id: '5th',
-    name: '5/θέσιο (30 ώρ./εβδ., 5 τμήματα: Α, Β, Γ, Δ, Ε-ΣΤ)',
+    name: '5/θέσιο (30 ώρ./εβδ., 5 τμήματα: Α, Β, Γ, Δ, Ε-ΣΤ, λήξη 13:15/13:30)',
     shortName: '5/θέσιο',
     periodsPerDay: 6,
     grades: ['Α', 'Β', 'Γ', 'Δ', 'Ε_ΣΤ'],
@@ -253,55 +269,57 @@ export const CURRICULA = {
       { id: 'tpe', name: 'Τ.Π.Ε. (Πληροφορική)', short: 'ΤΠΕ', hours: 1, branch: 'ΠΕ86', color: '#64748b', difficulty: 1, room: 'room_cs' },
       { id: 'ergastiria_dex', name: 'Εργαστήρια Δεξιοτήτων', short: 'ΕΡΓ.ΔΕΞ', hours: 1, branch: 'ΠΕ70', color: '#84cc16', difficulty: 1 },
     ],
-    // ── Ολιγοθέσια Τμήματα Συνδιδασκαλίας (ΥΑ 83939/Δ1/19-5-2017) ─────────
-    'Α_ΣΤ': [ // 1/θέσιο: Όλες οι τάξεις σε ενιαίο τμήμα (25 ώρες/εβδ)
-      { id: 'glossa', name: 'Γλώσσα (Συνδιδασκαλία)', short: 'ΓΛΩ', hours: 7, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 3 },
-      { id: 'math', name: 'Μαθηματικά (Συνδιδασκαλία)', short: 'ΜΑΘ', hours: 4, branch: 'ΠΕ70', color: '#10b981', difficulty: 3 },
-      { id: 'istoria', name: 'Ιστορία', short: 'ΙΣΤ', hours: 2, branch: 'ΠΕ70', color: '#eab308', difficulty: 2 },
-      { id: 'meleti_fysika', name: 'Μελέτη Περιβάλλοντος / Φυσικά', short: 'ΜΕΛ.ΦΥΣ', hours: 3, branch: 'ΠΕ70', color: '#f59e0b', difficulty: 2 },
-      { id: 'thriskeutika', name: 'Θρησκευτικά', short: 'ΘΡΗ', hours: 1, branch: 'ΠΕ70', color: '#8b5cf6', difficulty: 1 },
-      { id: 'agglika', name: 'Αγγλικά', short: 'ΑΓΓ', hours: 2, branch: 'ΠΕ06', color: '#06b6d4', difficulty: 2 },
-      { id: 'gymnastiki', name: 'Φυσική Αγωγή', short: 'ΦΥΣ.ΑΓ', hours: 2, branch: 'ΠΕ11', color: '#ec4899', difficulty: 1, room: 'room_gym' },
+    // ── Ολιγοθέσια Τμήματα Συνδιδασκαλίας (ΥΑ 83939/Δ1/19-5-2017 & 30ωρο έως 13:30) ──
+    'Α_ΣΤ': [ // 1/θέσιο: Όλες οι τάξεις σε ενιαίο τμήμα (30 ώρες/εβδ - 6ωρο καθημερινά έως 13:30)
+      { id: 'glossa', name: 'Γλώσσα (Συνδιδασκαλία)', short: 'ΓΛΩ', hours: 8, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 3 },
+      { id: 'math', name: 'Μαθηματικά (Συνδιδασκαλία)', short: 'ΜΑΘ', hours: 5, branch: 'ΠΕ70', color: '#10b981', difficulty: 3 },
+      { id: 'istoria', name: 'Ιστορία', short: 'ΙΣΤ', hours: 2, branch: 'ΠΕ70', color: '#eab308', difficulty: 2, isCycleSubject: true, cycleA: 'Κύκλος Α΄ (Γ΄/Ε΄)', cycleB: 'Κύκλος Β΄ (Δ΄/ΣΤ΄)' },
+      { id: 'meleti_fysika', name: 'Μελέτη Περιβάλλοντος / Φυσικά', short: 'ΜΕΛ.ΦΥΣ', hours: 3, branch: 'ΠΕ70', color: '#f59e0b', difficulty: 2, isCycleSubject: true, cycleA: 'Κύκλος Α΄ (Γ΄/Ε΄)', cycleB: 'Κύκλος Β΄ (Δ΄/ΣΤ΄)' },
+      { id: 'thriskeutika', name: 'Θρησκευτικά', short: 'ΘΡΗ', hours: 1, branch: 'ΠΕ70', color: '#8b5cf6', difficulty: 1, isCycleSubject: true, cycleA: 'Κύκλος Α΄ (Γ΄/Ε΄)', cycleB: 'Κύκλος Β΄ (Δ΄/ΣΤ΄)' },
+      { id: 'agglika', name: 'Αγγλικά', short: 'ΑΓΓ', hours: 3, branch: 'ΠΕ06', color: '#06b6d4', difficulty: 2 },
+      { id: 'gymnastiki', name: 'Φυσική Αγωγή', short: 'ΦΥΣ.ΑΓ', hours: 3, branch: 'ΠΕ11', color: '#ec4899', difficulty: 1, room: 'room_gym' },
       { id: 'mousiki', name: 'Μουσική', short: 'ΜΟΥ', hours: 1, branch: 'ΠΕ79.01', color: '#6366f1', difficulty: 1, room: 'room_art' },
       { id: 'eikastika', name: 'Εικαστικά', short: 'ΕΙΚ', hours: 1, branch: 'ΠΕ08', color: '#14b8a6', difficulty: 1 },
       { id: 'tpe', name: 'Τ.Π.Ε. (Πληροφορική)', short: 'ΤΠΕ', hours: 1, branch: 'ΠΕ86', color: '#64748b', difficulty: 1, room: 'room_cs' },
-      { id: 'ergastiria_dex', name: 'Εργαστήρια Δεξιοτήτων', short: 'ΕΡΓ.ΔΕΞ', hours: 1, branch: 'ΠΕ70', color: '#84cc16', difficulty: 1 },
+      { id: 'ergastiria_dex', name: 'Εργαστήρια Δεξιοτήτων', short: 'ΕΡΓ.ΔΕΞ', hours: 2, branch: 'ΠΕ70', color: '#84cc16', difficulty: 1 },
     ],
-    'Α_Γ': [ // 2/θέσιο - Τμήμα 1: Α-Β-Γ (25 ώρες/εβδ)
-      { id: 'glossa', name: 'Γλώσσα', short: 'ΓΛΩ', hours: 8, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 3 },
-      { id: 'math', name: 'Μαθηματικά', short: 'ΜΑΘ', hours: 4, branch: 'ΠΕ70', color: '#10b981', difficulty: 3 },
+    'Α_Γ': [ // 2/θέσιο - Τμήμα 1: Α-Β-Γ (30 ώρες/εβδ - έως 13:30)
+      { id: 'glossa', name: 'Γλώσσα', short: 'ΓΛΩ', hours: 9, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 3 },
+      { id: 'math', name: 'Μαθηματικά', short: 'ΜΑΘ', hours: 5, branch: 'ΠΕ70', color: '#10b981', difficulty: 3 },
       { id: 'meleti', name: 'Μελέτη Περιβάλλοντος', short: 'ΜΕΛ', hours: 3, branch: 'ΠΕ70', color: '#f59e0b', difficulty: 2 },
-      { id: 'istoria', name: 'Ιστορία', short: 'ΙΣΤ', hours: 1, branch: 'ΠΕ70', color: '#eab308', difficulty: 2 },
+      { id: 'istoria', name: 'Ιστορία', short: 'ΙΣΤ', hours: 2, branch: 'ΠΕ70', color: '#eab308', difficulty: 2 },
       { id: 'thriskeutika', name: 'Θρησκευτικά', short: 'ΘΡΗ', hours: 1, branch: 'ΠΕ70', color: '#8b5cf6', difficulty: 1 },
-      { id: 'agglika', name: 'Αγγλικά', short: 'ΑΓΓ', hours: 2, branch: 'ΠΕ06', color: '#06b6d4', difficulty: 2 },
-      { id: 'gymnastiki', name: 'Φυσική Αγωγή', short: 'ΦΥΣ.ΑΓ', hours: 2, branch: 'ΠΕ11', color: '#ec4899', difficulty: 1, room: 'room_gym' },
+      { id: 'agglika', name: 'Αγγλικά', short: 'ΑΓΓ', hours: 3, branch: 'ΠΕ06', color: '#06b6d4', difficulty: 2 },
+      { id: 'gymnastiki', name: 'Φυσική Αγωγή', short: 'ΦΥΣ.ΑΓ', hours: 3, branch: 'ΠΕ11', color: '#ec4899', difficulty: 1, room: 'room_gym' },
       { id: 'mousiki', name: 'Μουσική', short: 'ΜΟΥ', hours: 1, branch: 'ΠΕ79.01', color: '#6366f1', difficulty: 1, room: 'room_art' },
       { id: 'eikastika', name: 'Εικαστικά', short: 'ΕΙΚ', hours: 1, branch: 'ΠΕ08', color: '#14b8a6', difficulty: 1 },
       { id: 'tpe', name: 'Τ.Π.Ε. (Πληροφορική)', short: 'ΤΠΕ', hours: 1, branch: 'ΠΕ86', color: '#64748b', difficulty: 1, room: 'room_cs' },
       { id: 'ergastiria_dex', name: 'Εργαστήρια Δεξιοτήτων', short: 'ΕΡΓ.ΔΕΞ', hours: 1, branch: 'ΠΕ70', color: '#84cc16', difficulty: 1 },
     ],
-    'Δ_ΣΤ': [ // 2/θέσιο - Τμήμα 2: Δ-Ε-ΣΤ (25 ώρες/εβδ)
-      { id: 'glossa', name: 'Γλώσσα', short: 'ΓΛΩ', hours: 7, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 3 },
-      { id: 'math', name: 'Μαθηματικά', short: 'ΜΑΘ', hours: 4, branch: 'ΠΕ70', color: '#10b981', difficulty: 3 },
+    'Δ_ΣΤ': [ // 2/θέσιο - Τμήμα 2: Δ-Ε-ΣΤ (30 ώρες/εβδ - έως 13:30)
+      { id: 'glossa', name: 'Γλώσσα', short: 'ΓΛΩ', hours: 8, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 3 },
+      { id: 'math', name: 'Μαθηματικά', short: 'ΜΑΘ', hours: 5, branch: 'ΠΕ70', color: '#10b981', difficulty: 3 },
       { id: 'istoria', name: 'Ιστορία', short: 'ΙΣΤ', hours: 2, branch: 'ΠΕ70', color: '#eab308', difficulty: 2 },
       { id: 'fysika', name: 'Φυσικά / Μελέτη Περιβάλλοντος', short: 'ΦΥΣ', hours: 3, branch: 'ΠΕ70', color: '#0284c7', difficulty: 3 },
-      { id: 'geografia_kpa', name: 'Γεωγραφία / ΚΠΑ', short: 'ΓΕΩ.ΚΠΑ', hours: 1, branch: 'ΠΕ70', color: '#14b8a6', difficulty: 2 },
+      { id: 'geografia_kpa', name: 'Γεωγραφία / ΚΠΑ', short: 'ΓΕΩ.ΚΠΑ', hours: 2, branch: 'ΠΕ70', color: '#14b8a6', difficulty: 2 },
       { id: 'thriskeutika', name: 'Θρησκευτικά', short: 'ΘΡΗ', hours: 1, branch: 'ΠΕ70', color: '#8b5cf6', difficulty: 1 },
-      { id: 'agglika', name: 'Αγγλικά', short: 'ΑΓΓ', hours: 2, branch: 'ΠΕ06', color: '#06b6d4', difficulty: 2 },
+      { id: 'agglika', name: 'Αγγλικά', short: 'ΑΓΓ', hours: 3, branch: 'ΠΕ06', color: '#06b6d4', difficulty: 2 },
       { id: 'xeni_glossa_2', name: '2η Ξένη Γλώσσα', short: '2ηΞΓ', hours: 1, branch: 'ΠΕ05/ΠΕ07', color: '#d946ef', difficulty: 2 },
       { id: 'gymnastiki', name: 'Φυσική Αγωγή', short: 'ΦΥΣ.ΑΓ', hours: 2, branch: 'ΠΕ11', color: '#ec4899', difficulty: 1, room: 'room_gym' },
       { id: 'texnes', name: 'Μουσική / Εικαστικά', short: 'ΤΕΧΝ', hours: 1, branch: 'ΠΕ79.01', color: '#6366f1', difficulty: 1, room: 'room_art' },
       { id: 'tpe', name: 'Τ.Π.Ε. (Πληροφορική)', short: 'ΤΠΕ', hours: 1, branch: 'ΠΕ86', color: '#64748b', difficulty: 1, room: 'room_cs' },
+      { id: 'ergastiria_dex', name: 'Εργαστήρια Δεξιοτήτων', short: 'ΕΡΓ.ΔΕΞ', hours: 1, branch: 'ΠΕ70', color: '#84cc16', difficulty: 1 },
     ],
-    'Α_Β': [ // 3/θέσιο - Τμήμα 1: Α-Β (25 ώρες/εβδ)
-      { id: 'glossa', name: 'Γλώσσα', short: 'ΓΛΩ', hours: 8, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 3 },
-      { id: 'math', name: 'Μαθηματικά', short: 'ΜΑΘ', hours: 4, branch: 'ΠΕ70', color: '#10b981', difficulty: 3 },
+    'Α_Β': [ // 3/θέσιο - Τμήμα 1: Α-Β (30 ώρες/εβδ - έως 13:30)
+      { id: 'glossa', name: 'Γλώσσα', short: 'ΓΛΩ', hours: 9, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 3 },
+      { id: 'math', name: 'Μαθηματικά', short: 'ΜΑΘ', hours: 5, branch: 'ΠΕ70', color: '#10b981', difficulty: 3 },
       { id: 'meleti', name: 'Μελέτη Περιβάλλοντος', short: 'ΜΕΛ', hours: 3, branch: 'ΠΕ70', color: '#f59e0b', difficulty: 2 },
-      { id: 'thriskeutika', name: 'Θρησκευτικά', short: 'ΘΡΗ', hours: 1, branch: 'ΠΕ70', color: '#8b5cf6', difficulty: 1 },
+      { id: 'thriskeutika', name: 'Θρησκευτικά', short: 'ΘΡΗ', hours: 2, branch: 'ΠΕ70', color: '#8b5cf6', difficulty: 1 },
       { id: 'agglika', name: 'Αγγλικά', short: 'ΑΓΓ', hours: 2, branch: 'ΠΕ06', color: '#06b6d4', difficulty: 2 },
-      { id: 'gymnastiki', name: 'Φυσική Αγωγή', short: 'ΦΥΣ.ΑΓ', hours: 2, branch: 'ΠΕ11', color: '#ec4899', difficulty: 1, room: 'room_gym' },
+      { id: 'gymnastiki', name: 'Φυσική Αγωγή', short: 'ΦΥΣ.ΑΓ', hours: 3, branch: 'ΠΕ11', color: '#ec4899', difficulty: 1, room: 'room_gym' },
       { id: 'mousiki', name: 'Μουσική', short: 'ΜΟΥ', hours: 1, branch: 'ΠΕ79.01', color: '#6366f1', difficulty: 1, room: 'room_art' },
       { id: 'eikastika', name: 'Εικαστικά', short: 'ΕΙΚ', hours: 1, branch: 'ΠΕ08', color: '#14b8a6', difficulty: 1 },
+      { id: 'theatriki', name: 'Θεατρική Αγωγή', short: 'ΘΕΑ', hours: 1, branch: 'ΠΕ91', color: '#f97316', difficulty: 1 },
       { id: 'tpe', name: 'Τ.Π.Ε. (Πληροφορική)', short: 'ΤΠΕ', hours: 1, branch: 'ΠΕ86', color: '#64748b', difficulty: 1, room: 'room_cs' },
       { id: 'ergastiria_dex', name: 'Εργαστήρια Δεξιοτήτων', short: 'ΕΡΓ.ΔΕΞ', hours: 2, branch: 'ΠΕ70', color: '#84cc16', difficulty: 1 },
     ],
@@ -642,4 +660,26 @@ export function isBranchValidForSchoolType(branchCode, schoolType) {
 
   return true;
 }
+
+// ── Αναλυτικά Προγράμματα Ολοημέρου & Πρωινής Ζώνης (Π.Δ. 79/2017 & Ν. 4957/2022) ──
+export const OLOIMERO_CURRICULA = {
+  // Βασικό Ολοήμερο (13:20/13:40 έως 16:00 - 15 ώρες/εβδ.)
+  basic: [
+    { id: 'sitisi', name: 'Διατροφική Αγωγή / Σίτιση', short: 'ΣΙΤ', hours: 5, branch: 'ΠΕ70', color: '#10b981', difficulty: 1, isOloimero: true, fixedPeriod: 7 },
+    { id: 'meleti', name: 'Μελέτη - Προετοιμασία', short: 'ΜΕΛ.ΟΛ', hours: 5, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 2, isOloimero: true, fixedPeriod: 8 },
+    { id: 'drastiriotites', name: 'Διδακτικό Αντικείμενο (ΤΠΕ / Αγγλικά / Αθλητισμός / Τέχνες)', short: 'ΔΡΑΣΤ', hours: 5, branch: 'ΠΕ70/ΠΕ86/ΠΕ06/ΠΕ11/ΠΕ08/ΠΕ79.01', color: '#f59e0b', difficulty: 1, isOloimero: true, fixedPeriod: 9 },
+  ],
+  // Αναβαθμισμένο Ολοήμερο (έως 17:30 - 25 ώρες/εβδ. - Ν. 4957/2022)
+  expanded: [
+    { id: 'sitisi', name: 'Διατροφική Αγωγή / Σίτιση', short: 'ΣΙΤ', hours: 5, branch: 'ΠΕ70', color: '#10b981', difficulty: 1, isOloimero: true, fixedPeriod: 7 },
+    { id: 'meleti', name: 'Μελέτη - Προετοιμασία', short: 'ΜΕΛ.ΟΛ', hours: 5, branch: 'ΠΕ70', color: '#3b82f6', difficulty: 2, isOloimero: true, fixedPeriod: 8 },
+    { id: 'drastiriotites', name: 'Διδακτικό Αντικείμενο (ΤΠΕ / Αγγλικά / Αθλητισμός / Τέχνες)', short: 'ΔΡΑΣΤ', hours: 5, branch: 'ΠΕ70/ΠΕ86/ΠΕ06/ΠΕ11/ΠΕ08/ΠΕ79.01', color: '#f59e0b', difficulty: 1, isOloimero: true, fixedPeriod: 9 },
+    { id: 'omilos_1', name: 'Σχολικός Μαθητικός Όμιλος Α΄', short: 'ΟΜΙΛ.Α', hours: 5, branch: 'ΠΕ70/ΠΕ11/ΠΕ86/ΠΕ79.01/ΠΕ08', color: '#8b5cf6', difficulty: 1, isOloimero: true, fixedPeriod: 10 },
+    { id: 'omilos_2', name: 'Σχολικός Μαθητικός Όμιλος Β΄', short: 'ΟΜΙΛ.Β', hours: 5, branch: 'ΠΕ70/ΠΕ11/ΠΕ86/ΠΕ79.01/ΠΕ08', color: '#ec4899', difficulty: 1, isOloimero: true, fixedPeriod: 11 },
+  ],
+  // Πρωινή Ζώνη (07:00 έως 08:00 - 5 ώρες/εβδ. - Π.Δ. 79/2017)
+  proini_zoni: [
+    { id: 'proini_zoni', name: 'Πρωινή Ζώνη (07:00 - 08:00)', short: 'ΠΡ.ΖΩΝΗ', hours: 5, branch: 'ΠΕ70', color: '#6366f1', difficulty: 1, isProiniZoni: true, fixedPeriod: 0 },
+  ],
+};
 

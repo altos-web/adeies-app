@@ -1,11 +1,88 @@
 // model.js — Μοντέλο Δεδομένων & Κανόνες Εγκυρότητας Ωρολογίου Προγράμματος
 // Υποστηρίζει Τμήματα, Εκπαιδευτικούς, Διαθεσιμότητα (Time-off), Αίθουσες, Μαθήματα/Κάρτες και Διασπάσεις Τμημάτων.
 
-import { CURRICULA, DAYS_OF_WEEK, DEFAULT_BELL_TIMES, DIMOTIKO_ORGANICITIES, isBranchValidForSchoolType, SCHOOL_TYPES, SPECIAL_ROOMS } from './curricula.js';
+import { CURRICULA, DAYS_OF_WEEK, DEFAULT_BELL_TIMES, DIMOTIKO_ORGANICITIES, isBranchValidForSchoolType, SCHOOL_TYPES, SPECIAL_ROOMS, OLOIMERO_CURRICULA } from './curricula.js';
+
+// Κατασκευή του επίσημου ωραρίου κουδουνιού (κουδούνι πρωινού, πρωινής ζώνης και ολοημέρου)
+export function buildBellTimes(timetable) {
+  const times = [];
+  const isDimotiko = timetable.schoolType === 'dimotiko';
+  const isOligothesio = isDimotiko && ['1th', '2th', '3th'].includes(timetable.dimotikoOrganicity);
+
+  // 1. Πρωινή Ζώνη (07:00 - 08:00)
+  if (isDimotiko && timetable.hasProiniZoni) {
+    times.push(JSON.parse(JSON.stringify(DEFAULT_BELL_TIMES.proini_zoni)));
+  }
+
+  // 2. Πρωινό Πρόγραμμα (08:15 - 13:15 ή 13:30)
+  if (isDimotiko) {
+    const basePrimary = isOligothesio ? DEFAULT_BELL_TIMES.primary_oligothesia : DEFAULT_BELL_TIMES.primary;
+    times.push(...JSON.parse(JSON.stringify(basePrimary)));
+  } else {
+    times.push(...JSON.parse(JSON.stringify(DEFAULT_BELL_TIMES.secondary)));
+  }
+
+  // 3. Ολοήμερο Πρόγραμμα
+  if (isDimotiko && timetable.hasOloimero) {
+    const oloSource = isOligothesio ? DEFAULT_BELL_TIMES.oloimero_oligothesia : DEFAULT_BELL_TIMES.oloimero_primary;
+    const isExpanded = timetable.oloimeroType === 'expanded';
+    const oloTimes = isExpanded ? oloSource : oloSource.slice(0, 3);
+    times.push(...JSON.parse(JSON.stringify(oloTimes)));
+  }
+
+  return times;
+}
+
+// Συγχρονισμός ειδικών τμημάτων (Πρωινή Ζώνη & Ολοήμερο)
+export function syncSpecialClasses(timetable) {
+  if (timetable.schoolType !== 'dimotiko') return;
+
+  // 1. Πρωινή Ζώνη
+  const pzIdx = timetable.classes.findIndex((c) => c.isProiniZoni || c.id === 'c_proini_zoni');
+  if (timetable.hasProiniZoni) {
+    if (pzIdx === -1) {
+      timetable.classes.push({
+        id: 'c_proini_zoni',
+        name: 'Πρωινή Ζώνη',
+        grade: 'ΠΡ_ΖΩΝΗ',
+        grades: ['ΠΡ_ΖΩΝΗ'],
+        isProiniZoni: true,
+      });
+    }
+  } else {
+    if (pzIdx !== -1) {
+      timetable.classes.splice(pzIdx, 1);
+      timetable.lessons = (timetable.lessons || []).filter((l) => l.classId !== 'c_proini_zoni');
+    }
+  }
+
+  // 2. Ολοήμερο Πρόγραμμα
+  const oloCount = timetable.hasOloimero ? (timetable.oloimeroCount || 1) : 0;
+  timetable.classes = timetable.classes.filter((c) => {
+    if (!c.isOloimero) return true;
+    const num = parseInt(c.id.replace('c_olo_', ''), 10) || 1;
+    return num <= oloCount;
+  });
+  for (let i = 1; i <= oloCount; i++) {
+    const oloId = `c_olo_${i}`;
+    const exists = timetable.classes.some((c) => c.id === oloId);
+    if (!exists) {
+      timetable.classes.push({
+        id: oloId,
+        name: oloCount === 1 ? 'Ολοήμερο' : `Ολοήμερο ${i}`,
+        grade: 'ΟΛΟΗΜΕΡΟ',
+        grades: ['ΟΛΟΗΜΕΡΟ'],
+        isOloimero: true,
+      });
+    }
+  }
+  if (!timetable.hasOloimero) {
+    timetable.lessons = (timetable.lessons || []).filter((l) => !l.isOloimero);
+  }
+}
 
 export function createInitialTimetable(schoolType = 'gymnasio') {
   const typeConfig = SCHOOL_TYPES[schoolType] || SCHOOL_TYPES.gymnasio;
-  const bell = schoolType === 'dimotiko' ? DEFAULT_BELL_TIMES.primary : DEFAULT_BELL_TIMES.secondary;
 
   const defaultClasses = schoolType === 'dimotiko'
     ? [
@@ -22,18 +99,22 @@ export function createInitialTimetable(schoolType = 'gymnasio') {
         { id: 'c_3', name: 'Β1', grade: 'Β', grades: ['Β'] },
       ];
 
-  return {
+  const tt = {
     version: 1,
     schoolType,
     dimotikoOrganicity: schoolType === 'dimotiko' ? '6th_plus' : null,
+    hasProiniZoni: false,
+    hasOloimero: false,
+    oloimeroType: 'basic', // 'basic' | 'expanded'
+    oloimeroCount: 1,
     periodsPerDay: typeConfig.periodsPerDay,
     daysCount: 5,
-    bellTimes: JSON.parse(JSON.stringify(bell)),
+    bellTimes: [],
     classes: defaultClasses,
     rooms: JSON.parse(JSON.stringify(SPECIAL_ROOMS)),
-    teachers: [], // Θα τροφοδοτηθεί αυτόματα από το κατάστημα εργαζομένων ή χειροκίνητα
+    teachers: [],
     lessons: [],
-    schedule: [], // Τοποθετημένες κάρτες: { id, lessonId, day, period, classId, teacherId, subjectId, roomId, length, syncId }
+    schedule: [],
     unplacedCards: [],
     rules: {
       maxConsecutiveSameSubject: 2,
@@ -43,13 +124,21 @@ export function createInitialTimetable(schoolType = 'gymnasio') {
       maxGymSimultaneousClasses: 2,
     },
   };
+  tt.bellTimes = buildBellTimes(tt);
+  return tt;
 }
 
 // Εξασφάλιση ότι όλα τα πεδία και οι πίνακες του ωρολογίου υπάρχουν και είναι έγκυροι
 export function normalizeTimetable(tt) {
   if (!tt || typeof tt !== 'object') return createInitialTimetable('gymnasio');
   if (!tt.schoolType) tt.schoolType = 'gymnasio';
-  if (tt.schoolType === 'dimotiko' && !tt.dimotikoOrganicity) tt.dimotikoOrganicity = '6th_plus';
+  if (tt.schoolType === 'dimotiko') {
+    if (!tt.dimotikoOrganicity) tt.dimotikoOrganicity = '6th_plus';
+    if (tt.hasProiniZoni === undefined) tt.hasProiniZoni = false;
+    if (tt.hasOloimero === undefined) tt.hasOloimero = false;
+    if (!tt.oloimeroType) tt.oloimeroType = 'basic';
+    if (!tt.oloimeroCount) tt.oloimeroCount = 1;
+  }
   const typeConfig = SCHOOL_TYPES[tt.schoolType] || SCHOOL_TYPES.gymnasio;
   if (!tt.periodsPerDay) tt.periodsPerDay = typeConfig.periodsPerDay || 7;
   if (!Array.isArray(tt.classes)) tt.classes = [];
@@ -64,6 +153,7 @@ export function normalizeTimetable(tt) {
     ];
   }
   tt.classes.forEach((c) => {
+    if (c.isProiniZoni || c.isOloimero) return;
     if (!Array.isArray(c.grades) || c.grades.length === 0) {
       if (c.grade && typeof c.grade === 'string') {
         if (c.grade === 'Α_ΣΤ' || c.grade === 'Α_Β_Γ_Δ_Ε_ΣΤ') {
@@ -120,9 +210,17 @@ export function normalizeTimetable(tt) {
   if (!Array.isArray(tt.rooms) || tt.rooms.length === 0) tt.rooms = JSON.parse(JSON.stringify(SPECIAL_ROOMS));
   if (!Array.isArray(tt.schedule)) tt.schedule = [];
   if (!Array.isArray(tt.unplacedCards)) tt.unplacedCards = [];
-  if (!Array.isArray(tt.bellTimes)) {
-    tt.bellTimes = tt.schoolType === 'dimotiko' ? DEFAULT_BELL_TIMES.primary : DEFAULT_BELL_TIMES.secondary;
+  
+  // Ανακατασκευή των bell times βάσει ενεργών ρυθμίσεων (Ολιγοθέσιο / Πρωινή Ζώνη / Ολοήμερο)
+  tt.bellTimes = buildBellTimes(tt);
+  if (tt.schoolType === 'dimotiko') {
+    if (tt.hasOloimero) {
+      tt.periodsPerDay = tt.oloimeroType === 'expanded' ? 11 : 9;
+    } else {
+      tt.periodsPerDay = 6;
+    }
   }
+
   if (!tt.rules) {
     tt.rules = {
       maxConsecutiveSameSubject: 2,
@@ -269,6 +367,11 @@ export function generateCardsFromLessons(lessons) {
         difficulty: lesson.difficulty || 2,
         isSplit: Boolean(lesson.isSplit),
         splitType: lesson.splitType || null,
+        splitGrade: lesson.splitGrade || null,
+        targetGrades: lesson.targetGrades || (lesson.splitGrade ? [lesson.splitGrade] : null),
+        fixedPeriod: lesson.fixedPeriod !== undefined ? lesson.fixedPeriod : null,
+        isProiniZoni: Boolean(lesson.isProiniZoni),
+        isOloimero: Boolean(lesson.isOloimero),
         syncGroupId: lesson.syncGroupId || null, // Αν ανήκει σε κοινή ζώνη 2ης ξένης γλώσσας ή προσανατολισμού
       });
     });
@@ -276,13 +379,131 @@ export function generateCardsFromLessons(lessons) {
   return cards;
 }
 
+// Δημιουργία ή απόσχιση μαθήματος για συγκεκριμένη τάξη σε συνδιδασκόμενο τμήμα (Multigrade Split)
+export function splitMultigradeLesson(timetable, baseLessonId, targetGrade, hours = null) {
+  const lesson = (timetable.lessons || []).find((l) => l.id === baseLessonId);
+  if (!lesson) return null;
+
+  const splitHours = hours !== null ? Number(hours) : Math.max(1, Math.round(lesson.hours / 2));
+  const newLessonId = `les_${lesson.classId}_${lesson.subjectId}_split_${Date.now()}`;
+  const defDist = getDefaultLessonDistribution(lesson, splitHours);
+  const distStr = Array.isArray(defDist) ? defDist.join('+') : String(defDist);
+
+  const newLesson = {
+    ...JSON.parse(JSON.stringify(lesson)),
+    id: newLessonId,
+    subjectName: `${lesson.subjectName.replace(/\s*\([^)]*\)$/, '')} (Τάξη ${targetGrade}΄)`,
+    hours: splitHours,
+    defaultHours: splitHours,
+    distribution: distStr,
+    defaultDistribution: distStr,
+    isSplit: true,
+    splitType: 'multigrade_split',
+    splitGrade: targetGrade,
+    targetGrades: [targetGrade],
+    teacherId: '',
+    teacherName: '— Χωρίς εκπαιδευτικό —',
+  };
+
+  // Ενημέρωση και του αρχικού μαθήματος αν δεν έχει ήδη οριστεί splitGrade
+  if (!lesson.splitGrade) {
+    const cls = (timetable.classes || []).find((c) => c.id === lesson.classId);
+    const remainingGrades = (cls?.grades || []).filter((g) => g !== targetGrade);
+    if (remainingGrades.length > 0) {
+      lesson.splitGrade = remainingGrades.join('-');
+      lesson.targetGrades = [...remainingGrades];
+      lesson.subjectName = `${lesson.subjectName.replace(/\s*\([^)]*\)$/, '')} (Τάξη ${lesson.splitGrade}΄)`;
+      lesson.isSplit = true;
+      lesson.splitType = 'multigrade_split';
+    }
+  }
+
+  timetable.lessons.push(newLesson);
+  return newLesson;
+}
+
 // Αυτόματη φόρτωση του νομοθετημένου αναλυτικού προγράμματος στα τμήματα
 export function populateCurriculumForClasses(timetable) {
+  // Συγχρονισμός ειδικών τμημάτων (Πρωινή Ζώνη, Ολοήμερο) πριν τη φόρτωση
+  if (timetable.schoolType === 'dimotiko') {
+    syncSpecialClasses(timetable);
+  }
+
   const { schoolType, classes } = timetable;
   const curriculaForSchool = CURRICULA[schoolType] || {};
   const lessons = [];
 
   for (const cls of classes) {
+    // Ειδική περίπτωση 1: Πρωινή Ζώνη
+    if (cls.isProiniZoni || cls.id === 'c_proini_zoni') {
+      const template = OLOIMERO_CURRICULA.proini_zoni;
+      for (const item of template) {
+        lessons.push({
+          id: `les_${cls.id}_${item.id}`,
+          classId: cls.id,
+          className: cls.name,
+          grade: cls.grade,
+          grades: ['ΠΡ_ΖΩΝΗ'],
+          subjectId: item.id,
+          subjectName: item.name,
+          subjectShort: item.short,
+          subjectColor: item.color,
+          hours: item.hours,
+          defaultHours: item.hours,
+          distribution: '1+1+1+1+1',
+          defaultDistribution: '1+1+1+1+1',
+          branch: item.branch,
+          teacherId: '',
+          teacherName: '— Χωρίς εκπαιδευτικό —',
+          roomId: 'room_gen',
+          difficulty: item.difficulty || 1,
+          isSplit: false,
+          splitType: null,
+          fixedPeriod: item.fixedPeriod,
+          isProiniZoni: true,
+          isOloimero: false,
+          syncGroupId: null,
+        });
+      }
+      continue;
+    }
+
+    // Ειδική περίπτωση 2: Ολοήμερο Τμήμα
+    if (cls.isOloimero || cls.id.startsWith('c_olo_')) {
+      const oloType = timetable.oloimeroType || 'basic';
+      const template = OLOIMERO_CURRICULA[oloType] || OLOIMERO_CURRICULA.basic;
+      for (const item of template) {
+        lessons.push({
+          id: `les_${cls.id}_${item.id}`,
+          classId: cls.id,
+          className: cls.name,
+          grade: cls.grade,
+          grades: ['ΟΛΟΗΜΕΡΟ'],
+          subjectId: item.id,
+          subjectName: item.name,
+          subjectShort: item.short,
+          subjectColor: item.color,
+          hours: item.hours,
+          defaultHours: item.hours,
+          distribution: '1+1+1+1+1',
+          defaultDistribution: '1+1+1+1+1',
+          branch: item.branch,
+          teacherId: '',
+          teacherName: '— Χωρίς εκπαιδευτικό —',
+          roomId: 'room_gen',
+          difficulty: item.difficulty || 1,
+          isSplit: false,
+          splitType: null,
+          fixedPeriod: item.fixedPeriod,
+          isProiniZoni: false,
+          isOloimero: true,
+          syncGroupId: null,
+        });
+      }
+      continue;
+    }
+
+    // Κανονικό Πρωινό Πρόγραμμα
     const is30hOligothesio = schoolType === 'dimotiko' && (timetable.periodsPerDay === 6 || timetable.dimotikoOrganicity === '4th' || timetable.dimotikoOrganicity === '5th');
     const isMultiGradeClass = Array.isArray(cls.grades) && cls.grades.length > 1;
     if (isMultiGradeClass && !cls.cycle) {
@@ -373,6 +594,11 @@ export function populateCurriculumForClasses(timetable) {
         difficulty: item.difficulty,
         isSplit: item.isSplit || false,
         splitType: item.splitType || null,
+        splitGrade: null,
+        targetGrades: null,
+        fixedPeriod: item.fixedPeriod !== undefined ? item.fixedPeriod : null,
+        isProiniZoni: false,
+        isOloimero: false,
         syncGroupId,
       });
     }
@@ -582,6 +808,26 @@ export function validateSlotPlacement(schedule, card, day, period, timetable) {
 
   for (let offset = 0; offset < cardLength; offset++) {
     const targetPeriod = period + offset;
+
+    // A. Έλεγχος σταθερής ώρας (fixedPeriod: Πρωινή Ζώνη = 0, Ολοήμερο = 7, 8, 9, 10, 11)
+    if (card.fixedPeriod !== null && card.fixedPeriod !== undefined) {
+      if (targetPeriod !== card.fixedPeriod) {
+        conflicts.push(`Το μάθημα «${card.subjectName}» διδάσκεται αποκλειστικά την ${card.fixedPeriod}η ώρα.`);
+        continue;
+      }
+    } else {
+      // Τα κανονικά μαθήματα δεν μπορούν να μπούνε στην Πρωινή Ζώνη (ώρα 0)
+      if (targetPeriod === 0) {
+        conflicts.push(`Τα μαθήματα του κανονικού προγράμματος δεν επιτρέπεται να τοποθετηθούν στην Πρωινή Ζώνη (07:00 - 08:00).`);
+        continue;
+      }
+      // Στο Δημοτικό τα κανονικά μαθήματα ολοκληρώνονται στην 6η ώρα (έως 13:30)
+      if (timetable.schoolType === 'dimotiko' && targetPeriod > 6) {
+        conflicts.push(`Τα μαθήματα του κανονικού πρωινού προγράμματος ολοκληρώνονται στην 6η ώρα (έως 13:30).`);
+        continue;
+      }
+    }
+
     if (targetPeriod > timetable.periodsPerDay) {
       conflicts.push(`Η διδασκαλία υπερβαίνει το ημερήσιο ωράριο (${targetPeriod}η ώρα).`);
       continue;
@@ -611,11 +857,23 @@ export function validateSlotPlacement(schedule, card, day, period, timetable) {
 
       // Α. Σύγκρουση Τμήματος
       if (placed.classId === card.classId) {
-        // Εξαίρεση: αν είναι μέρος του ίδιου split (π.χ. Γαλλικά & Γερμανικά στο ίδιο τμήμα με διαφορετικό εκπαιδευτικό)
-        if (card.isSplit && placed.isSplit && card.syncGroupId === placed.syncGroupId && card.subjectId !== placed.subjectId) {
+        // Εξαίρεση 1: Παράλληλο split 2ης ξένης γλώσσας
+        if (card.isSplit && placed.isSplit && card.syncGroupId && card.syncGroupId === placed.syncGroupId && card.subjectId !== placed.subjectId) {
           // Επιτρεπτό παράλληλο split
+        }
+        // Εξαίρεση 2: Σπάσιμο συνδιδασκαλίας σε ολιγοθέσιο σχολείο (Multigrade Split)
+        // π.χ. ένας εκπαιδευτικός κάνει Αγγλικά στη Δ΄ και άλλος Μαθηματικά στη Γ΄
+        else if (card.splitGrade && placed.splitGrade && card.splitGrade !== placed.splitGrade) {
+          // Επιτρεπτό: διαφορετικές τάξεις του ίδιου συνδιδασκόμενου τμήματος
+        } else if (
+          Array.isArray(card.targetGrades) && Array.isArray(placed.targetGrades) &&
+          card.targetGrades.length > 0 && placed.targetGrades.length > 0 &&
+          !card.targetGrades.some((g) => placed.targetGrades.includes(g))
+        ) {
+          // Επιτρεπτό: ξένα σύνολα τάξεων
         } else {
-          conflicts.push(`Το τμήμα ${card.className || ''} έχει ήδη μάθημα (${placed.subjectName}) την ${targetPeriod}η ώρα.`);
+          const splitInfo = placed.splitGrade ? ` [Τάξη ${placed.splitGrade}΄]` : '';
+          conflicts.push(`Το τμήμα ${card.className || ''} έχει ήδη μάθημα (${placed.subjectName}${splitInfo}) την ${targetPeriod}η ώρα.`);
         }
       }
 

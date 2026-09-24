@@ -96,6 +96,11 @@ export class TimetableSolver {
     }
 
     return [...cards].sort((a, b) => {
+      // 0. Κάρτες καθορισμένης ώρας (Πρωινή Ζώνη, Ολοήμερο) έχουν αυστηρά περιορισμένο domain (μόλις 5 πιθανά slots)
+      const aFixed = a.fixedPeriod !== null && a.fixedPeriod !== undefined ? 200 : 0;
+      const bFixed = b.fixedPeriod !== null && b.fixedPeriod !== undefined ? 200 : 0;
+      if (aFixed !== bFixed) return bFixed - aFixed;
+
       // 1. Προτεραιότητα σε συγχρονισμένες κάρτες (Sync Groups)
       const aSync = a.syncGroupId ? 100 : 0;
       const bSync = b.syncGroupId ? 100 : 0;
@@ -198,7 +203,27 @@ export class TimetableSolver {
   // Δημιουργία και ταξινόμηση slots βάσει παιδαγωγικών κανόνων & ελαχιστοποίησης κενών
   generateOrderedSlots(card, currentSchedule) {
     const slots = [];
-    const maxPeriod = this.timetable.periodsPerDay - (card.length - 1);
+    const isFixed = card.fixedPeriod !== null && card.fixedPeriod !== undefined;
+
+    if (isFixed) {
+      // Κάρτα συγκεκριμένης ώρας (π.χ. Πρωινή Ζώνη = 0, Ολοήμερο = 7, 8, 9, 10, 11)
+      const p = card.fixedPeriod;
+      for (let day = 1; day <= 5; day++) {
+        // Αποφυγή επανάληψης του ίδιου μαθήματος στο ίδιο τμήμα την ίδια μέρα
+        const alreadyPlacedSameClass = currentSchedule.some(
+          (c) => c.classId === card.classId && c.day === day && (c.period === p || c.lessonId === card.lessonId)
+        );
+        let score = 100;
+        if (alreadyPlacedSameClass) score -= 500;
+        slots.push({ day, period: p, score });
+      }
+      slots.sort((a, b) => b.score - a.score);
+      return slots;
+    }
+
+    // Κανονικές πρωινές κάρτες: 1η έως 6η ώρα στο δημοτικό (ή 7η στη δευτεροβάθμια)
+    const maxMorningPeriod = this.timetable.schoolType === 'dimotiko' ? 6 : (this.timetable.periodsPerDay || 7);
+    const maxPeriod = maxMorningPeriod - (card.length - 1);
 
     for (let day = 1; day <= 5; day++) {
       for (let period = 1; period <= maxPeriod; period++) {
@@ -304,17 +329,14 @@ export class TimetableSolver {
     const unplaced = allCards.filter((c) => !placedIds.has(c.id));
 
     for (const card of unplaced) {
-      // Δοκιμή εύρεσης ενός slot με 1 μόνο σύγκρουση και ανταλλαγή
-      for (let day = 1; day <= 5; day++) {
-        for (let period = 1; period <= this.timetable.periodsPerDay - (card.length - 1); period++) {
-          const val = validateSlotPlacement(schedule, card, day, period, this.timetable);
-          if (val.valid) {
-            schedule.push({ ...card, day, period });
-            placedIds.add(card.id);
-            break;
-          }
+      const candidateSlots = this.generateOrderedSlots(card, schedule);
+      for (const { day, period } of candidateSlots) {
+        const val = validateSlotPlacement(schedule, card, day, period, this.timetable);
+        if (val.valid) {
+          schedule.push({ ...card, day, period });
+          placedIds.add(card.id);
+          break;
         }
-        if (placedIds.has(card.id)) break;
       }
     }
   }
