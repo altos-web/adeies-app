@@ -257,6 +257,7 @@ export function generateCardsFromLessons(lessons) {
         id: `card_${lesson.id}_${idx + 1}`,
         lessonId: lesson.id,
         classId: lesson.classId,
+        className: lesson.className,
         subjectId: lesson.subjectId,
         subjectName: lesson.subjectName,
         subjectShort: lesson.subjectShort,
@@ -282,7 +283,27 @@ export function populateCurriculumForClasses(timetable) {
   const lessons = [];
 
   for (const cls of classes) {
-    let template = curriculaForSchool[cls.grade];
+    const is30hOligothesio = schoolType === 'dimotiko' && (timetable.periodsPerDay === 6 || timetable.dimotikoOrganicity === '4th' || timetable.dimotikoOrganicity === '5th');
+    const isMultiGradeClass = Array.isArray(cls.grades) && cls.grades.length > 1;
+    if (isMultiGradeClass && !cls.cycle) {
+      cls.cycle = 'A'; // Προεπιλεγμένος εκπαιδευτικός κύκλος: Κύκλος Α'
+    }
+
+    let template = null;
+    if (schoolType === 'dimotiko') {
+      const gStr = (cls.grades && cls.grades.length > 0) ? cls.grades.join('') : cls.grade;
+      if (is30hOligothesio) {
+        if (gStr === 'ΓΔ' || cls.grade === 'Γ_Δ') {
+          template = curriculaForSchool['Γ_Δ_30h'];
+        } else if (gStr === 'ΕΣΤ' || cls.grade === 'Ε_ΣΤ') {
+          template = curriculaForSchool['Ε_ΣΤ_30h'];
+        }
+      }
+    }
+
+    if (!template) {
+      template = curriculaForSchool[cls.grade];
+    }
 
     if (!template || template.length === 0) {
       if (Array.isArray(cls.grades) && cls.grades.length > 0) {
@@ -295,8 +316,8 @@ export function populateCurriculumForClasses(timetable) {
         } else if (cls.grades.length === 2) {
           const gStr = cls.grades.join('');
           if (gStr === 'ΑΒ') template = curriculaForSchool['Α_Β'];
-          else if (gStr === 'ΓΔ') template = curriculaForSchool['Γ_Δ'];
-          else if (gStr === 'ΕΣΤ') template = curriculaForSchool['Ε_ΣΤ'];
+          else if (gStr === 'ΓΔ') template = is30hOligothesio ? curriculaForSchool['Γ_Δ_30h'] : curriculaForSchool['Γ_Δ'];
+          else if (gStr === 'ΕΣΤ') template = is30hOligothesio ? curriculaForSchool['Ε_ΣΤ_30h'] : curriculaForSchool['Ε_ΣΤ'];
         } else if (cls.grades.length === 1) {
           template = curriculaForSchool[cls.grades[0]];
         }
@@ -320,14 +341,25 @@ export function populateCurriculumForClasses(timetable) {
         : getDefaultLessonDistribution(item, item.hours);
       const distStr = Array.isArray(defaultDistArr) ? defaultDistArr.join('+') : String(defaultDistArr);
 
+      // Επεξεργασία ονόματος μαθήματος βάσει του επιλεγμένου κύκλου συνδιδασκαλίας (Κύκλος Α / Κύκλος Β)
+      let subjectDisplayName = item.name;
+      if (item.isCycleSubject && isMultiGradeClass) {
+        const cycle = cls.cycle || 'A';
+        const cycleInfo = cycle === 'B' ? item.cycleB : item.cycleA;
+        if (cycleInfo) {
+          subjectDisplayName = `${item.name} (${cycleInfo})`;
+        }
+      }
+
       lessons.push({
         id: lessonId,
         classId: cls.id,
         className: cls.name,
         grade: cls.grade,
         grades: Array.isArray(cls.grades) ? [...cls.grades] : [cls.grade],
+        cycle: cls.cycle || null,
         subjectId: item.id,
-        subjectName: item.name,
+        subjectName: subjectDisplayName,
         subjectShort: item.short,
         subjectColor: item.color,
         hours: item.hours,

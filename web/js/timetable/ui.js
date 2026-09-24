@@ -226,6 +226,12 @@ export class TimetableUI {
           this.timetable.periodsPerDay = org.periodsPerDay;
           this.timetable.bellTimes = JSON.parse(JSON.stringify(DEFAULT_BELL_TIMES[org.bell]));
           this.timetable.classes = JSON.parse(JSON.stringify(org.defaultClasses));
+          populateCurriculumForClasses(this.timetable);
+          if (this.timetable.teachers && this.timetable.teachers.length > 0) {
+            autoAssignTeachers(this.timetable, { overwriteExisting: false });
+          }
+          this.timetable.schedule = [];
+          this.timetable.unplacedCards = [];
           this.save();
           this.render();
         } else {
@@ -243,6 +249,12 @@ export class TimetableUI {
           this.timetable.periodsPerDay = 6;
           this.timetable.bellTimes = JSON.parse(JSON.stringify(DEFAULT_BELL_TIMES.primary));
           this.timetable.classes = JSON.parse(JSON.stringify(DIMOTIKO_ORGANICITIES['6th_plus'].defaultClasses));
+          populateCurriculumForClasses(this.timetable);
+          if (this.timetable.teachers && this.timetable.teachers.length > 0) {
+            autoAssignTeachers(this.timetable, { overwriteExisting: false });
+          }
+          this.timetable.schedule = [];
+          this.timetable.unplacedCards = [];
           this.save();
           this.render();
         }
@@ -262,10 +274,14 @@ export class TimetableUI {
         item.dataset.index = idx;
 
         const isMulti = Array.isArray(cls.grades) && cls.grades.length > 1;
+        const cycleBadge = isMulti
+          ? `<span class="badge info" style="font-size: 0.75rem; margin-left: 0.4rem; padding: 0.15rem 0.45rem;" title="Εκπαιδευτικός Κύκλος Συνδιδασκαλίας (Π.Δ. 79/2017)">Κύκλος ${cls.cycle || 'Α'}΄</span>`
+          : '';
         const gradeBadgesHtml = isMulti
           ? `<div class="class-grade-tag multi" title="Συνδιδασκόμενο τμήμα (${cls.grades.length} τάξεις: ${cls.grades.join(', ')})">
                <span class="multi-indicator">Συνδιδασκαλία</span>
                <span class="grades-pills">${cls.grades.map((g) => `<span class="pill">${g}</span>`).join('')}</span>
+               ${cycleBadge}
              </div>`
           : `<div class="class-grade-tag single">Τάξη ${cls.grade || (cls.grades && cls.grades[0]) || ''}</div>`;
 
@@ -450,6 +466,23 @@ export class TimetableUI {
           <div id="modal-grade-status" class="grade-selection-status"></div>
         </div>
 
+        <div id="modal-cycle-container" style="margin-top: 1rem; padding: 0.85rem; border: 1px solid var(--rule); border-radius: 6px; background: rgba(59, 130, 246, 0.04); display: ${initialGrades.length > 1 ? 'block' : 'none'};">
+          <div style="font-weight: 600; font-size: 0.875rem; margin-bottom: 0.25rem;">Εκπαιδευτικός Κύκλος Συνδιδασκαλίας (Π.Δ. 79/2017 & Υ.Α. 83939/Δ1)</div>
+          <p class="hint" style="font-size: 0.8125rem; margin-bottom: 0.6rem;">
+            Στα συνδιδασκόμενα τμήματα, τα γνωστικά αντικείμενα (Ιστορία, Γεωγραφία, Φυσικά, ΚΠΑ, Θρησκευτικά) διδάσκονται σε 2 εναλλασσόμενους κύκλους ανά σχολικό έτος σε όλο το τμήμα, ενώ στη Γλώσσα και τα Μαθηματικά γίνεται άμεση διδασκαλία ανά τάξη με σιωπηρές εργασίες.
+          </p>
+          <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+            <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.875rem;">
+              <input type="radio" name="modal-class-cycle" value="A" ${(clsToEdit?.cycle || 'A') === 'A' ? 'checked' : ''}>
+              <span><strong>Κύκλος Α΄</strong> (π.χ. Ύλη Γ΄ / Ε΄ Τάξης — Τρέχον Έτος)</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.875rem;">
+              <input type="radio" name="modal-class-cycle" value="B" ${(clsToEdit?.cycle || 'A') === 'B' ? 'checked' : ''}>
+              <span><strong>Κύκλος Β΄</strong> (π.χ. Ύλη Δ΄ / ΣΤ΄ Τάξης — Επόμενο Έτος)</span>
+            </label>
+          </div>
+        </div>
+
         <div class="form-grid" style="margin-top: 1rem;">
           <label class="field" style="width: 100%;">
             <span class="label" style="font-weight: 600;">Όνομα Τμήματος</span>
@@ -488,6 +521,11 @@ export class TimetableUI {
         statusEl.innerHTML = `<span class="status-multi">⚡ <strong>Συνδιδασκόμενο τμήμα (Μονοθέσιο)</strong>: Όλες οι τάξεις (Α, Β, Γ, Δ, Ε, ΣΤ)</span>`;
       } else {
         statusEl.innerHTML = `<span class="status-multi">⚡ <strong>Συνδιδασκόμενο τμήμα</strong> (${selected.length} τάξεις: <strong>${selected.join(', ')}</strong>)</span>`;
+      }
+
+      const cycleContainer = dialog.querySelector('#modal-cycle-container');
+      if (cycleContainer) {
+        cycleContainer.style.display = selected.length > 1 ? 'block' : 'none';
       }
 
       if (!isUserEditedName) {
@@ -553,26 +591,28 @@ export class TimetableUI {
         else if (joined === 'ΕΣΤ') canonicalGrade = 'Ε_ΣΤ';
       }
 
+      const cycleRadio = dialog.querySelector('input[name="modal-class-cycle"]:checked');
+      const selectedCycle = selectedGrades.length > 1 ? (cycleRadio?.value || 'A') : null;
+
       if (clsToEdit) {
         clsToEdit.name = name;
         clsToEdit.grade = canonicalGrade;
         clsToEdit.grades = selectedGrades;
-
-        // Ενημέρωση των υπαρχόντων μαθημάτων αυτού του τμήματος
-        (this.timetable.lessons || []).forEach((l) => {
-          if (l.classId === clsToEdit.id) {
-            l.className = name;
-            l.grade = canonicalGrade;
-            l.grades = [...selectedGrades];
-          }
-        });
+        clsToEdit.cycle = selectedCycle;
       } else {
         this.timetable.classes.push({
           id: `c_${Date.now()}`,
           name,
           grade: canonicalGrade,
           grades: selectedGrades,
+          cycle: selectedCycle,
         });
+      }
+
+      // Αυτόματος επαναπροσδιορισμός των μαθημάτων για όλα τα τμήματα ώστε να ανανεωθούν
+      populateCurriculumForClasses(this.timetable);
+      if (this.timetable.teachers && this.timetable.teachers.length > 0) {
+        autoAssignTeachers(this.timetable, { overwriteExisting: false });
       }
 
       this.save();
@@ -944,8 +984,10 @@ export class TimetableUI {
 
   // ── ΒΗΜΑ 3: Μαθήματα & Αναθέσεις ──────────────────────────────────────────
   renderStep3Lessons() {
-    // Αν δεν υπάρχουν μαθήματα αλλά υπάρχουν τμήματα, αυτόματη δημιουργία και ανάθεση
-    if ((!this.timetable.lessons || this.timetable.lessons.length === 0) && this.timetable.classes && this.timetable.classes.length > 0) {
+    // Αν δεν υπάρχουν μαθήματα ή αν κάποιο τμήμα δεν έχει μαθήματα, αυτόματη δημιουργία και ανάθεση
+    const existingClassIds = new Set((this.timetable.lessons || []).map((l) => l.classId));
+    const hasMissingClassLessons = (this.timetable.classes || []).some((c) => !existingClassIds.has(c.id));
+    if (!this.timetable.lessons || this.timetable.lessons.length === 0 || hasMissingClassLessons) {
       populateCurriculumForClasses(this.timetable);
       if (this.timetable.teachers && this.timetable.teachers.length > 0) {
         autoAssignTeachers(this.timetable, { overwriteExisting: false });
@@ -971,12 +1013,19 @@ export class TimetableUI {
         </button>
         <span class="badge info">${(this.timetable.lessons || []).length} ενεργά μαθήματα</span>
 
-        <div style="margin-left: auto; display: flex; align-items: center; gap: 0.5rem;">
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <div id="class-cycle-wrapper" style="display: none; align-items: center; gap: 0.35rem; background: rgba(59, 130, 246, 0.08); padding: 0.2rem 0.6rem; border-radius: 4px; border: 1px solid var(--rule);">
+            <span style="font-size: 0.8125rem; font-weight: 600;">Κύκλος Συνδιδασκαλίας:</span>
+            <select id="sel-class-cycle-step3" style="padding: 0.25rem 0.45rem; border-radius: 4px; border: 1px solid var(--rule); font-family: var(--sans); font-size: 0.8125rem;">
+              <option value="A">Κύκλος Α΄ (Ύλη Γ΄/Ε΄)</option>
+              <option value="B">Κύκλος Β΄ (Ύλη Δ΄/ΣΤ΄)</option>
+            </select>
+          </div>
           <label for="filter-class" class="hint" style="font-size: 0.8125rem;">Προβολή τμήματος:</label>
           <select id="filter-class" style="padding: 0.35rem 0.6rem; border-radius: 4px; border: 1px solid var(--rule); font-family: var(--sans); font-size: 0.8125rem;">
             <option value="all">Όλα τα τμήματα</option>
             ${(this.timetable.classes || []).map((c) => {
-              const grLabel = c.grades && c.grades.length > 1 ? `Συνδιδασκαλία: ${c.grades.join(', ')}` : `Τάξη ${c.grade}`;
+              const grLabel = c.grades && c.grades.length > 1 ? `Συνδιδασκαλία: ${c.grades.join(', ')} · Κύκλος ${c.cycle || 'Α'}΄` : `Τάξη ${c.grade}`;
               return `<option value="${c.id}">${c.name} (${grLabel})</option>`;
             }).join('')}
           </select>
@@ -1041,13 +1090,49 @@ export class TimetableUI {
     }
 
     const tbody = div.querySelector('#lessons-tbody');
+    const cycleWrapper = div.querySelector('#class-cycle-wrapper');
+    const cycleSelect = div.querySelector('#sel-class-cycle-step3');
+
+    const updateCycleVisibility = () => {
+      if (!cycleWrapper || !cycleSelect) return;
+      if (activeFilterClass === 'all') {
+        cycleWrapper.style.display = 'none';
+        return;
+      }
+      const selCls = (this.timetable.classes || []).find((c) => c.id === activeFilterClass);
+      if (selCls && selCls.grades && selCls.grades.length > 1) {
+        cycleWrapper.style.display = 'inline-flex';
+        cycleSelect.value = selCls.cycle || 'A';
+      } else {
+        cycleWrapper.style.display = 'none';
+      }
+    };
+
+    if (cycleSelect) {
+      cycleSelect.onchange = (e) => {
+        const selCls = (this.timetable.classes || []).find((c) => c.id === activeFilterClass);
+        if (selCls) {
+          selCls.cycle = e.target.value;
+          populateCurriculumForClasses(this.timetable);
+          if (this.timetable.teachers && this.timetable.teachers.length > 0) {
+            autoAssignTeachers(this.timetable, { overwriteExisting: false });
+          }
+          this.save();
+          this.renderLessonsList(tbody, activeFilterClass);
+        }
+      };
+    }
+
     const classFilter = div.querySelector('#filter-class');
     if (classFilter) {
       classFilter.onchange = (e) => {
         activeFilterClass = e.target.value;
+        updateCycleVisibility();
         this.renderLessonsList(tbody, activeFilterClass);
       };
     }
+
+    updateCycleVisibility();
 
     this.renderLessonsList(tbody, activeFilterClass);
 

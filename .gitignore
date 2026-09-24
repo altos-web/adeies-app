@@ -12,3 +12,10 @@ KATHARISMA.md
 
 # cache του firebase deploy
 .firebase/
+
+# Demo / Sample δεδομένα
+sample-data/
+generate_*.js
+*.sample.json
+*sample*.json
+*demo*
