@@ -96,7 +96,9 @@ export function normalizeTimetable(tt) {
   if (!Array.isArray(tt.lessons)) tt.lessons = [];
   else {
     tt.lessons.forEach((l) => {
-      if (l.hours && !l.defaultHours) l.defaultHours = l.hours;
+      if (l.hours !== undefined && l.hours !== null && (l.defaultHours === undefined || l.defaultHours === null)) {
+        l.defaultHours = l.hours;
+      }
     });
   }
   if (!Array.isArray(tt.rooms) || tt.rooms.length === 0) tt.rooms = JSON.parse(JSON.stringify(SPECIAL_ROOMS));
@@ -119,11 +121,13 @@ export function normalizeTimetable(tt) {
 
 // Δημιουργία των καρτών (Cards) από τις δηλωμένες αναθέσεις μαθημάτων (Lessons)
 // Στο στυλ του aSc Timetables: Ένα μάθημα 4 ωρών μπορεί να σπάσει σε 1 δίωρο + 2 μονόωρα (2+1+1)
+// Αν οι ώρες ενός μαθήματος έχουν οριστεί σε 0, δεν παράγονται κάρτες (ανενεργό μάθημα)
 export function generateCardsFromLessons(lessons) {
   const cards = [];
   if (!Array.isArray(lessons)) return cards;
   for (const lesson of lessons) {
-    const totalHours = Number(lesson.hours) || 1;
+    const totalHours = Number(lesson.hours);
+    if (!totalHours || totalHours <= 0) continue; // 0 ώρες: παράλειψη
     let distribution = lesson.distribution; // π.χ. '2+2', '2+1+1', '1+1+1+1'
 
     if (!distribution) {
@@ -227,7 +231,182 @@ export function populateCurriculumForClasses(timetable) {
   }
 
   timetable.lessons = lessons;
+
+  // Αν υπάρχουν ήδη καταχωρισμένοι εκπαιδευτικοί, ανάθεσέ τους αυτόματα βάσει ειδικότητας
+  if (timetable.teachers && timetable.teachers.length > 0) {
+    autoAssignTeachers(timetable, { overwriteExisting: false });
+  }
+
   return lessons;
+}
+
+// Έλεγχος συμβατότητας κλάδου/ειδικότητας εκπαιδευτικού με το μάθημα
+export function isBranchMatch(teacherBranch, lessonBranch) {
+  if (!teacherBranch || !lessonBranch) return false;
+  const tb = String(teacherBranch).trim().toUpperCase();
+  const lb = String(lessonBranch).trim().toUpperCase();
+
+  if (tb === lb) return true;
+
+  // Υποστήριξη σύνθετων κλάδων με κάθετο (π.χ. 'ΠΕ05/ΠΕ07' ή 'ΠΕ81-89/ΤΕ01/ΔΕ01')
+  if (lb.includes('/')) {
+    const parts = lb.split('/').map((s) => s.trim());
+    if (parts.some((p) => isBranchMatch(tb, p))) return true;
+  }
+  if (tb.includes('/')) {
+    const parts = tb.split('/').map((s) => s.trim());
+    if (parts.some((p) => isBranchMatch(p, lb))) return true;
+  }
+
+  // Ταύτιση βασικού κλάδου (π.χ. ΠΕ04.01 -> ΠΕ04, ΠΕ79.01 -> ΠΕ79, ΠΕ91.01 -> ΠΕ91)
+  const tbBase = tb.split('.')[0];
+  const lbBase = lb.split('.')[0];
+  if (tb === lbBase || tbBase === lb || tbBase === lbBase) return true;
+
+  // Ειδικές περιπτώσεις τεχνικών/επαγγελματικών κλάδων
+  if (lb.includes('ΠΕ8') && tb.startsWith('ΠΕ8')) return true;
+  if (lb.includes('ΤΕ') && tb.startsWith('ΤΕ')) return true;
+  if (lb.includes('ΔΕ') && tb.startsWith('ΔΕ')) return true;
+  if (lb === 'ΟΛΟΙ' || lb === 'ALL') return true;
+
+  return false;
+}
+
+// Αυτόματη ανάθεση εκπαιδευτικών σε μαθήματα βάσει συμβατής ειδικότητας και υπολειπόμενου ωραρίου
+export function autoAssignTeachers(timetable, { overwriteExisting = false } = {}) {
+  const teachers = timetable.teachers || [];
+  const lessons = timetable.lessons || [];
+  if (!teachers.length || !lessons.length) return 0;
+
+  // Υπολογισμός ανατεθειμένων ωρών ανά εκπαιδευτικό
+  const assignedHours = {};
+  teachers.forEach((t) => {
+    assignedHours[t.id] = 0;
+  });
+
+  lessons.forEach((l) => {
+    if (!overwriteExisting && l.teacherId && assignedHours[l.teacherId] !== undefined) {
+      assignedHours[l.teacherId] += Number(l.hours) || 0;
+    }
+  });
+
+  // Μνήμη ανάθεσης δασκάλου (ΠΕ70) ανά τμήμα στο Δημοτικό, ώστε ο ίδιος δάσκαλος να έχει τα βασικά μαθήματα της τάξης του
+  const classPrimaryTeacher = {};
+  lessons.forEach((l) => {
+    if (l.teacherId && isBranchMatch('ΠΕ70', l.branch)) {
+      classPrimaryTeacher[l.classId] = l.teacherId;
+    }
+  });
+
+  let assignedCount = 0;
+
+  // Φιλτράρισμα μαθημάτων που χρήζουν ανάθεσης (με ώρες > 0)
+  const pendingLessons = lessons.filter((l) => {
+    const hrs = Number(l.hours) || 0;
+    if (hrs <= 0) {
+      l.teacherId = '';
+      l.teacherName = '— Χωρίς εκπαιδευτικό —';
+      return false;
+    }
+    return overwriteExisting || !l.teacherId;
+  });
+
+  // Ταξινόμηση προτεραιότητας ανάθεσης:
+  // 1. ΠΕ70 δάσκαλοι ανά τμήμα (ώστε να κλειδώσει ο δάσκαλος στο τμήμα του)
+  // 2. Ειδικότητες με πολλές ώρες
+  pendingLessons.sort((a, b) => {
+    const isPE70A = isBranchMatch('ΠΕ70', a.branch);
+    const isPE70B = isBranchMatch('ΠΕ70', b.branch);
+    if (isPE70A && !isPE70B) return -1;
+    if (!isPE70A && isPE70B) return 1;
+
+    if (a.classId !== b.classId) {
+      return a.classId.localeCompare(b.classId);
+    }
+    return (Number(b.hours) || 0) - (Number(a.hours) || 0);
+  });
+
+  for (const les of pendingLessons) {
+    const lesHours = Number(les.hours) || 0;
+    if (lesHours <= 0) continue;
+
+    // Εύρεση εκπαιδευτικών με συμβατή ειδικότητα
+    const matchingTeachers = teachers.filter((t) => isBranchMatch(t.branch, les.branch));
+    if (!matchingTeachers.length) continue;
+
+    let chosenTeacher = null;
+
+    // Περίπτωση Α: Δημοτικό ΠΕ70 - Αν το τμήμα έχει ήδη υπεύθυνο δάσκαλο
+    if (isBranchMatch('ΠΕ70', les.branch) && classPrimaryTeacher[les.classId]) {
+      const preferred = matchingTeachers.find((t) => t.id === classPrimaryTeacher[les.classId]);
+      if (preferred) {
+        const cur = assignedHours[preferred.id] || 0;
+        const req = preferred.requiredHours || 24;
+        // Επιτρέπουμε στον υπεύθυνο δάσκαλο να αναλάβει τα μαθήματα του τμήματός του
+        if (cur < req + 3) {
+          chosenTeacher = preferred;
+        }
+      }
+    }
+
+    // Περίπτωση Β: Γενική επιλογή εκπαιδευτικού
+    if (!chosenTeacher) {
+      // Βαθμολόγηση υποψηφίων
+      const scored = matchingTeachers.map((t) => {
+        const cur = assignedHours[t.id] || 0;
+        const req = t.requiredHours || 20;
+        const rem = req - cur;
+        const exactBranch = String(t.branch).trim().toUpperCase() === String(les.branch).trim().toUpperCase();
+        const teachesInClass = lessons.some((l) => l.classId === les.classId && l.teacherId === t.id);
+        const fitsCapacity = rem >= lesHours;
+
+        return {
+          teacher: t,
+          cur,
+          req,
+          rem,
+          exactBranch,
+          teachesInClass,
+          fitsCapacity,
+        };
+      });
+
+      scored.sort((a, b) => {
+        // Πρώτα όσοι χωράνε πλήρως το μάθημα
+        if (a.fitsCapacity && !b.fitsCapacity) return -1;
+        if (!a.fitsCapacity && b.fitsCapacity) return 1;
+
+        // Ακριβής κλάδος
+        if (a.exactBranch && !b.exactBranch) return -1;
+        if (!a.exactBranch && b.exactBranch) return 1;
+
+        // Ήδη διδάσκει στο ίδιο τμήμα
+        if (a.teachesInClass && !b.teachesInClass) return -1;
+        if (!a.teachesInClass && b.teachesInClass) return 1;
+
+        // Περισσότερες εναπομείνασες ώρες
+        return b.rem - a.rem;
+      });
+
+      // Επιλογή καλύτερου υποψηφίου:
+      // Αν ο κορυφαίος έχει remaining > 0, ή αν είναι ο μόνος διαθέσιμος της ειδικότητας
+      if (scored[0].rem > 0 || matchingTeachers.length === 1) {
+        chosenTeacher = scored[0].teacher;
+      }
+    }
+
+    if (chosenTeacher) {
+      les.teacherId = chosenTeacher.id;
+      les.teacherName = chosenTeacher.name;
+      assignedHours[chosenTeacher.id] = (assignedHours[chosenTeacher.id] || 0) + lesHours;
+      if (isBranchMatch('ΠΕ70', les.branch) && !classPrimaryTeacher[les.classId]) {
+        classPrimaryTeacher[les.classId] = chosenTeacher.id;
+      }
+      assignedCount++;
+    }
+  }
+
+  return assignedCount;
 }
 
 // Ελεγκτής συγκρούσεων και περιορισμών (Constraint & Conflict Checker)

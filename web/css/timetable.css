@@ -407,6 +407,16 @@
   vertical-align: middle;
 }
 
+/* Γραμμή μαθήματος με μηδενικές ώρες (ανενεργό) */
+.lessons-table tr.lesson-row-zero {
+  opacity: 0.55;
+  background: rgba(0, 0, 0, 0.025);
+}
+
+.lessons-table tr.lesson-row-zero:hover {
+  opacity: 0.88;
+}
+
 /* Μεγαλύτερο, έντονο και καθαρό font για Badges, Κλάδους & Ανατεθειμένες Ώρες */
 .timetable-app .badge {
   font-family: var(--mono);
