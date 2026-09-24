@@ -2,7 +2,6 @@
 // Συντονίζει τα βήματα καταχώρισης (Σχολείο, Τμήματα, Εκπαιδευτικοί Time-off, Αναθέσεις, Solver & Matrix).
 
 import { store } from '../store.js';
-import { download } from '../output.js';
 import { DAYS_OF_WEEK, SCHOOL_TYPES } from './curricula.js';
 import { TimetableMatrix } from './matrix.js';
 import { createInitialTimetable, populateCurriculumForClasses } from './model.js';
@@ -326,11 +325,8 @@ export class TimetableUI {
         <p class="hint">Εισαγάγετε το διδακτικό ωράριο κάθε καθηγητή και ορίστε τις ώρες διαθεσιμότητας (time-off matrix).</p>
       </div>
 
-      <div class="toolbar" style="flex-wrap: wrap; gap: 0.5rem;">
-        <button class="primary" id="btn-sync-employees">🔄 Συγχρονισμός από Καρτέλα 02</button>
-        <button class="primary" id="btn-load-mock-teachers" style="background: #0284c7;">📥 Φόρτωση Εικονικών Εκπαιδευτικών (Demo)</button>
-        <button id="btn-import-json">📂 Εισαγωγή από JSON</button>
-        <button id="btn-download-sample" class="secondary">💾 Λήψη sample_teachers.json</button>
+      <div class="toolbar">
+        <button class="primary" id="btn-sync-employees">🔄 Συγχρονισμός από Καρτέλα Εργαζομένων</button>
         <button id="btn-add-teacher">+ Προσθήκη Εκπαιδευτικού</button>
       </div>
 
@@ -382,91 +378,7 @@ export class TimetableUI {
       alert(`Συγχρονίστηκαν ${added} εκπαιδευτικοί!`);
     };
 
-    // 2. Load mock dataset
-    div.querySelector('#btn-load-mock-teachers').onclick = async () => {
-      try {
-        const res = await fetch('data/sample_teachers.json');
-        if (!res.ok) throw new Error('Δεν βρέθηκε το αρχείο data/sample_teachers.json');
-        const data = await res.json();
-
-        if (data.timetable?.teachers) {
-          this.timetable.teachers = JSON.parse(JSON.stringify(data.timetable.teachers));
-        }
-        if (data.timetable?.classes && this.timetable.classes.length <= 3) {
-          this.timetable.classes = JSON.parse(JSON.stringify(data.timetable.classes));
-        }
-
-        // Επίσης αποθήκευση στην καρτέλα 02 (εργαζόμενοι)
-        if (Array.isArray(data.employees)) {
-          const currentEmps = store.getEmployees();
-          for (const emp of data.employees) {
-            if (!currentEmps.some((e) => e.id === emp.id)) {
-              store.saveEmployee(emp);
-            }
-          }
-        }
-
-        this.save();
-        this.render();
-        alert(`Φορτώθηκαν επιτυχώς ${this.timetable.teachers.length} εικονικοί εκπαιδευτικοί όλων των ειδικοτήτων με ρεαλιστικές διαθεσιμότητες (time-off)!`);
-      } catch (err) {
-        alert('Σφάλμα: ' + err.message);
-      }
-    };
-
-    // 3. Import JSON from file picker
-    const filePicker = document.createElement('input');
-    filePicker.type = 'file';
-    filePicker.accept = 'application/json';
-    filePicker.style.display = 'none';
-    div.append(filePicker);
-
-    div.querySelector('#btn-import-json').onclick = () => filePicker.click();
-
-    filePicker.onchange = async () => {
-      const file = filePicker.files[0];
-      if (!file) return;
-      try {
-        const text = await file.text();
-        const data = JSON.parse(text);
-
-        if (data.timetable?.teachers) {
-          this.timetable.teachers = data.timetable.teachers;
-          if (data.timetable.classes) this.timetable.classes = data.timetable.classes;
-        } else if (Array.isArray(data.employees)) {
-          this.timetable.teachers = data.employees.map((emp) => ({
-            id: emp.id,
-            name: emp.onomateponymo || `${emp.eponymo} ${emp.onoma}`,
-            branch: emp.klados || 'ΠΕ02',
-            requiredHours: 20,
-            assignedHours: 0,
-            timeOff: {},
-          }));
-        } else {
-          throw new Error('Το αρχείο δεν περιέχει έγκυρη λίστα εκπαιδευτικών.');
-        }
-
-        this.save();
-        this.render();
-        alert(`Επιτυχής εισαγωγή ${this.timetable.teachers.length} εκπαιδευτικών!`);
-      } catch (err) {
-        alert('Η εισαγωγή απέτυχε: ' + err.message);
-      }
-    };
-
-    // 4. Download sample JSON
-    div.querySelector('#btn-download-sample').onclick = async () => {
-      try {
-        const res = await fetch('data/sample_teachers.json');
-        if (!res.ok) throw new Error('Not found');
-        const blob = await res.blob();
-        download(blob, 'sample_teachers.json');
-      } catch {
-        alert('Δεν ήταν δυνατή η λήψη του sample_teachers.json');
-      }
-    };
-
-    // 5. Add manual teacher
+    // Add manual teacher
     div.querySelector('#btn-add-teacher').onclick = () => {
       const name = prompt('Ονοματεπώνυμο εκπαιδευτικού:');
       if (!name) return;
