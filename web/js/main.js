@@ -233,10 +233,14 @@ function importData() {
     { type: 'file', accept: 'application/json' });
   input.onchange = async () => {
     try {
-      store.importAll(JSON.parse(await input.files[0].text()));
+      const data = JSON.parse(await input.files[0].text());
+      store.importAll(data);
+      if (timetableUIInstance) {
+        timetableUIInstance.reloadFromStore();
+      }
       renderEmployees();
       renderDirector();
-      alert('Τα δεδομένα επαναφέρθηκαν.');
+      alert('Τα δεδομένα (εργαζόμενοι, σχολείο και ωρολόγιο πρόγραμμα με αναθέσεις) επαναφέρθηκαν επιτυχώς.');
     } catch (error) {
       alert(`Η επαναφορά απέτυχε: ${error.message}`);
     }
@@ -506,6 +510,8 @@ function renderTimetable() {
   const panel = $('#tab-timetable');
   if (!timetableUIInstance) {
     timetableUIInstance = new TimetableUI(panel);
+  } else {
+    timetableUIInstance.reloadFromStore();
   }
   timetableUIInstance.render();
 }

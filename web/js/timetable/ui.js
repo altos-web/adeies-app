@@ -77,9 +77,16 @@ export class TimetableUI {
     store.setTimetable(this.timetable);
   }
 
+  reloadFromStore() {
+    this.timetable = normalizeTimetable(store.getTimetable() || createInitialTimetable('gymnasio'));
+  }
+
   createStepsNav() {
     const nav = document.createElement('div');
     nav.className = 'timetable-wizard-nav';
+
+    const stepsWrap = document.createElement('div');
+    stepsWrap.className = 'wizard-steps-list';
 
     const steps = [
       { num: 1, title: 'Σχολείο & Τμήματα' },
@@ -96,8 +103,49 @@ export class TimetableUI {
         this.activeStep = num;
         this.render();
       };
-      nav.append(btn);
+      stepsWrap.append(btn);
     });
+    nav.append(stepsWrap);
+
+    // Quick I/O buttons for Timetable
+    const ioWrap = document.createElement('div');
+    ioWrap.className = 'timetable-quick-io';
+    ioWrap.style.cssText = 'display: flex; gap: 0.5rem; margin-left: auto; align-items: center;';
+    ioWrap.innerHTML = `
+      <button type="button" class="secondary" id="btn-tt-import" style="padding: 0.35rem 0.75rem; font-size: 0.8125rem; font-weight: 500;" title="Εισαγωγή ωρολογίου, εκπαιδευτικών & αναθέσεων από JSON">📥 Εισαγωγή JSON</button>
+      <button type="button" class="secondary" id="btn-tt-export" style="padding: 0.35rem 0.75rem; font-size: 0.8125rem; font-weight: 500;" title="Εξαγωγή πλήρους αντιγράφου JSON">📤 Εξαγωγή JSON</button>
+    `;
+
+    ioWrap.querySelector('#btn-tt-import').onclick = () => {
+      const input = Object.assign(document.createElement('input'), { type: 'file', accept: 'application/json' });
+      input.onchange = async () => {
+        try {
+          const text = await input.files[0].text();
+          const parsed = JSON.parse(text);
+          store.importAll(parsed);
+          this.reloadFromStore();
+          this.render();
+          const lesCount = (this.timetable.lessons || []).length;
+          const assignedCount = (this.timetable.lessons || []).filter((l) => l.teacherId).length;
+          alert(`Το αρχείο φορτώθηκε επιτυχώς! Περιλαμβάνει ${this.timetable.teachers.length} εκπαιδευτικούς και ${assignedCount}/${lesCount} ανατεθειμένα μαθήματα.`);
+        } catch (err) {
+          alert('Σφάλμα εισαγωγής JSON: ' + err.message);
+        }
+      };
+      input.click();
+    };
+
+    ioWrap.querySelector('#btn-tt-export').onclick = () => {
+      const data = store.exportAll();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `orologio_programma_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    };
+
+    nav.append(ioWrap);
 
     return nav;
   }
@@ -896,6 +944,15 @@ export class TimetableUI {
 
   // ── ΒΗΜΑ 3: Μαθήματα & Αναθέσεις ──────────────────────────────────────────
   renderStep3Lessons() {
+    // Αν δεν υπάρχουν μαθήματα αλλά υπάρχουν τμήματα, αυτόματη δημιουργία και ανάθεση
+    if ((!this.timetable.lessons || this.timetable.lessons.length === 0) && this.timetable.classes && this.timetable.classes.length > 0) {
+      populateCurriculumForClasses(this.timetable);
+      if (this.timetable.teachers && this.timetable.teachers.length > 0) {
+        autoAssignTeachers(this.timetable, { overwriteExisting: false });
+      }
+      this.save();
+    }
+
     const div = document.createElement('div');
     div.className = 'panel-step';
 
@@ -966,14 +1023,19 @@ export class TimetableUI {
           alert('Δεν έχουν καταχωριστεί εκπαιδευτικοί. Παρακαλώ μεταβείτε στο Βήμα 2 («Εκπαιδευτικοί») για να προσθέσετε ή να συγχρονίσετε εκπαιδευτικούς.');
           return;
         }
-        const count = autoAssignTeachers(this.timetable, { overwriteExisting: false });
+        let overwrite = false;
+        const hasUnassigned = (this.timetable.lessons || []).some((l) => !l.teacherId && Number(l.hours) > 0);
+        if (!hasUnassigned) {
+          if (confirm('Όλα τα μαθήματα έχουν ήδη ανατεθεί σε εκπαιδευτικό. Θέλετε να επανυπολογιστούν όλες οι αναθέσεις αυτόματα από την αρχή;')) {
+            overwrite = true;
+          } else {
+            return;
+          }
+        }
+        const count = autoAssignTeachers(this.timetable, { overwriteExisting: overwrite });
         this.save();
         this.renderLessonsList(tbody, activeFilterClass);
-        if (count > 0) {
-          alert(`Συμπληρώθηκαν επιτυχώς ${count} αναθέσεις μαθημάτων σε εκπαιδευτικούς αντίστοιχης ειδικότητας!`);
-        } else {
-          alert('Όλα τα μαθήματα έχουν ήδη ανατεθεί ή δεν βρέθηκαν διαθέσιμοι εκπαιδευτικοί αντίστοιχης ειδικότητας.');
-        }
+        alert(`Συμπληρώθηκαν επιτυχώς ${count} αναθέσεις μαθημάτων σε εκπαιδευτικούς αντίστοιχης ειδικότητας!`);
       };
     }
 

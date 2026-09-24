@@ -48,7 +48,53 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521023456",
       "kinito": "6971112233",
-      "email_ekpaideutikou": "g.papadopoulos@sch.gr"
+      "email_ekpaideutikou": "g.papadopoulos@sch.gr",
+      "ypoxreotiko_orario": 10,
+      "anatetheimenes_ores": 10,
+      "anathesi_mathimaton": [
+        "Α1: Θρησκευτικά / Ηθική (2 ώρ.)",
+        "Α2: Θρησκευτικά / Ηθική (2 ώρ.)",
+        "Β1: Θρησκευτικά / Ηθική (2 ώρ.)",
+        "Β2: Θρησκευτικά / Ηθική (2 ώρ.)",
+        "Γ1: Θρησκευτικά / Ηθική (2 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "thriskeutika",
+          "subjectName": "Θρησκευτικά / Ηθική",
+          "hours": 2
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "thriskeutika",
+          "subjectName": "Θρησκευτικά / Ηθική",
+          "hours": 2
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "thriskeutika",
+          "subjectName": "Θρησκευτικά / Ηθική",
+          "hours": 2
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "thriskeutika",
+          "subjectName": "Θρησκευτικά / Ηθική",
+          "hours": 2
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "thriskeutika",
+          "subjectName": "Θρησκευτικά / Ηθική",
+          "hours": 2
+        }
+      ]
     },
     {
       "id": "emp_02",
@@ -73,7 +119,45 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521034567",
       "kinito": "6972223344",
-      "email_ekpaideutikou": "e.ioannidou@sch.gr"
+      "email_ekpaideutikou": "e.ioannidou@sch.gr",
+      "ypoxreotiko_orario": 12,
+      "anatetheimenes_ores": 13,
+      "anathesi_mathimaton": [
+        "Α2: Νεοελληνική Γλώσσα & Γραμματεία (5 ώρ.)",
+        "Α2: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)",
+        "Α2: Ιστορία (2 ώρ.)",
+        "Γ1: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "ne_glossa",
+          "subjectName": "Νεοελληνική Γλώσσα & Γραμματεία",
+          "hours": 5
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "arxaia",
+          "subjectName": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+          "hours": 3
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "istoria",
+          "subjectName": "Ιστορία",
+          "hours": 2
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "arxaia",
+          "subjectName": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+          "hours": 3
+        }
+      ]
     },
     {
       "id": "emp_03",
@@ -98,7 +182,93 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521045678",
       "kinito": "6973334455",
-      "email_ekpaideutikou": "n.karagiannis@sch.gr"
+      "email_ekpaideutikou": "n.karagiannis@sch.gr",
+      "ypoxreotiko_orario": 18,
+      "anatetheimenes_ores": 19,
+      "anathesi_mathimaton": [
+        "Α1: Νεοελληνική Γλώσσα & Γραμματεία (5 ώρ.)",
+        "Α1: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)",
+        "Α1: Ιστορία (2 ώρ.)",
+        "Α1: Εργαστήρια Δεξιοτήτων (1 ώρ.)",
+        "Α2: Εργαστήρια Δεξιοτήτων (1 ώρ.)",
+        "Β1: Ιστορία (2 ώρ.)",
+        "Β1: Εργαστήρια Δεξιοτήτων (1 ώρ.)",
+        "Β2: Εργαστήρια Δεξιοτήτων (1 ώρ.)",
+        "Γ1: Ιστορία (2 ώρ.)",
+        "Γ1: Εργαστήρια Δεξιοτήτων (1 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "ne_glossa",
+          "subjectName": "Νεοελληνική Γλώσσα & Γραμματεία",
+          "hours": 5
+        },
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "arxaia",
+          "subjectName": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+          "hours": 3
+        },
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "istoria",
+          "subjectName": "Ιστορία",
+          "hours": 2
+        },
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "ergastiria_dex",
+          "subjectName": "Εργαστήρια Δεξιοτήτων",
+          "hours": 1
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "ergastiria_dex",
+          "subjectName": "Εργαστήρια Δεξιοτήτων",
+          "hours": 1
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "istoria",
+          "subjectName": "Ιστορία",
+          "hours": 2
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "ergastiria_dex",
+          "subjectName": "Εργαστήρια Δεξιοτήτων",
+          "hours": 1
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "ergastiria_dex",
+          "subjectName": "Εργαστήρια Δεξιοτήτων",
+          "hours": 1
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "istoria",
+          "subjectName": "Ιστορία",
+          "hours": 2
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "ergastiria_dex",
+          "subjectName": "Εργαστήρια Δεξιοτήτων",
+          "hours": 1
+        }
+      ]
     },
     {
       "id": "emp_04",
@@ -123,7 +293,37 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521056789",
       "kinito": "6974445566",
-      "email_ekpaideutikou": "m.vasileiou@sch.gr"
+      "email_ekpaideutikou": "m.vasileiou@sch.gr",
+      "ypoxreotiko_orario": 10,
+      "anatetheimenes_ores": 11,
+      "anathesi_mathimaton": [
+        "Β1: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)",
+        "Β1: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)",
+        "Γ1: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "ne_glossa",
+          "subjectName": "Νεοελληνική Γλώσσα & Γραμματεία",
+          "hours": 4
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "arxaia",
+          "subjectName": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+          "hours": 3
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "ne_glossa",
+          "subjectName": "Νεοελληνική Γλώσσα & Γραμματεία",
+          "hours": 4
+        }
+      ]
     },
     {
       "id": "emp_05",
@@ -148,7 +348,29 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521067890",
       "kinito": "6975556677",
-      "email_ekpaideutikou": "k.dimitriou@sch.gr"
+      "email_ekpaideutikou": "k.dimitriou@sch.gr",
+      "ypoxreotiko_orario": 8,
+      "anatetheimenes_ores": 8,
+      "anathesi_mathimaton": [
+        "Α1: Μαθηματικά (4 ώρ.)",
+        "Β1: Μαθηματικά (4 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "math",
+          "subjectName": "Μαθηματικά",
+          "hours": 4
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "math",
+          "subjectName": "Μαθηματικά",
+          "hours": 4
+        }
+      ]
     },
     {
       "id": "emp_06",
@@ -173,7 +395,29 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521078901",
       "kinito": "6976667788",
-      "email_ekpaideutikou": "s.antoniadou@sch.gr"
+      "email_ekpaideutikou": "s.antoniadou@sch.gr",
+      "ypoxreotiko_orario": 8,
+      "anatetheimenes_ores": 8,
+      "anathesi_mathimaton": [
+        "Α2: Μαθηματικά (4 ώρ.)",
+        "Β2: Μαθηματικά (4 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "math",
+          "subjectName": "Μαθηματικά",
+          "hours": 4
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "math",
+          "subjectName": "Μαθηματικά",
+          "hours": 4
+        }
+      ]
     },
     {
       "id": "emp_07",
@@ -198,7 +442,53 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521089012",
       "kinito": "6977778899",
-      "email_ekpaideutikou": "a.georgiadis@sch.gr"
+      "email_ekpaideutikou": "a.georgiadis@sch.gr",
+      "ypoxreotiko_orario": 8,
+      "anatetheimenes_ores": 8,
+      "anathesi_mathimaton": [
+        "Α1: Φυσική (1 ώρ.)",
+        "Α2: Φυσική (1 ώρ.)",
+        "Β1: Φυσική (2 ώρ.)",
+        "Β2: Φυσική (2 ώρ.)",
+        "Γ1: Φυσική (2 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "fysiki",
+          "subjectName": "Φυσική",
+          "hours": 1
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "fysiki",
+          "subjectName": "Φυσική",
+          "hours": 1
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "fysiki",
+          "subjectName": "Φυσική",
+          "hours": 2
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "fysiki",
+          "subjectName": "Φυσική",
+          "hours": 2
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "fysiki",
+          "subjectName": "Φυσική",
+          "hours": 2
+        }
+      ]
     },
     {
       "id": "emp_08",
@@ -223,7 +513,37 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521090123",
       "kinito": "6978889900",
-      "email_ekpaideutikou": "a.stavropoulou@sch.gr"
+      "email_ekpaideutikou": "a.stavropoulou@sch.gr",
+      "ypoxreotiko_orario": 4,
+      "anatetheimenes_ores": 3,
+      "anathesi_mathimaton": [
+        "Β1: Χημεία (1 ώρ.)",
+        "Β2: Χημεία (1 ώρ.)",
+        "Γ1: Χημεία (1 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "ximeia",
+          "subjectName": "Χημεία",
+          "hours": 1
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "ximeia",
+          "subjectName": "Χημεία",
+          "hours": 1
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "ximeia",
+          "subjectName": "Χημεία",
+          "hours": 1
+        }
+      ]
     },
     {
       "id": "emp_09",
@@ -248,7 +568,53 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521012349",
       "kinito": "6979990011",
-      "email_ekpaideutikou": "ch.michailidis@sch.gr"
+      "email_ekpaideutikou": "ch.michailidis@sch.gr",
+      "ypoxreotiko_orario": 5,
+      "anatetheimenes_ores": 5,
+      "anathesi_mathimaton": [
+        "Α1: Βιολογία (1 ώρ.)",
+        "Α2: Βιολογία (1 ώρ.)",
+        "Β1: Βιολογία (1 ώρ.)",
+        "Β2: Βιολογία (1 ώρ.)",
+        "Γ1: Βιολογία (1 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "viologia",
+          "subjectName": "Βιολογία",
+          "hours": 1
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "viologia",
+          "subjectName": "Βιολογία",
+          "hours": 1
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "viologia",
+          "subjectName": "Βιολογία",
+          "hours": 1
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "viologia",
+          "subjectName": "Βιολογία",
+          "hours": 1
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "viologia",
+          "subjectName": "Βιολογία",
+          "hours": 1
+        }
+      ]
     },
     {
       "id": "emp_10",
@@ -270,7 +636,37 @@
       "poli": "ΔΡΑΜΑ",
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "kinito": "6981112233",
-      "email_ekpaideutikou": "s.papadaki@sch.gr"
+      "email_ekpaideutikou": "s.papadaki@sch.gr",
+      "ypoxreotiko_orario": 6,
+      "anatetheimenes_ores": 6,
+      "anathesi_mathimaton": [
+        "Α1: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)",
+        "Α2: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)",
+        "Β2: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "xeni_glossa_2",
+          "subjectName": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+          "hours": 2
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "xeni_glossa_2",
+          "subjectName": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+          "hours": 2
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "xeni_glossa_2",
+          "subjectName": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+          "hours": 2
+        }
+      ]
     },
     {
       "id": "emp_11",
@@ -292,7 +688,29 @@
       "poli": "ΔΡΑΜΑ",
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "kinito": "6982223344",
-      "email_ekpaideutikou": "a.kazantzi@sch.gr"
+      "email_ekpaideutikou": "a.kazantzi@sch.gr",
+      "ypoxreotiko_orario": 4,
+      "anatetheimenes_ores": 4,
+      "anathesi_mathimaton": [
+        "Β1: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)",
+        "Γ1: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "xeni_glossa_2",
+          "subjectName": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+          "hours": 2
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "xeni_glossa_2",
+          "subjectName": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+          "hours": 2
+        }
+      ]
     },
     {
       "id": "emp_12",
@@ -317,7 +735,53 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521023411",
       "kinito": "6983334455",
-      "email_ekpaideutikou": "e.makri@sch.gr"
+      "email_ekpaideutikou": "e.makri@sch.gr",
+      "ypoxreotiko_orario": 10,
+      "anatetheimenes_ores": 10,
+      "anathesi_mathimaton": [
+        "Α1: Αγγλικά (2 ώρ.)",
+        "Α2: Αγγλικά (2 ώρ.)",
+        "Β1: Αγγλικά (2 ώρ.)",
+        "Β2: Αγγλικά (2 ώρ.)",
+        "Γ1: Αγγλικά (2 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "agglika",
+          "subjectName": "Αγγλικά",
+          "hours": 2
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "agglika",
+          "subjectName": "Αγγλικά",
+          "hours": 2
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "agglika",
+          "subjectName": "Αγγλικά",
+          "hours": 2
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "agglika",
+          "subjectName": "Αγγλικά",
+          "hours": 2
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "agglika",
+          "subjectName": "Αγγλικά",
+          "hours": 2
+        }
+      ]
     },
     {
       "id": "emp_13",
@@ -342,7 +806,53 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521034512",
       "kinito": "6984445566",
-      "email_ekpaideutikou": "p.athanasiadis@sch.gr"
+      "email_ekpaideutikou": "p.athanasiadis@sch.gr",
+      "ypoxreotiko_orario": 10,
+      "anatetheimenes_ores": 10,
+      "anathesi_mathimaton": [
+        "Α1: Φυσική Αγωγή (2 ώρ.)",
+        "Α2: Φυσική Αγωγή (2 ώρ.)",
+        "Β1: Φυσική Αγωγή (2 ώρ.)",
+        "Β2: Φυσική Αγωγή (2 ώρ.)",
+        "Γ1: Φυσική Αγωγή (2 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "gymnastiki",
+          "subjectName": "Φυσική Αγωγή",
+          "hours": 2
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "gymnastiki",
+          "subjectName": "Φυσική Αγωγή",
+          "hours": 2
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "gymnastiki",
+          "subjectName": "Φυσική Αγωγή",
+          "hours": 2
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "gymnastiki",
+          "subjectName": "Φυσική Αγωγή",
+          "hours": 2
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "gymnastiki",
+          "subjectName": "Φυσική Αγωγή",
+          "hours": 2
+        }
+      ]
     },
     {
       "id": "emp_14",
@@ -367,7 +877,53 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521045613",
       "kinito": "6985556677",
-      "email_ekpaideutikou": "a.nikolaou@sch.gr"
+      "email_ekpaideutikou": "a.nikolaou@sch.gr",
+      "ypoxreotiko_orario": 10,
+      "anatetheimenes_ores": 10,
+      "anathesi_mathimaton": [
+        "Α1: Πληροφορική (2 ώρ.)",
+        "Α2: Πληροφορική (2 ώρ.)",
+        "Β1: Πληροφορική (2 ώρ.)",
+        "Β2: Πληροφορική (2 ώρ.)",
+        "Γ1: Πληροφορική (2 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "pliroforiki",
+          "subjectName": "Πληροφορική",
+          "hours": 2
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "pliroforiki",
+          "subjectName": "Πληροφορική",
+          "hours": 2
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "pliroforiki",
+          "subjectName": "Πληροφορική",
+          "hours": 2
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "pliroforiki",
+          "subjectName": "Πληροφορική",
+          "hours": 2
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "pliroforiki",
+          "subjectName": "Πληροφορική",
+          "hours": 2
+        }
+      ]
     },
     {
       "id": "emp_15",
@@ -392,7 +948,29 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521056714",
       "kinito": "6986667788",
-      "email_ekpaideutikou": "e.konstantinidou@sch.gr"
+      "email_ekpaideutikou": "e.konstantinidou@sch.gr",
+      "ypoxreotiko_orario": 3,
+      "anatetheimenes_ores": 2,
+      "anathesi_mathimaton": [
+        "Α1: Οικιακή Οικονομία (1 ώρ.)",
+        "Α2: Οικιακή Οικονομία (1 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "oikiaki",
+          "subjectName": "Οικιακή Οικονομία",
+          "hours": 1
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "oikiaki",
+          "subjectName": "Οικιακή Οικονομία",
+          "hours": 1
+        }
+      ]
     },
     {
       "id": "emp_16",
@@ -417,7 +995,53 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521067815",
       "kinito": "6987778899",
-      "email_ekpaideutikou": "a.moraitou@sch.gr"
+      "email_ekpaideutikou": "a.moraitou@sch.gr",
+      "ypoxreotiko_orario": 5,
+      "anatetheimenes_ores": 5,
+      "anathesi_mathimaton": [
+        "Α1: Εικαστικά (1 ώρ.)",
+        "Α2: Εικαστικά (1 ώρ.)",
+        "Β1: Εικαστικά (1 ώρ.)",
+        "Β2: Εικαστικά (1 ώρ.)",
+        "Γ1: Εικαστικά (1 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "eikastika",
+          "subjectName": "Εικαστικά",
+          "hours": 1
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "eikastika",
+          "subjectName": "Εικαστικά",
+          "hours": 1
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "eikastika",
+          "subjectName": "Εικαστικά",
+          "hours": 1
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "eikastika",
+          "subjectName": "Εικαστικά",
+          "hours": 1
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "eikastika",
+          "subjectName": "Εικαστικά",
+          "hours": 1
+        }
+      ]
     },
     {
       "id": "emp_17",
@@ -442,7 +1066,53 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521078916",
       "kinito": "6988889900",
-      "email_ekpaideutikou": "s.theodoridis@sch.gr"
+      "email_ekpaideutikou": "s.theodoridis@sch.gr",
+      "ypoxreotiko_orario": 5,
+      "anatetheimenes_ores": 5,
+      "anathesi_mathimaton": [
+        "Α1: Μουσική (1 ώρ.)",
+        "Α2: Μουσική (1 ώρ.)",
+        "Β1: Μουσική (1 ώρ.)",
+        "Β2: Μουσική (1 ώρ.)",
+        "Γ1: Μουσική (1 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "mousiki",
+          "subjectName": "Μουσική",
+          "hours": 1
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "mousiki",
+          "subjectName": "Μουσική",
+          "hours": 1
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "mousiki",
+          "subjectName": "Μουσική",
+          "hours": 1
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "mousiki",
+          "subjectName": "Μουσική",
+          "hours": 1
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "mousiki",
+          "subjectName": "Μουσική",
+          "hours": 1
+        }
+      ]
     },
     {
       "id": "emp_18",
@@ -467,7 +1137,45 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521089123",
       "kinito": "6989990011",
-      "email_ekpaideutikou": "d.chatzidimitriou@sch.gr"
+      "email_ekpaideutikou": "d.chatzidimitriou@sch.gr",
+      "ypoxreotiko_orario": 6,
+      "anatetheimenes_ores": 6,
+      "anathesi_mathimaton": [
+        "Α1: Γεωλογία - Γεωγραφία (1 ώρ.)",
+        "Α2: Γεωλογία - Γεωγραφία (1 ώρ.)",
+        "Β1: Γεωλογία - Γεωγραφία (2 ώρ.)",
+        "Β2: Γεωλογία - Γεωγραφία (2 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "geografia",
+          "subjectName": "Γεωλογία - Γεωγραφία",
+          "hours": 1
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "geografia",
+          "subjectName": "Γεωλογία - Γεωγραφία",
+          "hours": 1
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "geografia",
+          "subjectName": "Γεωλογία - Γεωγραφία",
+          "hours": 2
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "geografia",
+          "subjectName": "Γεωλογία - Γεωγραφία",
+          "hours": 2
+        }
+      ]
     },
     {
       "id": "emp_19",
@@ -492,7 +1200,21 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521090234",
       "kinito": "6980001122",
-      "email_ekpaideutikou": "ch.varela@sch.gr"
+      "email_ekpaideutikou": "ch.varela@sch.gr",
+      "ypoxreotiko_orario": 3,
+      "anatetheimenes_ores": 2,
+      "anathesi_mathimaton": [
+        "Γ1: Κοινωνική & Πολιτική Αγωγή (2 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "kpa",
+          "subjectName": "Κοινωνική & Πολιτική Αγωγή",
+          "hours": 2
+        }
+      ]
     },
     {
       "id": "emp_20",
@@ -517,7 +1239,53 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521091345",
       "kinito": "6981112233",
-      "email_ekpaideutikou": "s.panou@sch.gr"
+      "email_ekpaideutikou": "s.panou@sch.gr",
+      "ypoxreotiko_orario": 5,
+      "anatetheimenes_ores": 5,
+      "anathesi_mathimaton": [
+        "Α1: Τεχνολογία (1 ώρ.)",
+        "Α2: Τεχνολογία (1 ώρ.)",
+        "Β1: Τεχνολογία (1 ώρ.)",
+        "Β2: Τεχνολογία (1 ώρ.)",
+        "Γ1: Τεχνολογία (1 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_a1",
+          "className": "Α1",
+          "subjectId": "texnologia",
+          "subjectName": "Τεχνολογία",
+          "hours": 1
+        },
+        {
+          "classId": "c_a2",
+          "className": "Α2",
+          "subjectId": "texnologia",
+          "subjectName": "Τεχνολογία",
+          "hours": 1
+        },
+        {
+          "classId": "c_b1",
+          "className": "Β1",
+          "subjectId": "texnologia",
+          "subjectName": "Τεχνολογία",
+          "hours": 1
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "texnologia",
+          "subjectName": "Τεχνολογία",
+          "hours": 1
+        },
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "texnologia",
+          "subjectName": "Τεχνολογία",
+          "hours": 1
+        }
+      ]
     },
     {
       "id": "emp_21",
@@ -542,7 +1310,37 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521092456",
       "kinito": "6982223344",
-      "email_ekpaideutikou": "a.spyropoulou@sch.gr"
+      "email_ekpaideutikou": "a.spyropoulou@sch.gr",
+      "ypoxreotiko_orario": 10,
+      "anatetheimenes_ores": 9,
+      "anathesi_mathimaton": [
+        "Β2: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)",
+        "Β2: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)",
+        "Β2: Ιστορία (2 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "ne_glossa",
+          "subjectName": "Νεοελληνική Γλώσσα & Γραμματεία",
+          "hours": 4
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "arxaia",
+          "subjectName": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+          "hours": 3
+        },
+        {
+          "classId": "c_b2",
+          "className": "Β2",
+          "subjectId": "istoria",
+          "subjectName": "Ιστορία",
+          "hours": 2
+        }
+      ]
     },
     {
       "id": "emp_22",
@@ -567,7 +1365,21 @@
       "dimos_katoikias": "ΔΡΑΜΑΣ",
       "tilefono_katoikias": "2521093567",
       "kinito": "6983334455",
-      "email_ekpaideutikou": "v.tsakiris@sch.gr"
+      "email_ekpaideutikou": "v.tsakiris@sch.gr",
+      "ypoxreotiko_orario": 4,
+      "anatetheimenes_ores": 4,
+      "anathesi_mathimaton": [
+        "Γ1: Μαθηματικά (4 ώρ.)"
+      ],
+      "assignments": [
+        {
+          "classId": "c_g1",
+          "className": "Γ1",
+          "subjectId": "math",
+          "subjectName": "Μαθηματικά",
+          "hours": 4
+        }
+      ]
     }
   ],
   "timetable": {
@@ -609,7 +1421,51 @@
         "branch": "ΠΕ01",
         "requiredHours": 10,
         "assignedHours": 10,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Θρησκευτικά / Ηθική (2 ώρ.)",
+          "Α2: Θρησκευτικά / Ηθική (2 ώρ.)",
+          "Β1: Θρησκευτικά / Ηθική (2 ώρ.)",
+          "Β2: Θρησκευτικά / Ηθική (2 ώρ.)",
+          "Γ1: Θρησκευτικά / Ηθική (2 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "thriskeutika",
+            "subjectName": "Θρησκευτικά / Ηθική",
+            "hours": 2
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "thriskeutika",
+            "subjectName": "Θρησκευτικά / Ηθική",
+            "hours": 2
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "thriskeutika",
+            "subjectName": "Θρησκευτικά / Ηθική",
+            "hours": 2
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "thriskeutika",
+            "subjectName": "Θρησκευτικά / Ηθική",
+            "hours": 2
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "thriskeutika",
+            "subjectName": "Θρησκευτικά / Ηθική",
+            "hours": 2
+          }
+        ]
       },
       {
         "id": "emp_02",
@@ -617,7 +1473,43 @@
         "branch": "ΠΕ02",
         "requiredHours": 12,
         "assignedHours": 13,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α2: Νεοελληνική Γλώσσα & Γραμματεία (5 ώρ.)",
+          "Α2: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)",
+          "Α2: Ιστορία (2 ώρ.)",
+          "Γ1: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "ne_glossa",
+            "subjectName": "Νεοελληνική Γλώσσα & Γραμματεία",
+            "hours": 5
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "arxaia",
+            "subjectName": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+            "hours": 3
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "istoria",
+            "subjectName": "Ιστορία",
+            "hours": 2
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "arxaia",
+            "subjectName": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+            "hours": 3
+          }
+        ]
       },
       {
         "id": "emp_03",
@@ -625,7 +1517,91 @@
         "branch": "ΠΕ02",
         "requiredHours": 18,
         "assignedHours": 19,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Νεοελληνική Γλώσσα & Γραμματεία (5 ώρ.)",
+          "Α1: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)",
+          "Α1: Ιστορία (2 ώρ.)",
+          "Α1: Εργαστήρια Δεξιοτήτων (1 ώρ.)",
+          "Α2: Εργαστήρια Δεξιοτήτων (1 ώρ.)",
+          "Β1: Ιστορία (2 ώρ.)",
+          "Β1: Εργαστήρια Δεξιοτήτων (1 ώρ.)",
+          "Β2: Εργαστήρια Δεξιοτήτων (1 ώρ.)",
+          "Γ1: Ιστορία (2 ώρ.)",
+          "Γ1: Εργαστήρια Δεξιοτήτων (1 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "ne_glossa",
+            "subjectName": "Νεοελληνική Γλώσσα & Γραμματεία",
+            "hours": 5
+          },
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "arxaia",
+            "subjectName": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+            "hours": 3
+          },
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "istoria",
+            "subjectName": "Ιστορία",
+            "hours": 2
+          },
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "ergastiria_dex",
+            "subjectName": "Εργαστήρια Δεξιοτήτων",
+            "hours": 1
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "ergastiria_dex",
+            "subjectName": "Εργαστήρια Δεξιοτήτων",
+            "hours": 1
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "istoria",
+            "subjectName": "Ιστορία",
+            "hours": 2
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "ergastiria_dex",
+            "subjectName": "Εργαστήρια Δεξιοτήτων",
+            "hours": 1
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "ergastiria_dex",
+            "subjectName": "Εργαστήρια Δεξιοτήτων",
+            "hours": 1
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "istoria",
+            "subjectName": "Ιστορία",
+            "hours": 2
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "ergastiria_dex",
+            "subjectName": "Εργαστήρια Δεξιοτήτων",
+            "hours": 1
+          }
+        ]
       },
       {
         "id": "emp_04",
@@ -633,7 +1609,35 @@
         "branch": "ΠΕ02",
         "requiredHours": 10,
         "assignedHours": 11,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Β1: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)",
+          "Β1: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)",
+          "Γ1: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "ne_glossa",
+            "subjectName": "Νεοελληνική Γλώσσα & Γραμματεία",
+            "hours": 4
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "arxaia",
+            "subjectName": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+            "hours": 3
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "ne_glossa",
+            "subjectName": "Νεοελληνική Γλώσσα & Γραμματεία",
+            "hours": 4
+          }
+        ]
       },
       {
         "id": "emp_05",
@@ -641,7 +1645,27 @@
         "branch": "ΠΕ03",
         "requiredHours": 8,
         "assignedHours": 8,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Μαθηματικά (4 ώρ.)",
+          "Β1: Μαθηματικά (4 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "math",
+            "subjectName": "Μαθηματικά",
+            "hours": 4
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "math",
+            "subjectName": "Μαθηματικά",
+            "hours": 4
+          }
+        ]
       },
       {
         "id": "emp_06",
@@ -649,7 +1673,27 @@
         "branch": "ΠΕ03",
         "requiredHours": 8,
         "assignedHours": 8,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α2: Μαθηματικά (4 ώρ.)",
+          "Β2: Μαθηματικά (4 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "math",
+            "subjectName": "Μαθηματικά",
+            "hours": 4
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "math",
+            "subjectName": "Μαθηματικά",
+            "hours": 4
+          }
+        ]
       },
       {
         "id": "emp_07",
@@ -657,7 +1701,51 @@
         "branch": "ΠΕ04.01",
         "requiredHours": 8,
         "assignedHours": 8,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Φυσική (1 ώρ.)",
+          "Α2: Φυσική (1 ώρ.)",
+          "Β1: Φυσική (2 ώρ.)",
+          "Β2: Φυσική (2 ώρ.)",
+          "Γ1: Φυσική (2 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "fysiki",
+            "subjectName": "Φυσική",
+            "hours": 1
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "fysiki",
+            "subjectName": "Φυσική",
+            "hours": 1
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "fysiki",
+            "subjectName": "Φυσική",
+            "hours": 2
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "fysiki",
+            "subjectName": "Φυσική",
+            "hours": 2
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "fysiki",
+            "subjectName": "Φυσική",
+            "hours": 2
+          }
+        ]
       },
       {
         "id": "emp_08",
@@ -680,7 +1768,35 @@
           "5-5": "no",
           "5-6": "no",
           "5-7": "no"
-        }
+        },
+        "anathesi_mathimaton": [
+          "Β1: Χημεία (1 ώρ.)",
+          "Β2: Χημεία (1 ώρ.)",
+          "Γ1: Χημεία (1 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "ximeia",
+            "subjectName": "Χημεία",
+            "hours": 1
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "ximeia",
+            "subjectName": "Χημεία",
+            "hours": 1
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "ximeia",
+            "subjectName": "Χημεία",
+            "hours": 1
+          }
+        ]
       },
       {
         "id": "emp_09",
@@ -688,7 +1804,51 @@
         "branch": "ΠΕ04.04",
         "requiredHours": 5,
         "assignedHours": 5,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Βιολογία (1 ώρ.)",
+          "Α2: Βιολογία (1 ώρ.)",
+          "Β1: Βιολογία (1 ώρ.)",
+          "Β2: Βιολογία (1 ώρ.)",
+          "Γ1: Βιολογία (1 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "viologia",
+            "subjectName": "Βιολογία",
+            "hours": 1
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "viologia",
+            "subjectName": "Βιολογία",
+            "hours": 1
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "viologia",
+            "subjectName": "Βιολογία",
+            "hours": 1
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "viologia",
+            "subjectName": "Βιολογία",
+            "hours": 1
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "viologia",
+            "subjectName": "Βιολογία",
+            "hours": 1
+          }
+        ]
       },
       {
         "id": "emp_10",
@@ -704,7 +1864,35 @@
           "2-5": "no",
           "2-6": "no",
           "2-7": "no"
-        }
+        },
+        "anathesi_mathimaton": [
+          "Α1: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)",
+          "Α2: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)",
+          "Β2: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "xeni_glossa_2",
+            "subjectName": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+            "hours": 2
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "xeni_glossa_2",
+            "subjectName": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+            "hours": 2
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "xeni_glossa_2",
+            "subjectName": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+            "hours": 2
+          }
+        ]
       },
       {
         "id": "emp_11",
@@ -712,7 +1900,27 @@
         "branch": "ΠΕ07",
         "requiredHours": 4,
         "assignedHours": 4,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Β1: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)",
+          "Γ1: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "xeni_glossa_2",
+            "subjectName": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+            "hours": 2
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "xeni_glossa_2",
+            "subjectName": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+            "hours": 2
+          }
+        ]
       },
       {
         "id": "emp_12",
@@ -720,7 +1928,51 @@
         "branch": "ΠΕ06",
         "requiredHours": 10,
         "assignedHours": 10,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Αγγλικά (2 ώρ.)",
+          "Α2: Αγγλικά (2 ώρ.)",
+          "Β1: Αγγλικά (2 ώρ.)",
+          "Β2: Αγγλικά (2 ώρ.)",
+          "Γ1: Αγγλικά (2 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "agglika",
+            "subjectName": "Αγγλικά",
+            "hours": 2
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "agglika",
+            "subjectName": "Αγγλικά",
+            "hours": 2
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "agglika",
+            "subjectName": "Αγγλικά",
+            "hours": 2
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "agglika",
+            "subjectName": "Αγγλικά",
+            "hours": 2
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "agglika",
+            "subjectName": "Αγγλικά",
+            "hours": 2
+          }
+        ]
       },
       {
         "id": "emp_13",
@@ -728,7 +1980,51 @@
         "branch": "ΠΕ11",
         "requiredHours": 10,
         "assignedHours": 10,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Φυσική Αγωγή (2 ώρ.)",
+          "Α2: Φυσική Αγωγή (2 ώρ.)",
+          "Β1: Φυσική Αγωγή (2 ώρ.)",
+          "Β2: Φυσική Αγωγή (2 ώρ.)",
+          "Γ1: Φυσική Αγωγή (2 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "gymnastiki",
+            "subjectName": "Φυσική Αγωγή",
+            "hours": 2
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "gymnastiki",
+            "subjectName": "Φυσική Αγωγή",
+            "hours": 2
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "gymnastiki",
+            "subjectName": "Φυσική Αγωγή",
+            "hours": 2
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "gymnastiki",
+            "subjectName": "Φυσική Αγωγή",
+            "hours": 2
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "gymnastiki",
+            "subjectName": "Φυσική Αγωγή",
+            "hours": 2
+          }
+        ]
       },
       {
         "id": "emp_14",
@@ -736,7 +2032,51 @@
         "branch": "ΠΕ86",
         "requiredHours": 10,
         "assignedHours": 10,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Πληροφορική (2 ώρ.)",
+          "Α2: Πληροφορική (2 ώρ.)",
+          "Β1: Πληροφορική (2 ώρ.)",
+          "Β2: Πληροφορική (2 ώρ.)",
+          "Γ1: Πληροφορική (2 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "pliroforiki",
+            "subjectName": "Πληροφορική",
+            "hours": 2
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "pliroforiki",
+            "subjectName": "Πληροφορική",
+            "hours": 2
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "pliroforiki",
+            "subjectName": "Πληροφορική",
+            "hours": 2
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "pliroforiki",
+            "subjectName": "Πληροφορική",
+            "hours": 2
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "pliroforiki",
+            "subjectName": "Πληροφορική",
+            "hours": 2
+          }
+        ]
       },
       {
         "id": "emp_15",
@@ -744,7 +2084,27 @@
         "branch": "ΠΕ80",
         "requiredHours": 3,
         "assignedHours": 2,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Οικιακή Οικονομία (1 ώρ.)",
+          "Α2: Οικιακή Οικονομία (1 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "oikiaki",
+            "subjectName": "Οικιακή Οικονομία",
+            "hours": 1
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "oikiaki",
+            "subjectName": "Οικιακή Οικονομία",
+            "hours": 1
+          }
+        ]
       },
       {
         "id": "emp_16",
@@ -752,7 +2112,51 @@
         "branch": "ΠΕ08",
         "requiredHours": 5,
         "assignedHours": 5,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Εικαστικά (1 ώρ.)",
+          "Α2: Εικαστικά (1 ώρ.)",
+          "Β1: Εικαστικά (1 ώρ.)",
+          "Β2: Εικαστικά (1 ώρ.)",
+          "Γ1: Εικαστικά (1 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "eikastika",
+            "subjectName": "Εικαστικά",
+            "hours": 1
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "eikastika",
+            "subjectName": "Εικαστικά",
+            "hours": 1
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "eikastika",
+            "subjectName": "Εικαστικά",
+            "hours": 1
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "eikastika",
+            "subjectName": "Εικαστικά",
+            "hours": 1
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "eikastika",
+            "subjectName": "Εικαστικά",
+            "hours": 1
+          }
+        ]
       },
       {
         "id": "emp_17",
@@ -760,7 +2164,51 @@
         "branch": "ΠΕ79.01",
         "requiredHours": 5,
         "assignedHours": 5,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Μουσική (1 ώρ.)",
+          "Α2: Μουσική (1 ώρ.)",
+          "Β1: Μουσική (1 ώρ.)",
+          "Β2: Μουσική (1 ώρ.)",
+          "Γ1: Μουσική (1 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "mousiki",
+            "subjectName": "Μουσική",
+            "hours": 1
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "mousiki",
+            "subjectName": "Μουσική",
+            "hours": 1
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "mousiki",
+            "subjectName": "Μουσική",
+            "hours": 1
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "mousiki",
+            "subjectName": "Μουσική",
+            "hours": 1
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "mousiki",
+            "subjectName": "Μουσική",
+            "hours": 1
+          }
+        ]
       },
       {
         "id": "emp_18",
@@ -768,7 +2216,43 @@
         "branch": "ΠΕ04.05",
         "requiredHours": 6,
         "assignedHours": 6,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Γεωλογία - Γεωγραφία (1 ώρ.)",
+          "Α2: Γεωλογία - Γεωγραφία (1 ώρ.)",
+          "Β1: Γεωλογία - Γεωγραφία (2 ώρ.)",
+          "Β2: Γεωλογία - Γεωγραφία (2 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "geografia",
+            "subjectName": "Γεωλογία - Γεωγραφία",
+            "hours": 1
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "geografia",
+            "subjectName": "Γεωλογία - Γεωγραφία",
+            "hours": 1
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "geografia",
+            "subjectName": "Γεωλογία - Γεωγραφία",
+            "hours": 2
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "geografia",
+            "subjectName": "Γεωλογία - Γεωγραφία",
+            "hours": 2
+          }
+        ]
       },
       {
         "id": "emp_19",
@@ -776,7 +2260,19 @@
         "branch": "ΠΕ78",
         "requiredHours": 3,
         "assignedHours": 2,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Γ1: Κοινωνική & Πολιτική Αγωγή (2 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "kpa",
+            "subjectName": "Κοινωνική & Πολιτική Αγωγή",
+            "hours": 2
+          }
+        ]
       },
       {
         "id": "emp_20",
@@ -784,7 +2280,51 @@
         "branch": "ΠΕ82",
         "requiredHours": 5,
         "assignedHours": 5,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Α1: Τεχνολογία (1 ώρ.)",
+          "Α2: Τεχνολογία (1 ώρ.)",
+          "Β1: Τεχνολογία (1 ώρ.)",
+          "Β2: Τεχνολογία (1 ώρ.)",
+          "Γ1: Τεχνολογία (1 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_a1",
+            "className": "Α1",
+            "subjectId": "texnologia",
+            "subjectName": "Τεχνολογία",
+            "hours": 1
+          },
+          {
+            "classId": "c_a2",
+            "className": "Α2",
+            "subjectId": "texnologia",
+            "subjectName": "Τεχνολογία",
+            "hours": 1
+          },
+          {
+            "classId": "c_b1",
+            "className": "Β1",
+            "subjectId": "texnologia",
+            "subjectName": "Τεχνολογία",
+            "hours": 1
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "texnologia",
+            "subjectName": "Τεχνολογία",
+            "hours": 1
+          },
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "texnologia",
+            "subjectName": "Τεχνολογία",
+            "hours": 1
+          }
+        ]
       },
       {
         "id": "emp_21",
@@ -792,7 +2332,35 @@
         "branch": "ΠΕ02",
         "requiredHours": 10,
         "assignedHours": 9,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Β2: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)",
+          "Β2: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)",
+          "Β2: Ιστορία (2 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "ne_glossa",
+            "subjectName": "Νεοελληνική Γλώσσα & Γραμματεία",
+            "hours": 4
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "arxaia",
+            "subjectName": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+            "hours": 3
+          },
+          {
+            "classId": "c_b2",
+            "className": "Β2",
+            "subjectId": "istoria",
+            "subjectName": "Ιστορία",
+            "hours": 2
+          }
+        ]
       },
       {
         "id": "emp_22",
@@ -800,7 +2368,19 @@
         "branch": "ΠΕ03",
         "requiredHours": 4,
         "assignedHours": 4,
-        "timeOff": {}
+        "timeOff": {},
+        "anathesi_mathimaton": [
+          "Γ1: Μαθηματικά (4 ώρ.)"
+        ],
+        "assignments": [
+          {
+            "classId": "c_g1",
+            "className": "Γ1",
+            "subjectId": "math",
+            "subjectName": "Μαθηματικά",
+            "hours": 4
+          }
+        ]
       }
     ],
     "lessons": [
@@ -825,7 +2405,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ (ΠΕ02)"
       },
       {
         "id": "les_c_a1_arxaia",
@@ -848,7 +2430,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ (ΠΕ02)"
       },
       {
         "id": "les_c_a1_math",
@@ -871,7 +2455,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΔΗΜΗΤΡΙΟΥ ΚΩΝΣΤΑΝΤΙΝΟΣ (ΠΕ03)"
       },
       {
         "id": "les_c_a1_fysiki",
@@ -894,7 +2480,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ (ΠΕ04.01)"
       },
       {
         "id": "les_c_a1_viologia",
@@ -917,7 +2505,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ (ΠΕ04.04)"
       },
       {
         "id": "les_c_a1_geografia",
@@ -940,7 +2530,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ (ΠΕ04.05)"
       },
       {
         "id": "les_c_a1_istoria",
@@ -963,7 +2555,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ (ΠΕ02)"
       },
       {
         "id": "les_c_a1_thriskeutika",
@@ -986,7 +2580,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ (ΠΕ01)"
       },
       {
         "id": "les_c_a1_agglika",
@@ -1009,7 +2605,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ (ΠΕ06)"
       },
       {
         "id": "les_c_a1_xeni_glossa_2",
@@ -1032,7 +2630,9 @@
         "difficulty": 2,
         "isSplit": true,
         "splitType": "foreign_lang_2",
-        "syncGroupId": "sync_Α_xeni_glossa_2"
+        "syncGroupId": "sync_Α_xeni_glossa_2",
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ (ΠΕ05/ΠΕ07)"
       },
       {
         "id": "les_c_a1_gymnastiki",
@@ -1055,7 +2655,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ (ΠΕ11)"
       },
       {
         "id": "les_c_a1_mousiki",
@@ -1078,7 +2680,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ (ΠΕ79.01)"
       },
       {
         "id": "les_c_a1_eikastika",
@@ -1101,7 +2705,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ (ΠΕ08)"
       },
       {
         "id": "les_c_a1_pliroforiki",
@@ -1124,7 +2730,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ (ΠΕ86)"
       },
       {
         "id": "les_c_a1_texnologia",
@@ -1147,7 +2755,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ (ΠΕ81-84)"
       },
       {
         "id": "les_c_a1_oikiaki",
@@ -1170,7 +2780,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΩΝΣΤΑΝΤΙΝΙΔΟΥ ΕΥΑΓΓΕΛΙΑ (ΠΕ80)"
       },
       {
         "id": "les_c_a1_ergastiria_dex",
@@ -1193,7 +2805,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ (Όλοι)"
       },
       {
         "id": "les_c_a2_ne_glossa",
@@ -1216,7 +2830,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ (ΠΕ02)"
       },
       {
         "id": "les_c_a2_arxaia",
@@ -1239,7 +2855,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ (ΠΕ02)"
       },
       {
         "id": "les_c_a2_math",
@@ -1262,7 +2880,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΑΝΤΩΝΙΑΔΟΥ ΣΟΦΙΑ (ΠΕ03)"
       },
       {
         "id": "les_c_a2_fysiki",
@@ -1285,7 +2905,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ (ΠΕ04.01)"
       },
       {
         "id": "les_c_a2_viologia",
@@ -1308,7 +2930,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ (ΠΕ04.04)"
       },
       {
         "id": "les_c_a2_geografia",
@@ -1331,7 +2955,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ (ΠΕ04.05)"
       },
       {
         "id": "les_c_a2_istoria",
@@ -1354,7 +2980,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ (ΠΕ02)"
       },
       {
         "id": "les_c_a2_thriskeutika",
@@ -1377,7 +3005,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ (ΠΕ01)"
       },
       {
         "id": "les_c_a2_agglika",
@@ -1400,7 +3030,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ (ΠΕ06)"
       },
       {
         "id": "les_c_a2_xeni_glossa_2",
@@ -1423,7 +3055,9 @@
         "difficulty": 2,
         "isSplit": true,
         "splitType": "foreign_lang_2",
-        "syncGroupId": "sync_Α_xeni_glossa_2"
+        "syncGroupId": "sync_Α_xeni_glossa_2",
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ (ΠΕ05/ΠΕ07)"
       },
       {
         "id": "les_c_a2_gymnastiki",
@@ -1446,7 +3080,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ (ΠΕ11)"
       },
       {
         "id": "les_c_a2_mousiki",
@@ -1469,7 +3105,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ (ΠΕ79.01)"
       },
       {
         "id": "les_c_a2_eikastika",
@@ -1492,7 +3130,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ (ΠΕ08)"
       },
       {
         "id": "les_c_a2_pliroforiki",
@@ -1515,7 +3155,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ (ΠΕ86)"
       },
       {
         "id": "les_c_a2_texnologia",
@@ -1538,7 +3180,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ (ΠΕ81-84)"
       },
       {
         "id": "les_c_a2_oikiaki",
@@ -1561,7 +3205,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΩΝΣΤΑΝΤΙΝΙΔΟΥ ΕΥΑΓΓΕΛΙΑ (ΠΕ80)"
       },
       {
         "id": "les_c_a2_ergastiria_dex",
@@ -1584,7 +3230,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ (Όλοι)"
       },
       {
         "id": "les_c_b1_ne_glossa",
@@ -1607,7 +3255,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ (ΠΕ02)"
       },
       {
         "id": "les_c_b1_arxaia",
@@ -1630,7 +3280,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ (ΠΕ02)"
       },
       {
         "id": "les_c_b1_math",
@@ -1653,7 +3305,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΔΗΜΗΤΡΙΟΥ ΚΩΝΣΤΑΝΤΙΝΟΣ (ΠΕ03)"
       },
       {
         "id": "les_c_b1_fysiki",
@@ -1676,7 +3330,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ (ΠΕ04.01)"
       },
       {
         "id": "les_c_b1_ximeia",
@@ -1699,7 +3355,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ (ΠΕ04.02)"
       },
       {
         "id": "les_c_b1_viologia",
@@ -1722,7 +3380,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ (ΠΕ04.04)"
       },
       {
         "id": "les_c_b1_geografia",
@@ -1745,7 +3405,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ (ΠΕ04.05)"
       },
       {
         "id": "les_c_b1_istoria",
@@ -1768,7 +3430,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ (ΠΕ02)"
       },
       {
         "id": "les_c_b1_thriskeutika",
@@ -1791,7 +3455,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ (ΠΕ01)"
       },
       {
         "id": "les_c_b1_agglika",
@@ -1814,7 +3480,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ (ΠΕ06)"
       },
       {
         "id": "les_c_b1_xeni_glossa_2",
@@ -1837,7 +3505,9 @@
         "difficulty": 2,
         "isSplit": true,
         "splitType": "foreign_lang_2",
-        "syncGroupId": "sync_Β_xeni_glossa_2"
+        "syncGroupId": "sync_Β_xeni_glossa_2",
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΑΖΑΝΤΖΗ ΑΝΝΑ (ΠΕ05/ΠΕ07)"
       },
       {
         "id": "les_c_b1_gymnastiki",
@@ -1860,7 +3530,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ (ΠΕ11)"
       },
       {
         "id": "les_c_b1_mousiki",
@@ -1883,7 +3555,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ (ΠΕ79.01)"
       },
       {
         "id": "les_c_b1_eikastika",
@@ -1906,7 +3580,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ (ΠΕ08)"
       },
       {
         "id": "les_c_b1_pliroforiki",
@@ -1929,7 +3605,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ (ΠΕ86)"
       },
       {
         "id": "les_c_b1_texnologia",
@@ -1952,7 +3630,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ (ΠΕ81-84)"
       },
       {
         "id": "les_c_b1_ergastiria_dex",
@@ -1975,7 +3655,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ (Όλοι)"
       },
       {
         "id": "les_c_b2_ne_glossa",
@@ -1998,7 +3680,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ (ΠΕ02)"
       },
       {
         "id": "les_c_b2_arxaia",
@@ -2021,7 +3705,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ (ΠΕ02)"
       },
       {
         "id": "les_c_b2_math",
@@ -2044,7 +3730,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΑΝΤΩΝΙΑΔΟΥ ΣΟΦΙΑ (ΠΕ03)"
       },
       {
         "id": "les_c_b2_fysiki",
@@ -2067,7 +3755,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ (ΠΕ04.01)"
       },
       {
         "id": "les_c_b2_ximeia",
@@ -2090,7 +3780,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ (ΠΕ04.02)"
       },
       {
         "id": "les_c_b2_viologia",
@@ -2113,7 +3805,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ (ΠΕ04.04)"
       },
       {
         "id": "les_c_b2_geografia",
@@ -2136,7 +3830,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ (ΠΕ04.05)"
       },
       {
         "id": "les_c_b2_istoria",
@@ -2159,7 +3855,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ (ΠΕ02)"
       },
       {
         "id": "les_c_b2_thriskeutika",
@@ -2182,7 +3880,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ (ΠΕ01)"
       },
       {
         "id": "les_c_b2_agglika",
@@ -2205,7 +3905,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ (ΠΕ06)"
       },
       {
         "id": "les_c_b2_xeni_glossa_2",
@@ -2228,7 +3930,9 @@
         "difficulty": 2,
         "isSplit": true,
         "splitType": "foreign_lang_2",
-        "syncGroupId": "sync_Β_xeni_glossa_2"
+        "syncGroupId": "sync_Β_xeni_glossa_2",
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ (ΠΕ05/ΠΕ07)"
       },
       {
         "id": "les_c_b2_gymnastiki",
@@ -2251,7 +3955,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ (ΠΕ11)"
       },
       {
         "id": "les_c_b2_mousiki",
@@ -2274,7 +3980,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ (ΠΕ79.01)"
       },
       {
         "id": "les_c_b2_eikastika",
@@ -2297,7 +4005,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ (ΠΕ08)"
       },
       {
         "id": "les_c_b2_pliroforiki",
@@ -2320,7 +4030,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ (ΠΕ86)"
       },
       {
         "id": "les_c_b2_texnologia",
@@ -2343,7 +4055,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ (ΠΕ81-84)"
       },
       {
         "id": "les_c_b2_ergastiria_dex",
@@ -2366,7 +4080,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ (Όλοι)"
       },
       {
         "id": "les_c_g1_ne_glossa",
@@ -2389,7 +4105,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ (ΠΕ02)"
       },
       {
         "id": "les_c_g1_arxaia",
@@ -2412,7 +4130,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ (ΠΕ02)"
       },
       {
         "id": "les_c_g1_math",
@@ -2435,7 +4155,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΤΣΑΚΙΡΗΣ ΒΑΣΙΛΕΙΟΣ (ΠΕ03)"
       },
       {
         "id": "les_c_g1_fysiki",
@@ -2458,7 +4180,9 @@
         "difficulty": 3,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ (ΠΕ04.01)"
       },
       {
         "id": "les_c_g1_ximeia",
@@ -2481,7 +4205,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ (ΠΕ04.02)"
       },
       {
         "id": "les_c_g1_viologia",
@@ -2504,7 +4230,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ (ΠΕ04.04)"
       },
       {
         "id": "les_c_g1_istoria",
@@ -2527,7 +4255,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ (ΠΕ02)"
       },
       {
         "id": "les_c_g1_thriskeutika",
@@ -2550,7 +4280,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ (ΠΕ01)"
       },
       {
         "id": "les_c_g1_agglika",
@@ -2573,7 +4305,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ (ΠΕ06)"
       },
       {
         "id": "les_c_g1_xeni_glossa_2",
@@ -2596,7 +4330,9 @@
         "difficulty": 2,
         "isSplit": true,
         "splitType": "foreign_lang_2",
-        "syncGroupId": "sync_Γ_xeni_glossa_2"
+        "syncGroupId": "sync_Γ_xeni_glossa_2",
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΑΖΑΝΤΖΗ ΑΝΝΑ (ΠΕ05/ΠΕ07)"
       },
       {
         "id": "les_c_g1_kpa",
@@ -2619,7 +4355,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΒΑΡΕΛΑ ΧΡΙΣΤΙΝΑ (ΠΕ78)"
       },
       {
         "id": "les_c_g1_gymnastiki",
@@ -2642,7 +4380,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ (ΠΕ11)"
       },
       {
         "id": "les_c_g1_mousiki",
@@ -2665,7 +4405,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ (ΠΕ79.01)"
       },
       {
         "id": "les_c_g1_eikastika",
@@ -2688,7 +4430,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ (ΠΕ08)"
       },
       {
         "id": "les_c_g1_pliroforiki",
@@ -2711,7 +4455,9 @@
         "difficulty": 2,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ (ΠΕ86)"
       },
       {
         "id": "les_c_g1_texnologia",
@@ -2734,7 +4480,9 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ (ΠΕ81-84)"
       },
       {
         "id": "les_c_g1_ergastiria_dex",
@@ -2757,7 +4505,2345 @@
         "difficulty": 1,
         "isSplit": false,
         "splitType": null,
-        "syncGroupId": null
+        "syncGroupId": null,
+        "assigned": true,
+        "anathesi_ekpaideutikou": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ (Όλοι)"
+      }
+    ],
+    "autoAssignments": [
+      {
+        "tmima": "Α1",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 5,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_05",
+        "ekpaideutikos_onoma": "ΔΗΜΗΤΡΙΟΥ ΚΩΝΣΤΑΝΤΙΝΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Φυσική",
+        "ores": 1,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Γεωλογία - Γεωγραφία",
+        "ores": 1,
+        "klados": "ΠΕ04.05",
+        "ekpaideutikos_id": "emp_18",
+        "ekpaideutikos_onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_10",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Οικιακή Οικονομία",
+        "ores": 1,
+        "klados": "ΠΕ80",
+        "ekpaideutikos_id": "emp_15",
+        "ekpaideutikos_onoma": "ΚΩΝΣΤΑΝΤΙΝΙΔΟΥ ΕΥΑΓΓΕΛΙΑ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 5,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_02",
+        "ekpaideutikos_onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_02",
+        "ekpaideutikos_onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_06",
+        "ekpaideutikos_onoma": "ΑΝΤΩΝΙΑΔΟΥ ΣΟΦΙΑ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Φυσική",
+        "ores": 1,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Γεωλογία - Γεωγραφία",
+        "ores": 1,
+        "klados": "ΠΕ04.05",
+        "ekpaideutikos_id": "emp_18",
+        "ekpaideutikos_onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_02",
+        "ekpaideutikos_onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_10",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Οικιακή Οικονομία",
+        "ores": 1,
+        "klados": "ΠΕ80",
+        "ekpaideutikos_id": "emp_15",
+        "ekpaideutikos_onoma": "ΚΩΝΣΤΑΝΤΙΝΙΔΟΥ ΕΥΑΓΓΕΛΙΑ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 4,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_04",
+        "ekpaideutikos_onoma": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_04",
+        "ekpaideutikos_onoma": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_05",
+        "ekpaideutikos_onoma": "ΔΗΜΗΤΡΙΟΥ ΚΩΝΣΤΑΝΤΙΝΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Φυσική",
+        "ores": 2,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Χημεία",
+        "ores": 1,
+        "klados": "ΠΕ04.02",
+        "ekpaideutikos_id": "emp_08",
+        "ekpaideutikos_onoma": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Γεωλογία - Γεωγραφία",
+        "ores": 2,
+        "klados": "ΠΕ04.05",
+        "ekpaideutikos_id": "emp_18",
+        "ekpaideutikos_onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_11",
+        "ekpaideutikos_onoma": "ΚΑΖΑΝΤΖΗ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 4,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_21",
+        "ekpaideutikos_onoma": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_21",
+        "ekpaideutikos_onoma": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_06",
+        "ekpaideutikos_onoma": "ΑΝΤΩΝΙΑΔΟΥ ΣΟΦΙΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Φυσική",
+        "ores": 2,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Χημεία",
+        "ores": 1,
+        "klados": "ΠΕ04.02",
+        "ekpaideutikos_id": "emp_08",
+        "ekpaideutikos_onoma": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Γεωλογία - Γεωγραφία",
+        "ores": 2,
+        "klados": "ΠΕ04.05",
+        "ekpaideutikos_id": "emp_18",
+        "ekpaideutikos_onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_21",
+        "ekpaideutikos_onoma": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_10",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 4,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_04",
+        "ekpaideutikos_onoma": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_02",
+        "ekpaideutikos_onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_22",
+        "ekpaideutikos_onoma": "ΤΣΑΚΙΡΗΣ ΒΑΣΙΛΕΙΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Φυσική",
+        "ores": 2,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Χημεία",
+        "ores": 1,
+        "klados": "ΠΕ04.02",
+        "ekpaideutikos_id": "emp_08",
+        "ekpaideutikos_onoma": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_11",
+        "ekpaideutikos_onoma": "ΚΑΖΑΝΤΖΗ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Κοινωνική & Πολιτική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ78",
+        "ekpaideutikos_id": "emp_19",
+        "ekpaideutikos_onoma": "ΒΑΡΕΛΑ ΧΡΙΣΤΙΝΑ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      }
+    ],
+    "anathesis_mathimaton": [
+      {
+        "tmima": "Α1",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 5,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_05",
+        "ekpaideutikos_onoma": "ΔΗΜΗΤΡΙΟΥ ΚΩΝΣΤΑΝΤΙΝΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Φυσική",
+        "ores": 1,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Γεωλογία - Γεωγραφία",
+        "ores": 1,
+        "klados": "ΠΕ04.05",
+        "ekpaideutikos_id": "emp_18",
+        "ekpaideutikos_onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_10",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Οικιακή Οικονομία",
+        "ores": 1,
+        "klados": "ΠΕ80",
+        "ekpaideutikos_id": "emp_15",
+        "ekpaideutikos_onoma": "ΚΩΝΣΤΑΝΤΙΝΙΔΟΥ ΕΥΑΓΓΕΛΙΑ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 5,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_02",
+        "ekpaideutikos_onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_02",
+        "ekpaideutikos_onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_06",
+        "ekpaideutikos_onoma": "ΑΝΤΩΝΙΑΔΟΥ ΣΟΦΙΑ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Φυσική",
+        "ores": 1,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Γεωλογία - Γεωγραφία",
+        "ores": 1,
+        "klados": "ΠΕ04.05",
+        "ekpaideutikos_id": "emp_18",
+        "ekpaideutikos_onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_02",
+        "ekpaideutikos_onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_10",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Οικιακή Οικονομία",
+        "ores": 1,
+        "klados": "ΠΕ80",
+        "ekpaideutikos_id": "emp_15",
+        "ekpaideutikos_onoma": "ΚΩΝΣΤΑΝΤΙΝΙΔΟΥ ΕΥΑΓΓΕΛΙΑ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 4,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_04",
+        "ekpaideutikos_onoma": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_04",
+        "ekpaideutikos_onoma": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_05",
+        "ekpaideutikos_onoma": "ΔΗΜΗΤΡΙΟΥ ΚΩΝΣΤΑΝΤΙΝΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Φυσική",
+        "ores": 2,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Χημεία",
+        "ores": 1,
+        "klados": "ΠΕ04.02",
+        "ekpaideutikos_id": "emp_08",
+        "ekpaideutikos_onoma": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Γεωλογία - Γεωγραφία",
+        "ores": 2,
+        "klados": "ΠΕ04.05",
+        "ekpaideutikos_id": "emp_18",
+        "ekpaideutikos_onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_11",
+        "ekpaideutikos_onoma": "ΚΑΖΑΝΤΖΗ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 4,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_21",
+        "ekpaideutikos_onoma": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_21",
+        "ekpaideutikos_onoma": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_06",
+        "ekpaideutikos_onoma": "ΑΝΤΩΝΙΑΔΟΥ ΣΟΦΙΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Φυσική",
+        "ores": 2,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Χημεία",
+        "ores": 1,
+        "klados": "ΠΕ04.02",
+        "ekpaideutikos_id": "emp_08",
+        "ekpaideutikos_onoma": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Γεωλογία - Γεωγραφία",
+        "ores": 2,
+        "klados": "ΠΕ04.05",
+        "ekpaideutikos_id": "emp_18",
+        "ekpaideutikos_onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_21",
+        "ekpaideutikos_onoma": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_10",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 4,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_04",
+        "ekpaideutikos_onoma": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_02",
+        "ekpaideutikos_onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_22",
+        "ekpaideutikos_onoma": "ΤΣΑΚΙΡΗΣ ΒΑΣΙΛΕΙΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Φυσική",
+        "ores": 2,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Χημεία",
+        "ores": 1,
+        "klados": "ΠΕ04.02",
+        "ekpaideutikos_id": "emp_08",
+        "ekpaideutikos_onoma": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_11",
+        "ekpaideutikos_onoma": "ΚΑΖΑΝΤΖΗ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Κοινωνική & Πολιτική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ78",
+        "ekpaideutikos_id": "emp_19",
+        "ekpaideutikos_onoma": "ΒΑΡΕΛΑ ΧΡΙΣΤΙΝΑ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      }
+    ]
+  },
+  "aftomates_anatheseis": {
+    "katastasi": "Πλήρως συμπληρωμένες αυτόματες αναθέσεις (85/85 μαθήματα ανατεθειμένα)",
+    "synolika_mathimata": 85,
+    "synolikes_ores_didaskalias": 163,
+    "anatheseis_ana_ekpaideutiko": [
+      {
+        "id": "emp_01",
+        "onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ",
+        "klados": "ΠΕ01",
+        "ypoxreotiko_orario": 10,
+        "anatetheimenes_ores": 10,
+        "mathimata": [
+          "Α1: Θρησκευτικά / Ηθική (2 ώρ.)",
+          "Α2: Θρησκευτικά / Ηθική (2 ώρ.)",
+          "Β1: Θρησκευτικά / Ηθική (2 ώρ.)",
+          "Β2: Θρησκευτικά / Ηθική (2 ώρ.)",
+          "Γ1: Θρησκευτικά / Ηθική (2 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_02",
+        "onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ",
+        "klados": "ΠΕ02",
+        "ypoxreotiko_orario": 12,
+        "anatetheimenes_ores": 13,
+        "mathimata": [
+          "Α2: Νεοελληνική Γλώσσα & Γραμματεία (5 ώρ.)",
+          "Α2: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)",
+          "Α2: Ιστορία (2 ώρ.)",
+          "Γ1: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_03",
+        "onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ",
+        "klados": "ΠΕ02",
+        "ypoxreotiko_orario": 18,
+        "anatetheimenes_ores": 19,
+        "mathimata": [
+          "Α1: Νεοελληνική Γλώσσα & Γραμματεία (5 ώρ.)",
+          "Α1: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)",
+          "Α1: Ιστορία (2 ώρ.)",
+          "Α1: Εργαστήρια Δεξιοτήτων (1 ώρ.)",
+          "Α2: Εργαστήρια Δεξιοτήτων (1 ώρ.)",
+          "Β1: Ιστορία (2 ώρ.)",
+          "Β1: Εργαστήρια Δεξιοτήτων (1 ώρ.)",
+          "Β2: Εργαστήρια Δεξιοτήτων (1 ώρ.)",
+          "Γ1: Ιστορία (2 ώρ.)",
+          "Γ1: Εργαστήρια Δεξιοτήτων (1 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_04",
+        "onoma": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ",
+        "klados": "ΠΕ02",
+        "ypoxreotiko_orario": 10,
+        "anatetheimenes_ores": 11,
+        "mathimata": [
+          "Β1: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)",
+          "Β1: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)",
+          "Γ1: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_05",
+        "onoma": "ΔΗΜΗΤΡΙΟΥ ΚΩΝΣΤΑΝΤΙΝΟΣ",
+        "klados": "ΠΕ03",
+        "ypoxreotiko_orario": 8,
+        "anatetheimenes_ores": 8,
+        "mathimata": [
+          "Α1: Μαθηματικά (4 ώρ.)",
+          "Β1: Μαθηματικά (4 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_06",
+        "onoma": "ΑΝΤΩΝΙΑΔΟΥ ΣΟΦΙΑ",
+        "klados": "ΠΕ03",
+        "ypoxreotiko_orario": 8,
+        "anatetheimenes_ores": 8,
+        "mathimata": [
+          "Α2: Μαθηματικά (4 ώρ.)",
+          "Β2: Μαθηματικά (4 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_07",
+        "onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ",
+        "klados": "ΠΕ04.01",
+        "ypoxreotiko_orario": 8,
+        "anatetheimenes_ores": 8,
+        "mathimata": [
+          "Α1: Φυσική (1 ώρ.)",
+          "Α2: Φυσική (1 ώρ.)",
+          "Β1: Φυσική (2 ώρ.)",
+          "Β2: Φυσική (2 ώρ.)",
+          "Γ1: Φυσική (2 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_08",
+        "onoma": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ",
+        "klados": "ΠΕ04.02",
+        "ypoxreotiko_orario": 4,
+        "anatetheimenes_ores": 3,
+        "mathimata": [
+          "Β1: Χημεία (1 ώρ.)",
+          "Β2: Χημεία (1 ώρ.)",
+          "Γ1: Χημεία (1 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_09",
+        "onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ",
+        "klados": "ΠΕ04.04",
+        "ypoxreotiko_orario": 5,
+        "anatetheimenes_ores": 5,
+        "mathimata": [
+          "Α1: Βιολογία (1 ώρ.)",
+          "Α2: Βιολογία (1 ώρ.)",
+          "Β1: Βιολογία (1 ώρ.)",
+          "Β2: Βιολογία (1 ώρ.)",
+          "Γ1: Βιολογία (1 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_10",
+        "onoma": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ",
+        "klados": "ΠΕ05",
+        "ypoxreotiko_orario": 6,
+        "anatetheimenes_ores": 6,
+        "mathimata": [
+          "Α1: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)",
+          "Α2: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)",
+          "Β2: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_11",
+        "onoma": "ΚΑΖΑΝΤΖΗ ΑΝΝΑ",
+        "klados": "ΠΕ07",
+        "ypoxreotiko_orario": 4,
+        "anatetheimenes_ores": 4,
+        "mathimata": [
+          "Β1: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)",
+          "Γ1: 2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά) (2 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_12",
+        "onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ",
+        "klados": "ΠΕ06",
+        "ypoxreotiko_orario": 10,
+        "anatetheimenes_ores": 10,
+        "mathimata": [
+          "Α1: Αγγλικά (2 ώρ.)",
+          "Α2: Αγγλικά (2 ώρ.)",
+          "Β1: Αγγλικά (2 ώρ.)",
+          "Β2: Αγγλικά (2 ώρ.)",
+          "Γ1: Αγγλικά (2 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_13",
+        "onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ",
+        "klados": "ΠΕ11",
+        "ypoxreotiko_orario": 10,
+        "anatetheimenes_ores": 10,
+        "mathimata": [
+          "Α1: Φυσική Αγωγή (2 ώρ.)",
+          "Α2: Φυσική Αγωγή (2 ώρ.)",
+          "Β1: Φυσική Αγωγή (2 ώρ.)",
+          "Β2: Φυσική Αγωγή (2 ώρ.)",
+          "Γ1: Φυσική Αγωγή (2 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_14",
+        "onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ",
+        "klados": "ΠΕ86",
+        "ypoxreotiko_orario": 10,
+        "anatetheimenes_ores": 10,
+        "mathimata": [
+          "Α1: Πληροφορική (2 ώρ.)",
+          "Α2: Πληροφορική (2 ώρ.)",
+          "Β1: Πληροφορική (2 ώρ.)",
+          "Β2: Πληροφορική (2 ώρ.)",
+          "Γ1: Πληροφορική (2 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_15",
+        "onoma": "ΚΩΝΣΤΑΝΤΙΝΙΔΟΥ ΕΥΑΓΓΕΛΙΑ",
+        "klados": "ΠΕ80",
+        "ypoxreotiko_orario": 3,
+        "anatetheimenes_ores": 2,
+        "mathimata": [
+          "Α1: Οικιακή Οικονομία (1 ώρ.)",
+          "Α2: Οικιακή Οικονομία (1 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_16",
+        "onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ",
+        "klados": "ΠΕ08",
+        "ypoxreotiko_orario": 5,
+        "anatetheimenes_ores": 5,
+        "mathimata": [
+          "Α1: Εικαστικά (1 ώρ.)",
+          "Α2: Εικαστικά (1 ώρ.)",
+          "Β1: Εικαστικά (1 ώρ.)",
+          "Β2: Εικαστικά (1 ώρ.)",
+          "Γ1: Εικαστικά (1 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_17",
+        "onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ",
+        "klados": "ΠΕ79.01",
+        "ypoxreotiko_orario": 5,
+        "anatetheimenes_ores": 5,
+        "mathimata": [
+          "Α1: Μουσική (1 ώρ.)",
+          "Α2: Μουσική (1 ώρ.)",
+          "Β1: Μουσική (1 ώρ.)",
+          "Β2: Μουσική (1 ώρ.)",
+          "Γ1: Μουσική (1 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_18",
+        "onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ",
+        "klados": "ΠΕ04.05",
+        "ypoxreotiko_orario": 6,
+        "anatetheimenes_ores": 6,
+        "mathimata": [
+          "Α1: Γεωλογία - Γεωγραφία (1 ώρ.)",
+          "Α2: Γεωλογία - Γεωγραφία (1 ώρ.)",
+          "Β1: Γεωλογία - Γεωγραφία (2 ώρ.)",
+          "Β2: Γεωλογία - Γεωγραφία (2 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_19",
+        "onoma": "ΒΑΡΕΛΑ ΧΡΙΣΤΙΝΑ",
+        "klados": "ΠΕ78",
+        "ypoxreotiko_orario": 3,
+        "anatetheimenes_ores": 2,
+        "mathimata": [
+          "Γ1: Κοινωνική & Πολιτική Αγωγή (2 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_20",
+        "onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ",
+        "klados": "ΠΕ82",
+        "ypoxreotiko_orario": 5,
+        "anatetheimenes_ores": 5,
+        "mathimata": [
+          "Α1: Τεχνολογία (1 ώρ.)",
+          "Α2: Τεχνολογία (1 ώρ.)",
+          "Β1: Τεχνολογία (1 ώρ.)",
+          "Β2: Τεχνολογία (1 ώρ.)",
+          "Γ1: Τεχνολογία (1 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_21",
+        "onoma": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ",
+        "klados": "ΠΕ02",
+        "ypoxreotiko_orario": 10,
+        "anatetheimenes_ores": 9,
+        "mathimata": [
+          "Β2: Νεοελληνική Γλώσσα & Γραμματεία (4 ώρ.)",
+          "Β2: Αρχαία Ελληνική Γλώσσα & Γραμματεία (3 ώρ.)",
+          "Β2: Ιστορία (2 ώρ.)"
+        ]
+      },
+      {
+        "id": "emp_22",
+        "onoma": "ΤΣΑΚΙΡΗΣ ΒΑΣΙΛΕΙΟΣ",
+        "klados": "ΠΕ03",
+        "ypoxreotiko_orario": 4,
+        "anatetheimenes_ores": 4,
+        "mathimata": [
+          "Γ1: Μαθηματικά (4 ώρ.)"
+        ]
+      }
+    ],
+    "analytikes_anatheseis_mathimaton": [
+      {
+        "tmima": "Α1",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 5,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_05",
+        "ekpaideutikos_onoma": "ΔΗΜΗΤΡΙΟΥ ΚΩΝΣΤΑΝΤΙΝΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Φυσική",
+        "ores": 1,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Γεωλογία - Γεωγραφία",
+        "ores": 1,
+        "klados": "ΠΕ04.05",
+        "ekpaideutikos_id": "emp_18",
+        "ekpaideutikos_onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_10",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Οικιακή Οικονομία",
+        "ores": 1,
+        "klados": "ΠΕ80",
+        "ekpaideutikos_id": "emp_15",
+        "ekpaideutikos_onoma": "ΚΩΝΣΤΑΝΤΙΝΙΔΟΥ ΕΥΑΓΓΕΛΙΑ"
+      },
+      {
+        "tmima": "Α1",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 5,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_02",
+        "ekpaideutikos_onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_02",
+        "ekpaideutikos_onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_06",
+        "ekpaideutikos_onoma": "ΑΝΤΩΝΙΑΔΟΥ ΣΟΦΙΑ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Φυσική",
+        "ores": 1,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Γεωλογία - Γεωγραφία",
+        "ores": 1,
+        "klados": "ΠΕ04.05",
+        "ekpaideutikos_id": "emp_18",
+        "ekpaideutikos_onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_02",
+        "ekpaideutikos_onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_10",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Οικιακή Οικονομία",
+        "ores": 1,
+        "klados": "ΠΕ80",
+        "ekpaideutikos_id": "emp_15",
+        "ekpaideutikos_onoma": "ΚΩΝΣΤΑΝΤΙΝΙΔΟΥ ΕΥΑΓΓΕΛΙΑ"
+      },
+      {
+        "tmima": "Α2",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 4,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_04",
+        "ekpaideutikos_onoma": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_04",
+        "ekpaideutikos_onoma": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_05",
+        "ekpaideutikos_onoma": "ΔΗΜΗΤΡΙΟΥ ΚΩΝΣΤΑΝΤΙΝΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Φυσική",
+        "ores": 2,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Χημεία",
+        "ores": 1,
+        "klados": "ΠΕ04.02",
+        "ekpaideutikos_id": "emp_08",
+        "ekpaideutikos_onoma": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Γεωλογία - Γεωγραφία",
+        "ores": 2,
+        "klados": "ΠΕ04.05",
+        "ekpaideutikos_id": "emp_18",
+        "ekpaideutikos_onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_11",
+        "ekpaideutikos_onoma": "ΚΑΖΑΝΤΖΗ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Β1",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 4,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_21",
+        "ekpaideutikos_onoma": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_21",
+        "ekpaideutikos_onoma": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_06",
+        "ekpaideutikos_onoma": "ΑΝΤΩΝΙΑΔΟΥ ΣΟΦΙΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Φυσική",
+        "ores": 2,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Χημεία",
+        "ores": 1,
+        "klados": "ΠΕ04.02",
+        "ekpaideutikos_id": "emp_08",
+        "ekpaideutikos_onoma": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Γεωλογία - Γεωγραφία",
+        "ores": 2,
+        "klados": "ΠΕ04.05",
+        "ekpaideutikos_id": "emp_18",
+        "ekpaideutikos_onoma": "ΧΑΤΖΗΔΗΜΗΤΡΙΟΥ ΔΗΜΗΤΡΙΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_21",
+        "ekpaideutikos_onoma": "ΣΠΥΡΟΠΟΥΛΟΥ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_10",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΑΚΗ ΣΥΛΒΙΑ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Β2",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Νεοελληνική Γλώσσα & Γραμματεία",
+        "ores": 4,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_04",
+        "ekpaideutikos_onoma": "ΒΑΣΙΛΕΙΟΥ ΜΑΡΙΑ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Αρχαία Ελληνική Γλώσσα & Γραμματεία",
+        "ores": 3,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_02",
+        "ekpaideutikos_onoma": "ΙΩΑΝΝΙΔΟΥ ΕΛΕΝΗ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Μαθηματικά",
+        "ores": 4,
+        "klados": "ΠΕ03",
+        "ekpaideutikos_id": "emp_22",
+        "ekpaideutikos_onoma": "ΤΣΑΚΙΡΗΣ ΒΑΣΙΛΕΙΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Φυσική",
+        "ores": 2,
+        "klados": "ΠΕ04.01",
+        "ekpaideutikos_id": "emp_07",
+        "ekpaideutikos_onoma": "ΓΕΩΡΓΙΑΔΗΣ ΑΛΕΞΑΝΔΡΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Χημεία",
+        "ores": 1,
+        "klados": "ΠΕ04.02",
+        "ekpaideutikos_id": "emp_08",
+        "ekpaideutikos_onoma": "ΣΤΑΥΡΟΠΟΥΛΟΥ ΑΙΚΑΤΕΡΙΝΗ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Βιολογία",
+        "ores": 1,
+        "klados": "ΠΕ04.04",
+        "ekpaideutikos_id": "emp_09",
+        "ekpaideutikos_onoma": "ΜΙΧΑΗΛΙΔΗΣ ΧΡΗΣΤΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Ιστορία",
+        "ores": 2,
+        "klados": "ΠΕ02",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Θρησκευτικά / Ηθική",
+        "ores": 2,
+        "klados": "ΠΕ01",
+        "ekpaideutikos_id": "emp_01",
+        "ekpaideutikos_onoma": "ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Αγγλικά",
+        "ores": 2,
+        "klados": "ΠΕ06",
+        "ekpaideutikos_id": "emp_12",
+        "ekpaideutikos_onoma": "ΜΑΚΡΗ ΕΛΙΣΑΒΕΤ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "2η Ξένη Γλώσσα (Γαλλικά/Γερμανικά)",
+        "ores": 2,
+        "klados": "ΠΕ05/ΠΕ07",
+        "ekpaideutikos_id": "emp_11",
+        "ekpaideutikos_onoma": "ΚΑΖΑΝΤΖΗ ΑΝΝΑ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Κοινωνική & Πολιτική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ78",
+        "ekpaideutikos_id": "emp_19",
+        "ekpaideutikos_onoma": "ΒΑΡΕΛΑ ΧΡΙΣΤΙΝΑ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Φυσική Αγωγή",
+        "ores": 2,
+        "klados": "ΠΕ11",
+        "ekpaideutikos_id": "emp_13",
+        "ekpaideutikos_onoma": "ΑΘΑΝΑΣΙΑΔΗΣ ΠΑΝΑΓΙΩΤΗΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Μουσική",
+        "ores": 1,
+        "klados": "ΠΕ79.01",
+        "ekpaideutikos_id": "emp_17",
+        "ekpaideutikos_onoma": "ΘΕΟΔΩΡΙΔΗΣ ΣΠΥΡΙΔΩΝ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Εικαστικά",
+        "ores": 1,
+        "klados": "ΠΕ08",
+        "ekpaideutikos_id": "emp_16",
+        "ekpaideutikos_onoma": "ΜΩΡΑΪΤΟΥ ΑΝΤΙΓΟΝΗ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Πληροφορική",
+        "ores": 2,
+        "klados": "ΠΕ86",
+        "ekpaideutikos_id": "emp_14",
+        "ekpaideutikos_onoma": "ΝΙΚΟΛΑΟΥ ΑΘΑΝΑΣΙΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Τεχνολογία",
+        "ores": 1,
+        "klados": "ΠΕ81-84",
+        "ekpaideutikos_id": "emp_20",
+        "ekpaideutikos_onoma": "ΠΑΝΟΥ ΣΤΕΡΓΙΟΣ"
+      },
+      {
+        "tmima": "Γ1",
+        "mathima": "Εργαστήρια Δεξιοτήτων",
+        "ores": 1,
+        "klados": "Όλοι",
+        "ekpaideutikos_id": "emp_03",
+        "ekpaideutikos_onoma": "ΚΑΡΑΓΙΑΝΝΗΣ ΝΙΚΟΛΑΟΣ"
       }
     ]
   }
