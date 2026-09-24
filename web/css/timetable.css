@@ -188,18 +188,18 @@
   background: #fee2e2;
 }
 
-/* ── Pop-up Modal Τμήματος (Class Dialog) ────────────────────────────────── */
-.class-dialog {
+/* ── Pop-up Modal Τμήματος & Εκπαιδευτικού (Dialogs) ─────────────────────── */
+.class-dialog, .teacher-form-dialog {
   border: 1px solid var(--rule);
   border-radius: 8px;
   padding: 2rem;
-  max-width: 28rem;
+  max-width: 30rem;
   width: 100%;
   background: var(--card);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.class-dialog::backdrop {
+.class-dialog::backdrop, .teacher-form-dialog::backdrop {
   background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(2px);
 }
@@ -208,7 +208,8 @@
 .teachers-table-wrap, .lessons-table-wrap {
   overflow-x: auto;
   border: 1px solid var(--rule);
-  border-radius: 4px;
+  border-radius: 6px;
+  background: var(--card);
 }
 
 .teachers-table, .lessons-table {
@@ -218,16 +219,73 @@
 
 .teachers-table th, .lessons-table th {
   background: var(--paper);
-  padding: 0.75rem 1rem;
-  font-size: 0.8125rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.9375rem; /* 15px - Εμφανές και ευανάγνωστο */
+  font-weight: 600;
   text-align: left;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 2px solid var(--rule);
+  color: var(--ink);
+  white-space: nowrap;
 }
 
 .teachers-table td, .lessons-table td {
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
   border-bottom: 1px solid var(--rule);
-  font-size: 0.875rem;
+  font-size: 0.9375rem; /* 15px */
+  vertical-align: middle;
+}
+
+/* Μεγαλύτερο, έντονο και καθαρό font για Badges, Κλάδους & Ανατεθειμένες Ώρες */
+.timetable-app .badge {
+  font-family: var(--mono);
+  font-size: 0.84375rem; /* ~13.5px αντί για 10px */
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
+.branch-badge {
+  font-family: var(--mono);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  background: var(--wash);
+  color: var(--stamp-deep);
+  border: 1px solid var(--rule);
+  display: inline-block;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+
+.hours-status-badge {
+  font-family: var(--mono);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 700;
+  padding: 0.25rem 0.7rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.hours-status-badge.exact {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+.hours-status-badge.over {
+  background: #fee2e2;
+  color: var(--brick);
+  border: 1px solid #fca5a5;
+}
+
+.hours-status-badge.under {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fcd34d;
 }
 
 /* ── Μοντάλ Time-off ────────────────────────────────────────────────────── */
@@ -819,9 +877,9 @@
 
 .rem-badge {
   font-family: var(--sans);
-  font-weight: 600;
-  font-size: 0.8125rem;
-  padding: 0.2rem 0.5rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.6rem;
   border-radius: 4px;
   white-space: nowrap;
 }

@@ -2,7 +2,7 @@
 // Συντονίζει τα βήματα καταχώρισης (Σχολείο, Τμήματα, Εκπαιδευτικοί Time-off, Αναθέσεις, Solver & Matrix).
 
 import { store } from '../store.js';
-import { DAYS_OF_WEEK, SCHOOL_TYPES } from './curricula.js';
+import { DAYS_OF_WEEK, DEFAULT_BELL_TIMES, DIMOTIKO_ORGANICITIES, SCHOOL_TYPES } from './curricula.js';
 import { TimetableMatrix } from './matrix.js';
 import { createInitialTimetable, normalizeTimetable, populateCurriculumForClasses } from './model.js';
 import { TimetableSolver } from './solver.js';
@@ -122,12 +122,28 @@ export class TimetableUI {
             ).join('')}
           </select>
         </label>
+
+        ${this.timetable.schoolType === 'dimotiko' ? `
+          <label class="field">
+            <span class="label">Λειτουργικότητα / Οργανικότητα Δημοτικού</span>
+            <select id="tt-dimotiko-organicity">
+              ${Object.values(DIMOTIKO_ORGANICITIES).map(
+                (org) => `<option value="${org.id}" ${org.id === (this.timetable.dimotikoOrganicity || '6th_plus') ? 'selected' : ''}>${org.name}</option>`
+              ).join('')}
+            </select>
+          </label>
+        ` : ''}
       </div>
 
       <div class="classes-management-section">
         <div class="section-header">
           <h4>Τμήματα Σχολείου (${this.timetable.classes.length})</h4>
-          <button class="primary" id="btn-add-class">+ Προσθήκη Τμήματος</button>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            ${this.timetable.schoolType === 'dimotiko' ? `
+              <button type="button" class="secondary" id="btn-reset-dimotiko-classes" title="Αυτόματος ορισμός των 6 αυτόνομων τάξεων (Α1 έως ΣΤ1)">⚡ Αυτόματα 6 Τμήματα (Α1-ΣΤ1)</button>
+            ` : ''}
+            <button class="primary" id="btn-add-class">+ Προσθήκη Τμήματος</button>
+          </div>
         </div>
         <div class="classes-grid" id="classes-list"></div>
       </div>
@@ -148,6 +164,41 @@ export class TimetableUI {
       } else {
         e.target.value = this.timetable.schoolType;
       }
+    };
+
+    // Organicity change for Dimotiko
+    const organicitySelect = div.querySelector('#tt-dimotiko-organicity');
+    if (organicitySelect) {
+      organicitySelect.onchange = (e) => {
+        const orgId = e.target.value;
+        const org = DIMOTIKO_ORGANICITIES[orgId];
+        if (!org) return;
+        if (confirm(`Προσαρμογή τμημάτων και ωρών στη λειτουργικότητα «${org.shortName}»; Αυτό θα ενημερώσει τα τμήματα και τις ώρες ανά ημέρα.`)) {
+          this.timetable.dimotikoOrganicity = orgId;
+          this.timetable.periodsPerDay = org.periodsPerDay;
+          this.timetable.bellTimes = JSON.parse(JSON.stringify(DEFAULT_BELL_TIMES[org.bell]));
+          this.timetable.classes = JSON.parse(JSON.stringify(org.defaultClasses));
+          this.save();
+          this.render();
+        } else {
+          e.target.value = this.timetable.dimotikoOrganicity || '6th_plus';
+        }
+      };
+    }
+
+    // Reset 6 classes button for Dimotiko
+    const resetDimotikoBtn = div.querySelector('#btn-reset-dimotiko-classes');
+    if (resetDimotikoBtn) {
+      resetDimotikoBtn.onclick = () => {
+        if (confirm('Επαναφορά των 6 αυτόνομων τμημάτων (Α1, Β1, Γ1, Δ1, Ε1, ΣΤ1);')) {
+          this.timetable.dimotikoOrganicity = '6th_plus';
+          this.timetable.periodsPerDay = 6;
+          this.timetable.bellTimes = JSON.parse(JSON.stringify(DEFAULT_BELL_TIMES.primary));
+          this.timetable.classes = JSON.parse(JSON.stringify(DIMOTIKO_ORGANICITIES['6th_plus'].defaultClasses));
+          this.save();
+          this.render();
+        }
+      };
     };
 
     // Render classes
@@ -401,23 +452,9 @@ export class TimetableUI {
       alert(`Συγχρονίστηκαν ${added} εκπαιδευτικοί!`);
     };
 
-    // Add manual teacher
+    // Add manual teacher with Pop-up Modal
     div.querySelector('#btn-add-teacher').onclick = () => {
-      const name = prompt('Ονοματεπώνυμο εκπαιδευτικού:');
-      if (!name) return;
-      const branch = prompt('Κλάδος (π.χ. ΠΕ02, ΠΕ03, ΠΕ04, ΠΕ86):', 'ΠΕ02') || 'ΠΕ';
-      const hours = Number(prompt('Υποχρεωτικό εβδομαδιαίο διδακτικό ωράριο (ώρες):', '20')) || 20;
-
-      this.timetable.teachers.push({
-        id: `t_${Date.now()}`,
-        name: name.trim().toUpperCase(),
-        branch: branch.trim().toUpperCase(),
-        requiredHours: hours,
-        assignedHours: 0,
-        timeOff: {},
-      });
-      this.save();
-      this.render();
+      this.openTeacherFormModal(null, () => this.render());
     };
 
     const tbody = div.querySelector('#teachers-tbody');
@@ -453,29 +490,35 @@ export class TimetableUI {
 
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td><strong>${t.name}</strong></td>
-        <td><span class="badge">${t.branch || '—'}</span></td>
+        <td><strong style="font-size: 0.9375rem;">${t.name}</strong></td>
+        <td><span class="branch-badge">${t.branch || '—'}</span></td>
         <td>
-          <input type="number" min="1" max="30" value="${t.requiredHours || 21}" class="input-hours" style="width: 4rem;"> ώρες
+          <input type="number" min="1" max="30" value="${t.requiredHours || 24}" class="input-hours" style="width: 4.5rem; font-size: 0.9375rem; font-weight: bold; text-align: center;"> <span style="font-weight: 500;">ώρες</span>
         </td>
         <td>
-          <span class="badge ${assigned === t.requiredHours ? 'success' : assigned > t.requiredHours ? 'danger' : 'warn'}">
+          <span class="hours-status-badge ${assigned === t.requiredHours ? 'exact' : assigned > t.requiredHours ? 'over' : 'under'}">
             ${assigned} / ${t.requiredHours} ώρες
           </span>
         </td>
         <td>
           <button class="btn-timeoff">📅 Πλέγμα Διαθεσιμότητας</button>
         </td>
-        <td class="row-actions">
-          <button class="danger btn-del-t">Διαγραφή</button>
+        <td class="row-actions" style="display: flex; gap: 0.35rem; align-items: center;">
+          <button class="chip-edit btn-edit-t" title="Επεξεργασία">✎</button>
+          <button class="danger btn-del-t" title="Διαγραφή">✕</button>
         </td>
       `;
 
       // Change hours
       row.querySelector('.input-hours').onchange = (e) => {
-        t.requiredHours = Number(e.target.value) || 21;
+        t.requiredHours = Number(e.target.value) || 24;
         this.save();
         this.render();
+      };
+
+      // Edit teacher
+      row.querySelector('.btn-edit-t').onclick = () => {
+        this.openTeacherFormModal(t, () => this.render());
       };
 
       // Open Time-off modal
@@ -494,6 +537,136 @@ export class TimetableUI {
 
       tbody.append(row);
     });
+  }
+
+  // Pop-up modal για προσθήκη / επεξεργασία εκπαιδευτικού σε ενιαίο παράθυρο (Προεπιλογή: 24 ώρες)
+  openTeacherFormModal(teacherToEdit = null, onSaved = null) {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'teacher-form-dialog';
+
+    const defaultHours = teacherToEdit ? teacherToEdit.requiredHours : 24; // Προεπιλογή 24 ώρες βάσει οδηγίας
+    const defaultName = teacherToEdit ? teacherToEdit.name : '';
+    const defaultBranch = teacherToEdit ? teacherToEdit.branch : (this.timetable.schoolType === 'dimotiko' ? 'ΠΕ70' : 'ΠΕ02');
+
+    const commonBranches = [
+      { code: 'ΠΕ70', label: 'ΠΕ70 - Δάσκαλοι' },
+      { code: 'ΠΕ60', label: 'ΠΕ60 - Νηπιαγωγοί' },
+      { code: 'ΠΕ02', label: 'ΠΕ02 - Φιλόλογοι' },
+      { code: 'ΠΕ03', label: 'ΠΕ03 - Μαθηματικοί' },
+      { code: 'ΠΕ04.01', label: 'ΠΕ04.01 - Φυσικοί' },
+      { code: 'ΠΕ04.02', label: 'ΠΕ04.02 - Χημικοί' },
+      { code: 'ΠΕ04.04', label: 'ΠΕ04.04 - Βιολόγοι' },
+      { code: 'ΠΕ04.05', label: 'ΠΕ04.05 - Γεωλόγοι' },
+      { code: 'ΠΕ06', label: 'ΠΕ06 - Αγγλικής' },
+      { code: 'ΠΕ05', label: 'ΠΕ05 - Γαλλικής' },
+      { code: 'ΠΕ07', label: 'ΠΕ07 - Γερμανικής' },
+      { code: 'ΠΕ11', label: 'ΠΕ11 - Φυσικής Αγωγής' },
+      { code: 'ΠΕ79.01', label: 'ΠΕ79.01 - Μουσικής' },
+      { code: 'ΠΕ08', label: 'ΠΕ08 - Εικαστικών' },
+      { code: 'ΠΕ86', label: 'ΠΕ86 - Πληροφορικής' },
+      { code: 'ΠΕ91.01', label: 'ΠΕ91.01 - Θεατρικής Αγωγής' },
+      { code: 'ΠΕ80', label: 'ΠΕ80 - Οικονομίας' },
+      { code: 'other', label: '— Άλλος κλάδος (πληκτρολόγηση) —' },
+    ];
+
+    const isKnownBranch = commonBranches.some((b) => b.code === defaultBranch);
+
+    dialog.innerHTML = `
+      <div class="dialog-content">
+        <div class="dialog-header">
+          <h3>${teacherToEdit ? 'Επεξεργασία Εκπαιδευτικού' : 'Προσθήκη Νέου Εκπαιδευτικού'}</h3>
+          <p class="hint">Συμπληρώστε το ονοματεπώνυμο, τον κλάδο και το υποχρεωτικό διδακτικό ωράριο.</p>
+        </div>
+
+        <form id="form-teacher-modal" style="margin-top: 1.25rem; display: flex; flex-direction: column; gap: 1rem;">
+          <label class="field">
+            <span class="label">Ονοματεπώνυμο</span>
+            <input type="text" id="tmodal-name" value="${defaultName}" placeholder="π.χ. ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΕΩΡΓΙΟΣ" required autofocus style="font-weight: 600;">
+          </label>
+
+          <label class="field">
+            <span class="label">Κλάδος / Ειδικότητα</span>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
+              <select id="tmodal-branch-select">
+                ${commonBranches.map(
+                  (b) => `<option value="${b.code}" ${b.code === (isKnownBranch ? defaultBranch : 'other') ? 'selected' : ''}>${b.label}</option>`
+                ).join('')}
+              </select>
+              <input type="text" id="tmodal-branch-custom" value="${defaultBranch}" placeholder="π.χ. ΠΕ02 ή ΠΕ88.01" style="${isKnownBranch ? 'display: none;' : ''}">
+            </div>
+          </label>
+
+          <label class="field">
+            <span class="label">Υποχρεωτικό Ωράριο (ώρες/εβδομάδα)</span>
+            <div style="display: flex; align-items: center; gap: 0.6rem;">
+              <input type="number" id="tmodal-hours" min="1" max="30" value="${defaultHours}" style="width: 5.5rem; font-size: 1rem; font-weight: bold; text-align: center;">
+              <span class="hint" style="font-weight: 500;">(Προεπιλογή: 24 ώρες)</span>
+            </div>
+          </label>
+
+          <div class="toolbar" style="margin-top: 1.5rem; justify-content: flex-end; gap: 0.75rem;">
+            <button type="button" class="btn-cancel">Άκυρο</button>
+            <button type="submit" class="primary">Αποθήκευση</button>
+          </div>
+        </form>
+      </div>
+    `;
+
+    const branchSelect = dialog.querySelector('#tmodal-branch-select');
+    const branchCustom = dialog.querySelector('#tmodal-branch-custom');
+
+    branchSelect.onchange = () => {
+      if (branchSelect.value === 'other') {
+        branchCustom.style.display = 'block';
+        branchCustom.focus();
+      } else {
+        branchCustom.style.display = 'none';
+        branchCustom.value = branchSelect.value;
+      }
+    };
+
+    const close = () => {
+      dialog.close();
+      dialog.remove();
+    };
+
+    dialog.querySelector('.btn-cancel').onclick = close;
+
+    dialog.querySelector('#form-teacher-modal').onsubmit = (e) => {
+      e.preventDefault();
+      const name = dialog.querySelector('#tmodal-name').value.trim().toUpperCase();
+      let branch = (branchSelect.value === 'other' ? branchCustom.value : branchSelect.value).trim().toUpperCase();
+      if (!branch) branch = this.timetable.schoolType === 'dimotiko' ? 'ΠΕ70' : 'ΠΕ02';
+      const hours = parseInt(dialog.querySelector('#tmodal-hours').value, 10) || 24;
+
+      if (!name) {
+        alert('Παρακαλώ εισαγάγετε ονοματεπώνυμο.');
+        return;
+      }
+
+      if (teacherToEdit) {
+        teacherToEdit.name = name;
+        teacherToEdit.branch = branch;
+        teacherToEdit.requiredHours = hours;
+      } else {
+        this.timetable.teachers.push({
+          id: `t_${Date.now()}`,
+          name,
+          branch,
+          requiredHours: hours,
+          assignedHours: 0,
+          timeOff: {},
+        });
+      }
+
+      this.save();
+      close();
+      if (onSaved) onSaved();
+      else this.render();
+    };
+
+    document.body.append(dialog);
+    dialog.showModal();
   }
 
   // Μοντάλ Διαθεσιμότητας aSc Time-off Matrix
@@ -716,24 +889,24 @@ export class TimetableUI {
             `}
           </div>
         </td>
-        <td><small>${les.branch || '—'}</small></td>
+        <td><span class="branch-badge">${les.branch || '—'}</span></td>
         <td>
           ${teacher ? `
             <button type="button" class="btn-teacher-select assigned" title="Κλικ για αλλαγή ανάθεσης εκπαιδευτικού">
               <div class="assigned-teacher-label">
-                <strong>${teacher.name}</strong>
-                <span class="badge muted" style="font-size: 0.6875rem;">${teacher.branch || '—'}</span>
+                <strong style="font-size: 0.9375rem;">${teacher.name}</strong>
+                <span class="branch-badge" style="font-size: 0.8125rem; padding: 0.1rem 0.45rem;">${teacher.branch || '—'}</span>
               </div>
-              <span class="rem-badge ${remClass}" style="font-size: 0.75rem;">
+              <span class="rem-badge ${remClass}" style="font-size: 0.8125rem;">
                 ${teacherRemainingInfo}
               </span>
               <span class="edit-icon">✎</span>
             </button>
           ` : `
             <button type="button" class="btn-teacher-select unassigned" title="Κλικ για επιλογή εκπαιδευτικού από τη λίστα">
-              <span style="font-size: 1rem; font-weight: bold; color: var(--stamp);">＋</span>
-              <span>Επιλογή Εκπαιδευτικού</span>
-              ${les.branch ? `<span class="badge highlight" style="font-size: 0.7rem; margin-left: auto;">${les.branch}</span>` : ''}
+              <span style="font-size: 1.125rem; font-weight: bold; color: var(--stamp);">＋</span>
+              <span style="font-weight: 600;">Επιλογή Εκπαιδευτικού</span>
+              ${les.branch ? `<span class="branch-badge" style="font-size: 0.8125rem; margin-left: auto;">${les.branch}</span>` : ''}
             </button>
           `}
         </td>
@@ -952,12 +1125,12 @@ export class TimetableUI {
           <div class="teacher-pick-info">
             <div class="teacher-pick-title-row">
               <span class="teacher-pick-name">${t.name}</span>
-              <span class="badge ${isMatchingBranch ? 'success' : 'muted'}">${t.branch || '—'}</span>
+              <span class="branch-badge" style="font-size: 0.8125rem; padding: 0.15rem 0.5rem;">${t.branch || '—'}</span>
               ${isCurrent ? '<span class="badge" style="background: var(--stamp); color: white;">✓ Τρέχουσα Ανάθεση</span>' : ''}
               ${isMatchingBranch && !isCurrent ? '<span class="badge highlight">Συμβατός Κλάδος</span>' : ''}
             </div>
             <span class="teacher-pick-sub">
-              Υποχρεωτικό ωράριο: <strong>${t.requiredHours || 20} ώρες</strong> &bull; Ήδη ανατεθειμένες: <strong>${assigned} ώρες</strong>
+              Υποχρεωτικό ωράριο: <strong>${t.requiredHours || 24} ώρες</strong> &bull; Ήδη ανατεθειμένες: <strong>${assigned} ώρες</strong>
             </span>
           </div>
 

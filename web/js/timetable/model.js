@@ -1,23 +1,35 @@
 // model.js — Μοντέλο Δεδομένων & Κανόνες Εγκυρότητας Ωρολογίου Προγράμματος
 // Υποστηρίζει Τμήματα, Εκπαιδευτικούς, Διαθεσιμότητα (Time-off), Αίθουσες, Μαθήματα/Κάρτες και Διασπάσεις Τμημάτων.
 
-import { CURRICULA, DAYS_OF_WEEK, DEFAULT_BELL_TIMES, SCHOOL_TYPES, SPECIAL_ROOMS } from './curricula.js';
+import { CURRICULA, DAYS_OF_WEEK, DEFAULT_BELL_TIMES, DIMOTIKO_ORGANICITIES, SCHOOL_TYPES, SPECIAL_ROOMS } from './curricula.js';
 
 export function createInitialTimetable(schoolType = 'gymnasio') {
   const typeConfig = SCHOOL_TYPES[schoolType] || SCHOOL_TYPES.gymnasio;
   const bell = schoolType === 'dimotiko' ? DEFAULT_BELL_TIMES.primary : DEFAULT_BELL_TIMES.secondary;
 
+  const defaultClasses = schoolType === 'dimotiko'
+    ? [
+        { id: 'c_a1', name: 'Α1', grade: 'Α' },
+        { id: 'c_b1', name: 'Β1', grade: 'Β' },
+        { id: 'c_g1', name: 'Γ1', grade: 'Γ' },
+        { id: 'c_d1', name: 'Δ1', grade: 'Δ' },
+        { id: 'c_e1', name: 'Ε1', grade: 'Ε' },
+        { id: 'c_st1', name: 'ΣΤ1', grade: 'ΣΤ' },
+      ]
+    : [
+        { id: 'c_1', name: 'Α1', grade: 'Α' },
+        { id: 'c_2', name: 'Α2', grade: 'Α' },
+        { id: 'c_3', name: 'Β1', grade: 'Β' },
+      ];
+
   return {
     version: 1,
     schoolType,
+    dimotikoOrganicity: schoolType === 'dimotiko' ? '6th_plus' : null,
     periodsPerDay: typeConfig.periodsPerDay,
     daysCount: 5,
     bellTimes: JSON.parse(JSON.stringify(bell)),
-    classes: [
-      { id: 'c_1', name: 'Α1', grade: 'Α' },
-      { id: 'c_2', name: 'Α2', grade: 'Α' },
-      { id: 'c_3', name: 'Β1', grade: 'Β' },
-    ],
+    classes: defaultClasses,
     rooms: JSON.parse(JSON.stringify(SPECIAL_ROOMS)),
     teachers: [], // Θα τροφοδοτηθεί αυτόματα από το κατάστημα εργαζομένων ή χειροκίνητα
     lessons: [],
@@ -37,9 +49,20 @@ export function createInitialTimetable(schoolType = 'gymnasio') {
 export function normalizeTimetable(tt) {
   if (!tt || typeof tt !== 'object') return createInitialTimetable('gymnasio');
   if (!tt.schoolType) tt.schoolType = 'gymnasio';
+  if (tt.schoolType === 'dimotiko' && !tt.dimotikoOrganicity) tt.dimotikoOrganicity = '6th_plus';
   const typeConfig = SCHOOL_TYPES[tt.schoolType] || SCHOOL_TYPES.gymnasio;
   if (!tt.periodsPerDay) tt.periodsPerDay = typeConfig.periodsPerDay || 7;
   if (!Array.isArray(tt.classes)) tt.classes = [];
+  if (tt.schoolType === 'dimotiko' && tt.classes.length === 0) {
+    tt.classes = [
+      { id: 'c_a1', name: 'Α1', grade: 'Α' },
+      { id: 'c_b1', name: 'Β1', grade: 'Β' },
+      { id: 'c_g1', name: 'Γ1', grade: 'Γ' },
+      { id: 'c_d1', name: 'Δ1', grade: 'Δ' },
+      { id: 'c_e1', name: 'Ε1', grade: 'Ε' },
+      { id: 'c_st1', name: 'ΣΤ1', grade: 'ΣΤ' },
+    ];
+  }
   if (!Array.isArray(tt.teachers)) tt.teachers = [];
   if (!Array.isArray(tt.lessons)) tt.lessons = [];
   else {
