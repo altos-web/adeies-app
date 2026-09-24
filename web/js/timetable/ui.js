@@ -1147,6 +1147,11 @@ export class TimetableUI {
       this.save();
     }
 
+    const allLessons = this.timetable.lessons || [];
+    const activeLessons = allLessons.filter((l) => Number(l.hours) > 0);
+    const assignedCount = activeLessons.filter((l) => l.teacherId && String(l.teacherId).trim()).length;
+    const unassignedCount = activeLessons.filter((l) => !l.teacherId || !String(l.teacherId).trim()).length;
+
     const div = document.createElement('div');
     div.className = 'panel-step';
 
@@ -1154,7 +1159,7 @@ export class TimetableUI {
       <div class="step-intro">
         <h3>Βήμα 3: Μαθήματα & Αναθέσεις Διδασκαλίας</h3>
         <p class="hint">
-          Ορίστε τις ώρες διδασκαλίας κάθε μαθήματος ανά τμήμα (προεπιλεγμένες βάσει νομοθεσίας) και αναθέστε τους κατάλληλους εκπαιδευτικούς μέσω του αναδυόμενου πίνακα διαθεσιμότητας.
+          Ορίστε τις ώρες διδασκαλίας κάθε μαθήματος ανά τμήμα (προεπιλεγμένες βάσει νομοθεσίας) και αναθέστε τους κατάλληλους εκπαιδευτικούς. <em>Σημείωση: Μαθήματα χωρίς ανάθεση εκπαιδευτικού δεν διδάσκονται και δεν εντάσσονται στο πρόγραμμα.</em>
         </p>
       </div>
 
@@ -1163,7 +1168,8 @@ export class TimetableUI {
         <button type="button" class="secondary" id="btn-auto-assign-teachers" title="Αυτόματη ανάθεση εκπαιδευτικών αντίστοιχης ειδικότητας βάσει διαθέσιμων ωρών">
           ⚡ Αυτόματη Συμπλήρωση Εκπαιδευτικών
         </button>
-        <span class="badge info">${(this.timetable.lessons || []).length} ενεργά μαθήματα</span>
+        <span class="badge success" title="Μαθήματα που θα διδαχθούν">${assignedCount} με ανάθεση</span>
+        ${unassignedCount > 0 ? `<span class="badge warn" title="Μαθήματα χωρίς εκπαιδευτικό δεν διδάσκονται και δεν μπαίνουν στο πρόγραμμα">${unassignedCount} χωρίς ανάθεση (δεν διδάσκονται)</span>` : ''}
 
         <div style="margin-left: auto; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
           <div id="class-cycle-wrapper" style="display: none; align-items: center; gap: 0.35rem; background: rgba(59, 130, 246, 0.08); padding: 0.2rem 0.6rem; border-radius: 4px; border: 1px solid var(--rule);">
@@ -1415,6 +1421,9 @@ export class TimetableUI {
               <span style="font-weight: 600;">Επιλογή Εκπαιδευτικού</span>
               ${les.branch ? `<span class="branch-badge" style="font-size: 0.8125rem; margin-left: auto;">${les.branch}</span>` : ''}
             </button>
+            <div style="font-size: 0.6875rem; color: var(--brick); margin-top: 0.25rem; font-weight: 500;">
+              ⚠️ Χωρίς εκπαιδευτικό — Δεν θα διδαχθεί
+            </div>
           `)}
         </td>
         <td>
@@ -1855,11 +1864,20 @@ export class TimetableUI {
 
     // Run Solver
     div.querySelector('#btn-run-solver').onclick = () => {
-      // Έλεγχος αν υπάρχουν ανατεθειμένοι καθηγητές
       const lessons = this.timetable.lessons || [];
-      const unassignedCount = lessons.filter((l) => !l.teacherId).length;
-      if (unassignedCount > 0) {
-        if (!confirm(`Υπάρχουν ${unassignedCount} μαθήματα χωρίς ανάθεση εκπαιδευτικού. Θέλετε να συνεχίσετε;`)) {
+      const assignedLessons = lessons.filter((l) => Number(l.hours) > 0 && l.teacherId && String(l.teacherId).trim());
+      const unassignedLessons = lessons.filter((l) => Number(l.hours) > 0 && (!l.teacherId || !String(l.teacherId).trim()));
+
+      if (assignedLessons.length === 0) {
+        alert('Δεν υπάρχουν μαθήματα με ανάθεση εκπαιδευτικού! Παρακαλώ αναθέστε εκπαιδευτικούς στο Βήμα 3 («Μαθήματα & Αναθέσεις») ή πατήστε «Αυτόματη Συμπλήρωση Εκπαιδευτικών».');
+        return;
+      }
+
+      if (unassignedLessons.length > 0) {
+        const unassignedHours = unassignedLessons.reduce((sum, l) => sum + (Number(l.hours) || 0), 0);
+        const assignedHours = assignedLessons.reduce((sum, l) => sum + (Number(l.hours) || 0), 0);
+        const confirmMsg = `Ενημέρωση:\nΥπάρχουν ${unassignedLessons.length} μαθήματα (${unassignedHours} ώρες) χωρίς ανάθεση εκπαιδευτικού.\n\nΣύμφωνα με τους κανονισμούς, τα μαθήματα αυτά ΔΕΝ θα διδαχθούν και ΔΕΝ θα συμπεριληφθούν στο ωρολόγιο πρόγραμμα.\n\nΘέλετε να καταρτιστεί το πρόγραμμα για τις ${assignedHours} ανατεθειμένες ώρες;`;
+        if (!confirm(confirmMsg)) {
           return;
         }
       }

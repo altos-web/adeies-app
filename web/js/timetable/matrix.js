@@ -107,13 +107,25 @@ export class TimetableMatrix {
     // Στατιστικά / Μετρητές
     const statsBadge = document.createElement('div');
     statsBadge.className = 'matrix-stats-badge';
+
+    const activeLessons = (this.timetable.lessons || []).filter((l) => Number(l.hours) > 0);
+    const assignedLessons = activeLessons.filter((l) => l.teacherId && String(l.teacherId).trim());
+    const unassignedLessons = activeLessons.filter((l) => !l.teacherId || !String(l.teacherId).trim());
+
     const totalPlacedHours = (this.timetable.schedule || []).reduce((sum, c) => sum + (c.length || 1), 0);
-    const totalLessonHours = (this.timetable.lessons || []).reduce((sum, l) => sum + (Number(l.hours) || 0), 0);
+    const totalAssignedHours = assignedLessons.reduce((sum, l) => sum + (Number(l.hours) || 0), 0);
+    const unassignedHours = unassignedLessons.reduce((sum, l) => sum + (Number(l.hours) || 0), 0);
     const unplacedHours = (this.timetable.unplacedCards || []).reduce((sum, c) => sum + (c.length || 1), 0);
     const placedCardsCount = this.timetable.schedule.length;
-    statsBadge.innerHTML = `<strong>${totalPlacedHours}</strong> / ${totalLessonHours} ώρες (${placedCardsCount} κάρτες) ${
+
+    let unassignedNotice = '';
+    if (unassignedHours > 0) {
+      unassignedNotice = `· <span class="badge muted" style="font-size: 0.72rem; padding: 0.15rem 0.4rem;" title="${unassignedLessons.length} μαθήματα χωρίς εκπαιδευτικό δεν διδάσκονται και δεν μπαίνουν στο πρόγραμμα">${unassignedHours} ώρ. χωρίς εκπαιδευτικό (δεν διδάσκονται)</span>`;
+    }
+
+    statsBadge.innerHTML = `<strong>${totalPlacedHours}</strong> / ${totalAssignedHours} ώρες (${placedCardsCount} κάρτες) ${
       unplacedHours > 0 ? `· <span class="badge danger">${unplacedHours} ώρες ατοποθέτητες</span>` : '· <span class="badge success">100% Πλήρες</span>'
-    }`;
+    } ${unassignedNotice}`;
     bar.append(statsBadge);
 
     return bar;

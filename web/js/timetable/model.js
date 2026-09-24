@@ -210,6 +210,17 @@ export function normalizeTimetable(tt) {
   if (!Array.isArray(tt.rooms) || tt.rooms.length === 0) tt.rooms = JSON.parse(JSON.stringify(SPECIAL_ROOMS));
   if (!Array.isArray(tt.schedule)) tt.schedule = [];
   if (!Array.isArray(tt.unplacedCards)) tt.unplacedCards = [];
+
+  // Αφαίρεση τυχόν καρτών από το πρόγραμμα για μαθήματα χωρίς εκπαιδευτικό ή με 0 ώρες
+  if (Array.isArray(tt.lessons)) {
+    const activeAssignedLessonIds = new Set(
+      tt.lessons
+        .filter((l) => Number(l.hours) > 0 && l.teacherId && String(l.teacherId).trim())
+        .map((l) => l.id)
+    );
+    tt.schedule = tt.schedule.filter((c) => activeAssignedLessonIds.has(c.lessonId));
+    tt.unplacedCards = tt.unplacedCards.filter((c) => activeAssignedLessonIds.has(c.lessonId));
+  }
   
   // Ανακατασκευή των bell times βάσει ενεργών ρυθμίσεων (Ολιγοθέσιο / Πρωινή Ζώνη / Ολοήμερο)
   tt.bellTimes = buildBellTimes(tt);
@@ -342,6 +353,8 @@ export function generateCardsFromLessons(lessons) {
   for (const lesson of lessons) {
     const totalHours = Number(lesson.hours);
     if (!totalHours || totalHours <= 0) continue; // 0 ώρες: παράλειψη
+    // Κανόνας: Μαθήματα στα οποία δεν έχει γίνει ανάθεση εκπαιδευτικού ΔΕΝ διδάσκονται και ΔΕΝ μπαίνουν στο ωρολόγιο πρόγραμμα
+    if (!lesson.teacherId || !String(lesson.teacherId).trim()) continue;
     let distribution = lesson.distribution; // π.χ. '1+1', '2', '2+1+1'
 
     if (!distribution) {
@@ -805,6 +818,15 @@ export function validateSlotPlacement(schedule, card, day, period, timetable) {
   const conflicts = [];
   const warnings = [];
   const cardLength = card.length || 1;
+
+  // Κανόνας: Μαθήματα χωρίς ανάθεση εκπαιδευτικού δεν διδάσκονται και δεν μπορούν να τοποθετηθούν στο πρόγραμμα
+  if (!card.teacherId || !String(card.teacherId).trim()) {
+    return {
+      valid: false,
+      conflicts: ['Το μάθημα δεν έχει ανατεθεί σε εκπαιδευτικό και δεν μπορεί να διδαχθεί.'],
+      warnings: [],
+    };
+  }
 
   for (let offset = 0; offset < cardLength; offset++) {
     const targetPeriod = period + offset;
