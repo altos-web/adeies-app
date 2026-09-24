@@ -2,6 +2,7 @@
 // Συντονίζει τα βήματα καταχώρισης (Σχολείο, Τμήματα, Εκπαιδευτικοί Time-off, Αναθέσεις, Solver & Matrix).
 
 import { store } from '../store.js';
+import { download } from '../output.js';
 import { DAYS_OF_WEEK, SCHOOL_TYPES } from './curricula.js';
 import { TimetableMatrix } from './matrix.js';
 import { createInitialTimetable, populateCurriculumForClasses } from './model.js';
@@ -129,44 +130,88 @@ export class TimetableUI {
 
     // Render classes
     const classesList = div.querySelector('#classes-list');
-    const typeConfig = SCHOOL_TYPES[this.timetable.schoolType] || SCHOOL_TYPES.gymnasio;
+    let draggedClassIndex = null;
 
     const renderClassesList = () => {
       classesList.innerHTML = '';
       this.timetable.classes.forEach((cls, idx) => {
         const item = document.createElement('div');
         item.className = 'class-chip';
+        item.draggable = true;
+        item.dataset.index = idx;
         item.innerHTML = `
-          <div class="class-chip-info">
-            <strong>${cls.name}</strong>
-            <span class="class-grade">Τάξη ${cls.grade}</span>
+          <div class="class-chip-content">
+            <span class="drag-handle" title="Σύρετε για αναδιάταξη">⠿</span>
+            <div class="class-chip-info" title="Κλικ για επεξεργασία">
+              <strong>${cls.name}</strong>
+              <span class="class-grade">Τάξη ${cls.grade}</span>
+            </div>
           </div>
-          <button class="chip-delete danger" title="Διαγραφή">✕</button>
+          <div class="chip-actions">
+            <button class="chip-edit" title="Επεξεργασία">✎</button>
+            <button class="chip-delete danger" title="Διαγραφή">✕</button>
+          </div>
         `;
-        item.querySelector('.chip-delete').onclick = () => {
-          this.timetable.classes.splice(idx, 1);
+
+        // Click to edit
+        const handleEdit = () => {
+          this.openClassModal(cls, () => renderClassesList());
+        };
+        item.querySelector('.class-chip-content').onclick = handleEdit;
+        item.querySelector('.chip-edit').onclick = handleEdit;
+
+        // Delete
+        item.querySelector('.chip-delete').onclick = (e) => {
+          e.stopPropagation();
+          if (confirm(`Διαγραφή του τμήματος ${cls.name};`)) {
+            this.timetable.classes.splice(idx, 1);
+            this.save();
+            renderClassesList();
+          }
+        };
+
+        // Drag n drop reordering
+        item.addEventListener('dragstart', (e) => {
+          draggedClassIndex = idx;
+          item.classList.add('is-dragging');
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', String(idx));
+        });
+
+        item.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          item.classList.add('drag-over');
+        });
+
+        item.addEventListener('dragleave', () => {
+          item.classList.remove('drag-over');
+        });
+
+        item.addEventListener('drop', (e) => {
+          e.preventDefault();
+          item.classList.remove('drag-over');
+          if (draggedClassIndex === null || draggedClassIndex === idx) return;
+
+          const moved = this.timetable.classes.splice(draggedClassIndex, 1)[0];
+          this.timetable.classes.splice(idx, 0, moved);
           this.save();
           renderClassesList();
-        };
+        });
+
+        item.addEventListener('dragend', () => {
+          item.classList.remove('is-dragging');
+          draggedClassIndex = null;
+        });
+
         classesList.append(item);
       });
     };
     renderClassesList();
 
-    // Add class button
+    // Add class button opens modal
     div.querySelector('#btn-add-class').onclick = () => {
-      const grade = prompt(`Επιλέξτε Τάξη (${typeConfig.grades.join(', ')}):`, typeConfig.grades[0]);
-      if (!grade) return;
-      const name = prompt(`Όνομα τμήματος (π.χ. ${grade}1, ${grade}2):`, `${grade}${this.timetable.classes.filter((c) => c.grade === grade).length + 1}`);
-      if (!name) return;
-
-      this.timetable.classes.push({
-        id: `c_${Date.now()}`,
-        name: name.trim().toUpperCase(),
-        grade: grade.trim().toUpperCase(),
-      });
-      this.save();
-      renderClassesList();
+      this.openClassModal(null, () => renderClassesList());
     };
 
     div.querySelector('#btn-to-step-2').onclick = () => {
@@ -175,6 +220,99 @@ export class TimetableUI {
     };
 
     return div;
+  }
+
+  // Pop-up modal για επιλογή τάξης και ονόματος τμήματος
+  openClassModal(clsToEdit = null, onSaved = null) {
+    const typeConfig = SCHOOL_TYPES[this.timetable.schoolType] || SCHOOL_TYPES.gymnasio;
+    const dialog = document.createElement('dialog');
+    dialog.className = 'class-dialog';
+
+    const defaultGrade = clsToEdit ? clsToEdit.grade : typeConfig.grades[0];
+    const suggestName = (gr) => {
+      const count = this.timetable.classes.filter((c) => c.grade === gr).length;
+      return `${gr}${count + 1}`;
+    };
+    const defaultName = clsToEdit ? clsToEdit.name : suggestName(defaultGrade);
+
+    dialog.innerHTML = `
+      <div class="dialog-content">
+        <h3>${clsToEdit ? 'Επεξεργασία Τμήματος' : 'Προσθήκη Νέου Τμήματος'}</h3>
+        <p class="hint">Επιλέξτε την τάξη ανάλογα με τη βαθμίδα και ορίστε το όνομα του τμήματος.</p>
+
+        <div class="form-grid" style="margin-top: 1.25rem;">
+          <label class="field">
+            <span class="label">Τάξη</span>
+            <select id="modal-class-grade">
+              ${typeConfig.grades.map(
+                (g) => `<option value="${g}" ${g === defaultGrade ? 'selected' : ''}>Τάξη ${g}</option>`
+              ).join('')}
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="label">Όνομα Τμήματος</span>
+            <input type="text" id="modal-class-name" value="${defaultName}" placeholder="π.χ. Α1, Β2, Γ_ΘΕΤ" autofocus>
+          </label>
+        </div>
+
+        <div class="toolbar" style="margin-top: 1.5rem; justify-content: flex-end;">
+          <button type="button" class="btn-cancel">Άκυρο</button>
+          <button type="button" class="primary btn-save">Αποθήκευση</button>
+        </div>
+      </div>
+    `;
+
+    const gradeSelect = dialog.querySelector('#modal-class-grade');
+    const nameInput = dialog.querySelector('#modal-class-name');
+
+    if (!clsToEdit) {
+      gradeSelect.onchange = () => {
+        nameInput.value = suggestName(gradeSelect.value);
+      };
+    }
+
+    const close = () => {
+      dialog.close();
+      dialog.remove();
+    };
+
+    dialog.querySelector('.btn-cancel').onclick = close;
+
+    const save = () => {
+      const grade = gradeSelect.value.trim().toUpperCase();
+      const name = nameInput.value.trim().toUpperCase();
+      if (!name) {
+        alert('Παρακαλώ εισαγάγετε όνομα τμήματος.');
+        return;
+      }
+
+      if (clsToEdit) {
+        clsToEdit.grade = grade;
+        clsToEdit.name = name;
+      } else {
+        this.timetable.classes.push({
+          id: `c_${Date.now()}`,
+          name,
+          grade,
+        });
+      }
+
+      this.save();
+      close();
+      if (onSaved) onSaved();
+    };
+
+    dialog.querySelector('.btn-save').onclick = save;
+    nameInput.onkeydown = (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        save();
+      }
+    };
+
+    document.body.append(dialog);
+    dialog.showModal();
   }
 
   // ── ΒΗΜΑ 2: Εκπαιδευτικοί & Time-off ──────────────────────────────────────
@@ -188,8 +326,11 @@ export class TimetableUI {
         <p class="hint">Εισαγάγετε το διδακτικό ωράριο κάθε καθηγητή και ορίστε τις ώρες διαθεσιμότητας (time-off matrix).</p>
       </div>
 
-      <div class="toolbar">
-        <button class="primary" id="btn-sync-employees">🔄 Συγχρονισμός από Καρτέλα Εργαζομένων</button>
+      <div class="toolbar" style="flex-wrap: wrap; gap: 0.5rem;">
+        <button class="primary" id="btn-sync-employees">🔄 Συγχρονισμός από Καρτέλα 02</button>
+        <button class="primary" id="btn-load-mock-teachers" style="background: #0284c7;">📥 Φόρτωση Εικονικών Εκπαιδευτικών (Demo)</button>
+        <button id="btn-import-json">📂 Εισαγωγή από JSON</button>
+        <button id="btn-download-sample" class="secondary">💾 Λήψη sample_teachers.json</button>
         <button id="btn-add-teacher">+ Προσθήκη Εκπαιδευτικού</button>
       </div>
 
@@ -215,11 +356,11 @@ export class TimetableUI {
       </div>
     `;
 
-    // Sync from employees tab
+    // 1. Sync from employees tab
     div.querySelector('#btn-sync-employees').onclick = () => {
       const employees = store.getEmployees();
       if (!employees.length) {
-        alert('Δεν έχουν καταχωριστεί εργαζόμενοι στην καρτέλα 02 («Εργαζόμενοι»).');
+        alert('Δεν έχουν καταχωριστεί εργαζόμενοι στην καρτέλα 02 («Εργαζόμενοι»). Μπορείτε να πατήσετε «Φόρτωση Εικονικών Εκπαιδευτικών» για έτοιμο δείγμα.');
         return;
       }
       let added = 0;
@@ -229,7 +370,7 @@ export class TimetableUI {
             id: emp.id,
             name: emp.onomateponymo || `${emp.eponymo || ''} ${emp.onoma || ''}`.trim() || 'Εκπαιδευτικός',
             branch: emp.klados || 'ΠΕ02',
-            requiredHours: 21, // Προεπιλογή
+            requiredHours: 20,
             assignedHours: 0,
             timeOff: {},
           });
@@ -241,12 +382,96 @@ export class TimetableUI {
       alert(`Συγχρονίστηκαν ${added} εκπαιδευτικοί!`);
     };
 
-    // Add manual teacher
+    // 2. Load mock dataset
+    div.querySelector('#btn-load-mock-teachers').onclick = async () => {
+      try {
+        const res = await fetch('data/sample_teachers.json');
+        if (!res.ok) throw new Error('Δεν βρέθηκε το αρχείο data/sample_teachers.json');
+        const data = await res.json();
+
+        if (data.timetable?.teachers) {
+          this.timetable.teachers = JSON.parse(JSON.stringify(data.timetable.teachers));
+        }
+        if (data.timetable?.classes && this.timetable.classes.length <= 3) {
+          this.timetable.classes = JSON.parse(JSON.stringify(data.timetable.classes));
+        }
+
+        // Επίσης αποθήκευση στην καρτέλα 02 (εργαζόμενοι)
+        if (Array.isArray(data.employees)) {
+          const currentEmps = store.getEmployees();
+          for (const emp of data.employees) {
+            if (!currentEmps.some((e) => e.id === emp.id)) {
+              store.saveEmployee(emp);
+            }
+          }
+        }
+
+        this.save();
+        this.render();
+        alert(`Φορτώθηκαν επιτυχώς ${this.timetable.teachers.length} εικονικοί εκπαιδευτικοί όλων των ειδικοτήτων με ρεαλιστικές διαθεσιμότητες (time-off)!`);
+      } catch (err) {
+        alert('Σφάλμα: ' + err.message);
+      }
+    };
+
+    // 3. Import JSON from file picker
+    const filePicker = document.createElement('input');
+    filePicker.type = 'file';
+    filePicker.accept = 'application/json';
+    filePicker.style.display = 'none';
+    div.append(filePicker);
+
+    div.querySelector('#btn-import-json').onclick = () => filePicker.click();
+
+    filePicker.onchange = async () => {
+      const file = filePicker.files[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const data = JSON.parse(text);
+
+        if (data.timetable?.teachers) {
+          this.timetable.teachers = data.timetable.teachers;
+          if (data.timetable.classes) this.timetable.classes = data.timetable.classes;
+        } else if (Array.isArray(data.employees)) {
+          this.timetable.teachers = data.employees.map((emp) => ({
+            id: emp.id,
+            name: emp.onomateponymo || `${emp.eponymo} ${emp.onoma}`,
+            branch: emp.klados || 'ΠΕ02',
+            requiredHours: 20,
+            assignedHours: 0,
+            timeOff: {},
+          }));
+        } else {
+          throw new Error('Το αρχείο δεν περιέχει έγκυρη λίστα εκπαιδευτικών.');
+        }
+
+        this.save();
+        this.render();
+        alert(`Επιτυχής εισαγωγή ${this.timetable.teachers.length} εκπαιδευτικών!`);
+      } catch (err) {
+        alert('Η εισαγωγή απέτυχε: ' + err.message);
+      }
+    };
+
+    // 4. Download sample JSON
+    div.querySelector('#btn-download-sample').onclick = async () => {
+      try {
+        const res = await fetch('data/sample_teachers.json');
+        if (!res.ok) throw new Error('Not found');
+        const blob = await res.blob();
+        download(blob, 'sample_teachers.json');
+      } catch {
+        alert('Δεν ήταν δυνατή η λήψη του sample_teachers.json');
+      }
+    };
+
+    // 5. Add manual teacher
     div.querySelector('#btn-add-teacher').onclick = () => {
       const name = prompt('Ονοματεπώνυμο εκπαιδευτικού:');
       if (!name) return;
       const branch = prompt('Κλάδος (π.χ. ΠΕ02, ΠΕ03, ΠΕ04, ΠΕ86):', 'ΠΕ02') || 'ΠΕ';
-      const hours = Number(prompt('Υποχρεωτικό εβδομαδιαίο διδακτικό ωράριο (ώρες):', '21')) || 21;
+      const hours = Number(prompt('Υποχρεωτικό εβδομαδιαίο διδακτικό ωράριο (ώρες):', '20')) || 20;
 
       this.timetable.teachers.push({
         id: `t_${Date.now()}`,
