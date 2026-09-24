@@ -220,18 +220,18 @@ export class TimetableSolver {
     // Δύσκολα μαθήματα (Math, Ancient Greek, Physics): ιδανικά ώρες 2, 3, 4
     if (card.difficulty >= 3) {
       if (period >= 2 && period <= 4) score += 30;
-      else if (period === 1) score += 10;
+      else if (period === 1) score += 20; // 1η ώρα είναι απολύτως κατάλληλη για πρωινά μαθήματα
       else if (period >= 6) score -= 40; // Όχι 6η ή 7η ώρα!
     } else if (card.difficulty === 1) {
       // Ελαφριά μαθήματα (Γυμναστική, Μουσική, Εικαστικά): προτιμώνται ώρες 4-7
       if (period >= 4) score += 20;
-      else if (period === 1) score -= 15;
+      else if (period === 1) score -= 5;
     }
 
     // 2. Ελαχιστοποίηση κενών εκπαιδευτικού (Teacher Gaps / Windows)
     if (card.teacherId) {
       const teacherCardsToday = currentSchedule.filter(
-        (c) => c.teacherId === card.teacherId && c.day === day
+        (c) => c.teacherId === card.teacherId && c.day === day && c.id !== card.id
       );
       if (teacherCardsToday.length > 0) {
         // Αν είναι συνεχόμενο με άλλο μάθημα του ίδιου καθηγητή (δίπλα δίπλα), επιβραβεύεται έντονα!
@@ -246,15 +246,54 @@ export class TimetableSolver {
     // 3. Διασπορά μαθημάτων μέσα στην εβδομάδα (Day Spread)
     // Αν το τμήμα έχει ήδη αυτό το μάθημα σήμερα, ελαττώνεται το score
     const classSameSubjectToday = currentSchedule.filter(
-      (c) => c.classId === card.classId && c.subjectId === card.subjectId && c.day === day
+      (c) => c.classId === card.classId && c.subjectId === card.subjectId && c.day === day && c.id !== card.id
     );
     if (classSameSubjectToday.length > 0) {
       score -= 50;
     }
 
-    // 4. Ισόρροπη κατανομή ωραρίου τμήματος
-    const classCardsToday = currentSchedule.filter((c) => c.classId === card.classId && c.day === day);
-    if (classCardsToday.length >= 6) score -= 20;
+    // 4. Συνέχεια ωραρίου τμήματος (ΑΠΟΛΥΤΟΣ ΚΑΝΟΝΑΣ: Όχι κενά στους μαθητές, έναρξη πάντα 1η ώρα)
+    const classCardsToday = currentSchedule.filter(
+      (c) => c.classId === card.classId && c.day === day && c.id !== card.id
+    );
+
+    const occupiedPeriods = new Set();
+    for (const c of classCardsToday) {
+      const len = c.length || 1;
+      for (let o = 0; o < len; o++) {
+        occupiedPeriods.add(c.period + o);
+      }
+    }
+
+    const cardLen = card.length || 1;
+    const cardEnd = period + cardLen - 1;
+
+    if (occupiedPeriods.size === 0) {
+      // Πρώτο μάθημα της ημέρας για το τμήμα: Πρέπει οπωσδήποτε να ξεκινάει 1η ώρα!
+      if (period === 1) {
+        score += 80;
+      } else {
+        score -= period * 25; // Έντονη ποινή αν ξεκινάει 2η, 3η ή αργότερα
+      }
+    } else {
+      // Υπάρχουν ήδη μαθήματα στο τμήμα σήμερα:
+      // Επιβράβευση αν είναι ακριβώς συνεχόμενο (χωρίς κανένα κενό)
+      if (occupiedPeriods.has(period - 1) || occupiedPeriods.has(cardEnd + 1)) {
+        score += 50;
+      } else {
+        score -= 70; // Δημιουργεί κενό/τρύπα στο πρόγραμμα των μαθητών
+      }
+
+      // Αν η 1η ώρα δεν έχει καλυφθεί ακόμα και αυτό το μάθημα δεν ξεκινά την 1η ώρα:
+      if (!occupiedPeriods.has(1) && period !== 1) {
+        score -= 90;
+      }
+    }
+
+    // 5. Ισόρροπη κατανομή ωραρίου τμήματος ανά ημέρα (στόχος: ~6-7 ώρες/ημέρα)
+    const hoursToday = occupiedPeriods.size + cardLen;
+    if (hoursToday > 7) score -= 60;
+    else if (hoursToday >= 6) score -= 15;
 
     return score;
   }

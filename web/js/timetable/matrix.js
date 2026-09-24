@@ -316,7 +316,7 @@ export class TimetableMatrix {
       <div class="card-header">
         <span class="card-subject" title="${card.subjectName}">${card.subjectShort || card.subjectName}</span>
         ${lengthBadgeText ? `<span class="card-badge length ${part > 1 ? 'is-cont' : ''}">${lengthBadgeText}</span>` : ''}
-        ${card.isSplit ? `<span class="card-badge split">Σπαστό</span>` : ''}
+        ${card.isSplit ? `<span class="card-badge badge-split">Σπαστό</span>` : ''}
         ${currentPeriod ? `<button type="button" class="card-unplace-btn" title="Αφαίρεση από το πρόγραμμα (στο καλάθι)">✕</button>` : ''}
       </div>
       <div class="card-body">
